@@ -18,6 +18,7 @@ bool is_header = false;
 ArduCAM myCAM(OV2640, CAMERA_CS);
 #endif
 uint8_t read_fifo_burst(ArduCAM myCAM);
+
 void setup()
 {
     Serial.begin(9600);
@@ -44,8 +45,8 @@ void setup()
 void loop()
 {
     // To continuously take photos, enable the next two lines;
-    take_photo();
-    delay(1000);
+    // take_photo();
+    // delay(1000);
 }
 
 void check_spi()
