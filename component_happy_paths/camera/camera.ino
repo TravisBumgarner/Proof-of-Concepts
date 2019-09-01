@@ -13,36 +13,46 @@
 #define SD_CS 10
 
 bool is_header = false;
-int total_time = 0;
+
 #if defined(OV2640_MINI_2MP_PLUS)
 ArduCAM myCAM(OV2640, CAMERA_CS);
 #endif
 uint8_t read_fifo_burst(ArduCAM myCAM);
 void setup()
 {
-    // put your setup code here, to run once:
-    uint8_t vid, pid;
-    uint8_t temp;
-#if defined(__SAM3X8E__)
-    Wire1.begin();
-#else
-    Wire.begin();
-#endif
     Serial.begin(9600);
-    Serial.println(F("ArduCAM Start!"));
-    // set the CS as an output:
+    Serial.println("Testing Camera...");
+
+    Wire.begin();
+
     pinMode(CAMERA_CS, OUTPUT);
     digitalWrite(CAMERA_CS, HIGH);
-    // initialize SPI:
+
     SPI.begin();
-    //Reset the CPLD
     myCAM.write_reg(0x07, 0x80);
     delay(100);
     myCAM.write_reg(0x07, 0x00);
     delay(100);
-    while (1)
+
+    check_spi();
+    check_camera_module();
+    check_sd_card();
+
+    take_photo();
+}
+
+void loop()
+{
+    // To continuously take photos, enable the next two lines;
+    take_photo();
+    delay(1000);
+}
+
+void check_spi()
+{
+    uint8_t temp;
+    while (true)
     {
-        //Check if the ArduCAM SPI bus is OK
         myCAM.write_reg(ARDUCHIP_TEST1, 0x55);
         temp = myCAM.read_reg(ARDUCHIP_TEST1);
         if (temp != 0x55)
@@ -57,67 +67,60 @@ void setup()
             break;
         }
     }
-#if defined(OV2640_MINI_2MP_PLUS)
-    while (1)
+}
+
+void check_camera_module()
+{
+    uint8_t vid, pid;
+
+    while (true)
     {
-        //Check if the camera module type is OV2640
         myCAM.wrSensorReg8_8(0xff, 0x01);
         myCAM.rdSensorReg8_8(OV2640_CHIPID_HIGH, &vid);
         myCAM.rdSensorReg8_8(OV2640_CHIPID_LOW, &pid);
         if ((vid != 0x26) && ((pid != 0x41) || (pid != 0x42)))
         {
-            Serial.println(F("ACK CMD Can't find OV2640 module!"));
+            Serial.println(F("Cannot find camera."));
             delay(1000);
             continue;
         }
         else
         {
-            Serial.println(F("ACK CMD OV2640 detected."));
+            Serial.println(F("Camera detected."));
             break;
         }
     }
-#endif
-    //Initialize SD Card
+}
+
+void check_sd_card()
+{
     while (!SD.begin(SD_CS))
     {
         Serial.println(F("SD Card Error!"));
         delay(1000);
     }
     Serial.println(F("SD Card detected."));
-    //Change to JPEG capture mode and initialize the OV5640 module
+
     myCAM.set_format(JPEG);
     myCAM.InitCAM();
     myCAM.clear_fifo_flag();
     myCAM.write_reg(ARDUCHIP_FRAMES, FRAMES_NUM);
 }
 
-void loop()
+void take_photo()
 {
-    // put your main code here, to run repeatedly:
     myCAM.flush_fifo();
     myCAM.clear_fifo_flag();
-#if defined(OV2640_MINI_2MP_PLUS)
     myCAM.OV2640_set_JPEG_size(OV2640_1600x1200);
-#endif
+
     //Start capture
     myCAM.start_capture();
-    Serial.println(F("start capture."));
-    total_time = millis();
+    Serial.print("Taking photo...");
     while (!myCAM.get_bit(ARDUCHIP_TRIG, CAP_DONE_MASK))
         ;
-    Serial.println(F("CAM Capture Done."));
-    total_time = millis() - total_time;
-    Serial.print(F("capture total_time used (in miliseconds):"));
-    Serial.println(total_time, DEC);
-    total_time = millis();
-    read_fifo_burst(myCAM);
-    total_time = millis() - total_time;
-    Serial.print(F("save capture total_time used (in miliseconds):"));
-    Serial.println(total_time, DEC);
-    //Clear the capture done flag
-    myCAM.clear_fifo_flag();
-    delay(5000);
+    Serial.println("done.");
 }
+
 uint8_t read_fifo_burst(ArduCAM myCAM)
 {
     uint8_t temp = 0, temp_last = 0;

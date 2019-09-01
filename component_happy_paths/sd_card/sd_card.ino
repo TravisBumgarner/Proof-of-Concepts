@@ -35,7 +35,7 @@ void setup()
 {
     // Open serial communications and wait for port to open:
     Serial.begin(9600);
-    Serial.println("Testing SD Card.");
+    Serial.println("Testing SD Card...");
     while (!Serial)
 
         if (!card.init(SPI_HALF_SPEED, chipSelect))

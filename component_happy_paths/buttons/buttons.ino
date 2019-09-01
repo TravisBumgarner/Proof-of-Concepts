@@ -8,7 +8,7 @@
 void setup()
 {
     Serial.begin(9600);
-    Serial.println("Testing Buttons");
+    Serial.println("Testing Buttons...");
 }
 
 void loop()
