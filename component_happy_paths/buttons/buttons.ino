@@ -9,6 +9,13 @@ void setup()
 {
     Serial.begin(9600);
     Serial.println("Testing Buttons...");
+
+    pinMode(BUTTON_UP, INPUT);
+    pinMode(BUTTON_DOWN, INPUT);
+    pinMode(BUTTON_LEFT, INPUT);
+    pinMode(BUTTON_RIGHT, INPUT);
+    pinMode(BUTTON_SELECT, INPUT);
+    pinMode(BUTTON_SHOOT, INPUT);
 }
 
 void loop()

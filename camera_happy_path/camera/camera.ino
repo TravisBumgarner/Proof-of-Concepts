@@ -11,6 +11,12 @@
 #define FRAMES_NUM 0x06
 #define CAMERA_CS 9
 #define SD_CS 10
+#define BUTTON_UP 2
+#define BUTTON_DOWN 3
+#define BUTTON_LEFT 4
+#define BUTTON_RIGHT 5
+#define BUTTON_SELECT 6
+#define BUTTON_SHOOT 7
 
 bool is_header = false;
 
@@ -22,31 +28,63 @@ uint8_t read_fifo_burst(ArduCAM myCAM);
 void setup()
 {
     Serial.begin(9600);
-    Serial.println("Testing Camera...");
 
+    Serial.println("Initializing Buttons...");
+    pinMode(BUTTON_UP, INPUT);
+    pinMode(BUTTON_DOWN, INPUT);
+    pinMode(BUTTON_LEFT, INPUT);
+    pinMode(BUTTON_RIGHT, INPUT);
+    pinMode(BUTTON_SELECT, INPUT);
+    pinMode(BUTTON_SHOOT, INPUT);
+
+    Serial.println("Initializing Camera and SD Card...");
     Wire.begin();
-
     pinMode(CAMERA_CS, OUTPUT);
     digitalWrite(CAMERA_CS, HIGH);
-
     SPI.begin();
     myCAM.write_reg(0x07, 0x80);
     delay(100);
     myCAM.write_reg(0x07, 0x00);
     delay(100);
-
     check_spi();
     check_camera_module();
     check_sd_card();
-
-    take_photo();
 }
 
 void loop()
 {
-    // To continuously take photos, enable the next two lines;
-    take_photo();
-    delay(1000);
+    int buttonUpState = digitalRead(BUTTON_UP);
+    int buttonLeftState = digitalRead(BUTTON_LEFT);
+    int buttonRightState = digitalRead(BUTTON_RIGHT);
+    int buttonDownState = digitalRead(BUTTON_DOWN);
+    int buttonSelectState = digitalRead(BUTTON_SELECT);
+    int buttonShootState = digitalRead(BUTTON_SHOOT);
+
+    if (buttonUpState == LOW)
+    {
+        Serial.println("up");
+    }
+    if (buttonLeftState == LOW)
+    {
+        Serial.println("left");
+    }
+    if (buttonRightState == LOW)
+    {
+        Serial.println("right");
+    }
+    if (buttonDownState == LOW)
+    {
+        Serial.println("down");
+    }
+    if (buttonSelectState == LOW)
+    {
+        Serial.println("select");
+    }
+    if (buttonShootState == LOW)
+    {
+        Serial.println("shoot");
+        take_photo();
+    }
 }
 
 void check_spi()
@@ -129,6 +167,8 @@ uint8_t read_fifo_burst(ArduCAM myCAM)
     File outFile;
     byte buf[256];
     length = myCAM.read_fifo_length();
+    Serial.print(F("The fifo length is :"));
+    Serial.println(length, DEC);
     if (length >= MAX_FIFO_SIZE) //8M
     {
         Serial.println("Over size.");
@@ -155,6 +195,7 @@ uint8_t read_fifo_burst(ArduCAM myCAM)
             outFile.write(buf, i);
             //Close the file
             outFile.close();
+            Serial.println(F("OK"));
             is_header = false;
             myCAM.CS_LOW();
             myCAM.set_fifo_burst();
