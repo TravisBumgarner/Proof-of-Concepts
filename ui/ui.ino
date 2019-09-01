@@ -19,6 +19,8 @@ void setup()
         {
         }
     }
+    display.setTextSize(2);
+    display.setTextColor(WHITE);
     display.clearDisplay();
 }
 
@@ -31,18 +33,8 @@ void testdrawchar(void)
 {
     display.clearDisplay();
 
-    display.setTextSize(2);
-    display.setTextColor(WHITE);
     display.setCursor(0, 0);
-    display.cp437(true);
-
-    for (int16_t i = 0; i < 256; i++)
-    {
-        if (i == '\n')
-            display.write(' ');
-        else
-            display.write(i);
-    }
+    display.println(F("Greetings"));
 
     display.display();
     delay(2000);
