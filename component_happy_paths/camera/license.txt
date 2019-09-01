@@ -1,0 +1,2 @@
+ArduCAM Mini demo (C)2018 Lee
+Web: http://www.ArduCAM.com
