@@ -22,6 +22,14 @@ char *menuItems[] = {
     "White Bal.",
     "Contrast"
 };
+
+int menuItemValues[] = {
+  0,
+  0,
+  0,
+  0
+};
+
 int lastMenuIndex = 3;
 
 void setup()
@@ -50,6 +58,8 @@ void loop()
 {
     int buttonUpState = digitalRead(BUTTON_UP);
     int buttonDownState = digitalRead(BUTTON_DOWN);
+    int buttonLeftState = digitalRead(BUTTON_LEFT);
+    int buttonRightState = digitalRead(BUTTON_RIGHT);
     previousSelectedMenuItem = selectedMenuItem;
 
     if (buttonUpState == LOW)
@@ -69,13 +79,26 @@ void loop()
             selectedMenuItem = lastMenuIndex;
         }
     }
-    if(previousSelectedMenuItem != selectedMenuItem){
-        display.clearDisplay();
 
-        display.setCursor(0, 0);
-        display.println(menuItems[selectedMenuItem]);
-
-        display.display();
-        delay(100);
+    if (buttonLeftState == LOW)
+    {
+        menuItemValues[selectedMenuItem] -= 1;
     }
+
+    if (buttonRightState == LOW)
+    {
+        menuItemValues[selectedMenuItem] += 1;
+    }
+
+
+    display.clearDisplay();
+
+    display.setCursor(0, 0);
+    display.println(menuItems[selectedMenuItem]);
+    display.setCursor(0, 15);
+    display.println(menuItemValues[selectedMenuItem]);
+
+    display.display();
+    delay(50);
+    
 }
