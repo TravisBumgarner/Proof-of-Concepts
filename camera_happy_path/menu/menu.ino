@@ -9,12 +9,13 @@
 #define BUTTON_DOWN 3
 #define BUTTON_LEFT 4
 #define BUTTON_RIGHT 5
-#define BUTTON_SELECT 6
+#define BUTTON_MENU_TOGGLE 6
 #define BUTTON_SHOOT 7
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 int selectedMenuItem = 0;
 int previousSelectedMenuItem = 0;
+bool isMenuVisible = false;
 
 char *menuItems[] = {
     "Brightness",
@@ -39,7 +40,7 @@ void setup()
     pinMode(BUTTON_DOWN, INPUT);
     pinMode(BUTTON_LEFT, INPUT);
     pinMode(BUTTON_RIGHT, INPUT);
-    pinMode(BUTTON_SELECT, INPUT);
+    pinMode(BUTTON_MENU_TOGGLE, INPUT);
     pinMode(BUTTON_SHOOT, INPUT);
 
     if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS))
@@ -49,7 +50,7 @@ void setup()
         {
         }
     }
-    display.setTextSize(2);
+    display.setTextSize(1.5);
     display.setTextColor(WHITE);
     display.clearDisplay();
 }
@@ -60,7 +61,13 @@ void loop()
     int buttonDownState = digitalRead(BUTTON_DOWN);
     int buttonLeftState = digitalRead(BUTTON_LEFT);
     int buttonRightState = digitalRead(BUTTON_RIGHT);
+    int buttonMenuToggleState = digitalRead(BUTTON_MENU_TOGGLE);
+
     previousSelectedMenuItem = selectedMenuItem;
+
+    if (buttonMenuToggleState == LOW){
+        isMenuVisible = !isMenuVisible;
+    }
 
     if (buttonUpState == LOW)
     {
@@ -90,15 +97,23 @@ void loop()
         menuItemValues[selectedMenuItem] += 1;
     }
 
-
     display.clearDisplay();
+    if(isMenuVisible){
+        display.setCursor(0, 0);
+        display.println(menuItems[selectedMenuItem]);
+        display.setCursor(0, 15);
+        display.println(menuItemValues[selectedMenuItem]);
+    } else {
+        display.setCursor(0, 0);
+        display.println("Shots:5/200");
+        display.setCursor(0, 15);
+        display.println("Bat:95%");
+        display.setCursor(0, 30);
+        display.println("EV:+5");
+    }
 
-    display.setCursor(0, 0);
-    display.println(menuItems[selectedMenuItem]);
-    display.setCursor(0, 15);
-    display.println(menuItemValues[selectedMenuItem]);
-
-    display.display();
     delay(50);
+    display.display();
+
     
 }
