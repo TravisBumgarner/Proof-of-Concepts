@@ -142,10 +142,10 @@ while True:
     # a series of dilations and erosions to remove any small
     # blobs left in the mask
     mask = cv2.inRange(hsv, blueLower, blueUpper)
-    cv2.imshow("Mask", mask)
+    # cv2.imshow("Mask", mask)
     mask = cv2.erode(mask, None, iterations=2)
     mask = cv2.dilate(mask, None, iterations=2)
-
+    
     # find contours in the mask and initialize the current
     # (x, y) center of the ball
     cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -173,7 +173,7 @@ while True:
         cv2.line(frame, pts[0], pts[0], (0, 0, 255), thickness)
 
     # show the frame to our screen
-    cv2.imshow("Frame", frame)
+    # cv2.imshow("Frame", frame)
     key = cv2.waitKey(1) & 0xFF
 
     # if the 'q' key is pressed, stop the loop
@@ -184,6 +184,12 @@ while True:
 
         # Clear the screen
     screen.fill(BLACK)
+    
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    frame = np.rot90(frame)
+    frame = pygame.surfarray.make_surface(frame)
+    screen.blit(frame, (0,0))
+
     # Calls update() method on every sprite in the list
     all_sprites_list.update()
     clock.tick(FPS)
