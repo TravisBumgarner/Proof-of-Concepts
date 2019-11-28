@@ -2,23 +2,24 @@ import pygame
 import random
 
 SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 400
+SCREEN_HEIGHT = 800
 FPS = 30
 BLACK = (0, 0, 0)
 GREEN = (0, 128, 0)
 
 
 class Paddle(pygame.sprite.Sprite):
-    def __init__(self, color, width, height):
+    def __init__(self, side, color, width, height):
         super().__init__()
 
         self.image = pygame.Surface([width, height])
         self.image.fill(GREEN)
         self.rect = self.image.get_rect()
+        self.side = side
         self.reset_position()
 
     def reset_position(self):
-        self.rect.x = 5
+        self.rect.x = 5 if self.side == "left" else SCREEN_WIDTH - (5 + self.rect.width)
         self.rect.y = (SCREEN_HEIGHT / 2) - self.rect.height / 2
 
     def update(self):
@@ -63,7 +64,7 @@ class Pong(pygame.sprite.Sprite):
         self.x_velocity = -self.x_velocity
 
     def has_lost(self):
-        return self.rect.x <= 0
+        return self.rect.x <= 0 or self.rect.x >= SCREEN_WIDTH
 
     def is_collided_with(self, sprite):
         return self.rect.colliderect(sprite.rect)
@@ -74,7 +75,7 @@ screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 all_sprites_list = pygame.sprite.Group()
 
 font_name = pygame.font.match_font("arial")
-
+pygame.display.set_caption('Digi Fisi')
 
 def draw_text(surf, text, size, x, y):
     font = pygame.font.Font(font_name, size)
@@ -90,8 +91,9 @@ clock = pygame.time.Clock()
 
 pong = Pong(color=GREEN, width=20, height=20)
 all_sprites_list.add(pong)
-paddle = Paddle(color=GREEN, width=10, height=100)
-all_sprites_list.add(paddle)
+left_paddle = Paddle(side="left", color=GREEN, width=10, height=100)
+right_paddle = Paddle(side="right", color=GREEN, width=10, height=100)
+all_sprites_list.add(left_paddle, right_paddle)
 
 score = 0
 while not done:
@@ -104,7 +106,7 @@ while not done:
     # Calls update() method on every sprite in the list
     all_sprites_list.update()
     clock.tick(FPS)
-    if pong.is_collided_with(paddle):
+    if pong.is_collided_with(left_paddle) or pong.is_collided_with(right_paddle):
         pong.handle_collision()
         score += 1
 
