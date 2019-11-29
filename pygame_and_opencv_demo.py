@@ -43,10 +43,11 @@ class Paddle(pygame.sprite.Sprite):
         self.rect.x = 5 if self.side == "left" else SCREEN_WIDTH - (5 + self.rect.width)
         self.rect.y = (SCREEN_HEIGHT / 2) - self.rect.height / 2
 
-    def update(self):
+    def update_paddle_position(self, paddle_location_as_percentage):
         self.rect.y = (
             paddle_location_as_percentage * SCREEN_HEIGHT
         ) - self.rect.height / 2
+
 
 
 class Pong(pygame.sprite.Sprite):
@@ -117,15 +118,12 @@ vs = VideoStream(src=0).start()
 # allow the camera or video file to warm up
 time.sleep(2.0)
 
-score = 0
 
-while True:
+def get_frame_and_paddle_position():
     frame = vs.read()
-    if frame is None:
-        break
-
     frame = imutils.resize(frame, height=WEBCAM_HEIGHT)
 
+    paddle_location_as_percentage = 0
     blurred = cv2.GaussianBlur(frame, (11, 11), 0)
     hsv = cv2.cvtColor(blurred, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, paddle_lower_threshold, paddle_upper_threshold)
@@ -146,42 +144,49 @@ while True:
     if center:
         cv2.circle(frame, center, 3, (0, 0, 0), 5)
 
-    # show the frame to our screen
-    # cv2.imshow("Frame", frame)
-    key = cv2.waitKey(1) & 0xFF
-
-    # if the 'q' key is pressed, stop the loop
-    if key == ord("q"):
-        break
-
-    # vs.stop()
-
-    # Clear the screen
-    screen.fill(BLACK)
-
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     frame = np.rot90(frame)
+
+    return frame, paddle_location_as_percentage
+
+
+def draw_game(score, frame, paddle_position):
+    clock.tick(FPS)
+    screen.fill(BLACK)
     frame = pygame.surfarray.make_surface(frame)
     screen.blit(frame, (0, 0))
 
-    # Calls update() method on every sprite in the list
+    left_paddle.update_paddle_position(paddle_position)
+    right_paddle.update_paddle_position(paddle_position)
     all_sprites_list.update()
-    clock.tick(FPS)
+
     if pong.is_collided_with(left_paddle) or pong.is_collided_with(right_paddle):
         pong.handle_collision()
         score += 1
 
     if pong.has_lost():
         draw_text(screen, "Game Over :(", 50, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-    # Draw all the spites
+    
     all_sprites_list.draw(screen)
     draw_text(screen, str(score), 30, SCREEN_WIDTH / 2, 10)
-    # Go ahead and update the screen with what we've drawn.
+    
     pygame.display.flip()
+    
     if pong.has_lost():
         pygame.time.wait(3000)
         score = 0
         pong.reset_position()
+        
+    return score
 
-# close all windows
+score = 0
+while True:
+    frame, paddle_position = get_frame_and_paddle_position()
+
+    score = draw_game(score, frame, paddle_position)
+
+    key = cv2.waitKey(1) & 0xFF
+    if key == 27:
+        break
+
 cv2.destroyAllWindows()
