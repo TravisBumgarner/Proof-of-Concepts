@@ -85,7 +85,7 @@ class Pong(pygame.sprite.Sprite):
         self.x_velocity = -self.x_velocity
 
     def has_lost(self):
-        return self.rect.x <= 0 or self.rect.x >= SCREEN_WIDTH
+        return self.rect.x <= 0 or (self.rect.x + self.rect.width) >= SCREEN_WIDTH
 
     def is_collided_with(self, sprite):
         return self.rect.colliderect(sprite.rect)
@@ -176,7 +176,7 @@ def draw_game(score, frame, paddle_position):
         pygame.time.wait(3000)
         score = 0
         pong.reset_position()
-        
+
     return score
 
 score = 0
