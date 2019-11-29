@@ -78,9 +78,13 @@ while True:
         if v_reading > v_upper:
             v_upper += min(abs(v_upper - v_reading), MAX_CHANGE_PER_READING)
 
-        if h_lower == h_upper or s_lower == s_upper or v_lower == v_upper:
-            # cv2.inRange will fail if lower == upper. As calibration first starts, these numbers will collide.
-            continue
+        # cv2.inRange will fail if lower == upper. As calibration first starts, these numbers will collide.
+        if h_lower == h_upper:
+            h_upper += 1
+        if s_lower == s_upper:
+            s_upper += 1
+        if v_lower == v_upper:
+            v_upper += 1
 
     # Threshold the HSV image to get only blue colors
     mask = cv2.inRange(hsv, lower_mask_bound, upper_mask_bound)
