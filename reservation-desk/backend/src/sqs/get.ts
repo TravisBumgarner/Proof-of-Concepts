@@ -1,16 +1,17 @@
 require('dotenv').config()
 
-const { Consumer } = require('sqs-consumer');
+import {Consumer} from 'sqs-consumer'
 
-const db = require('../db')
+
+// const db = require('../db')
 
 const app = Consumer.create({
   queueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/820935989716/${process.env.AWS_SQS_QUEUE_NAME}`,
   handleMessage: async (message) => {
     console.log('Message', message.Body)
-    console.log('Author', message.MessageAttributes.Author.StringValue)
-    console.log('Title', message.MessageAttributes.Title.StringValue)
-    db.insert({ body: message.Body, id: message.MessageId, timestamp: message.Attributes.SentTimestamp })
+    console.log('Author', message.MessageAttributes)
+    console.log('Title', message.MessageAttributes)
+    // db.insert({ body: message.Body, id: message.MessageId, timestamp: message.Attributes.SentTimestamp })
   },
   attributeNames: ['All'],
   messageAttributeNames: ['All'] 
