@@ -19,7 +19,7 @@ These are a collection of projects that go beyond just learning the basics of a 
     - React
     - Express
 
-### `reservation-desk`  ([Link](reservation-desk))
+###  ([reservation-desk](reservation-desk))
 
 - Summary: Connects various computers to a central hub. Track which computers are available for people to use and which are taken.
 - Tech Stack
