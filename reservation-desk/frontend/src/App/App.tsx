@@ -2,6 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 import { Body, Title } from 'sharedComponents'
+import { Chat } from './components'
 
 const Form = styled.form`
 `
@@ -46,6 +47,7 @@ const App = () => {
   return (
     <Body>
       <div>
+        <Chat />
         <Title>Config</Title>
         {/* <Button onClick={() => setCanSubmit(!canSubmit)}>Toggle Submit</Button> */}
         <Title>Reservation System</Title>
