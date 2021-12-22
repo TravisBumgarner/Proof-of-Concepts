@@ -4,7 +4,7 @@ Connects various computers to a central hub. Track which computers are available
 
 # Tech Stack
 
-React
-Express
-TypeScript
-Node.js
+- React
+- Express
+- TypeScript
+- Node.js
