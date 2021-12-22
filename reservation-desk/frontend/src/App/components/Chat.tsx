@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { w3cwebsocket as W3CWebSocket } from "websocket"
+import { w3cwebsocket } from "websocket"
+
 import styled from 'styled-components'
 
 import { Title, Body } from 'sharedComponents'
@@ -33,27 +34,16 @@ type Message = {
 
 type Props = {
     user: String
+    client: w3cwebsocket
 }
 
-const Chat = ({ user }: Props) => {
-
-    const [hasConnected, setHasConnected] = React.useState<boolean>(false)
+const Chat = ({ user, client }: Props) => {
     const [messages, setMessages] = React.useState<Message[]>([])
     const [content, setContent] = React.useState('')
-
-    const client = new W3CWebSocket('ws://127.0.0.1:5000')
-
 
     client.onmessage = (message: { data: string }) => {
         setMessages([...messages, JSON.parse(message.data)])
     }
-    if (!hasConnected) {
-        client.onopen = () => {
-            setHasConnected(true)
-        }
-        return <p>Loading</p>
-    }
-
 
     const chatMessages = messages.map(({ content, sender }, index) => {
         return <ChatMessage key={index}><strong>{sender}</strong>: {content}</ChatMessage>

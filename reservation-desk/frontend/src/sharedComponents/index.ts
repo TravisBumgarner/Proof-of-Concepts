@@ -5,10 +5,11 @@ const Title = styled.h1`
 `
 
 const Body = styled.div`
-    height: 50vh;
+    height: 30vh;
     padding: 10px;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 `
 
 export {
