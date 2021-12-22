@@ -2,10 +2,12 @@ import * as React from 'react'
 import { w3cwebsocket } from "websocket"
 
 import styled from 'styled-components'
+import { v4 as uuidv4 } from 'uuid'
+
 
 import { Title, Body } from 'sharedComponents'
 import { CHAT_MESSAGE_TYPE, Message, ChatMessage } from '../../../../types/websockets'
-
+import { context } from '../Context'
 
 const ChatInputWrapper = styled.div`
     display: flex;
@@ -28,34 +30,24 @@ const ChatMessagesWrapper = styled.div`
     background-color: rgba(0,0,0,0.2);
 `
 
-type Props = {
-    user: String
-    client: w3cwebsocket
-}
-
-const Chat = ({ user, client }: Props) => {
-    const [messages, setMessages] = React.useState<ChatMessage[]>([])
+const Chat = () => {
     const [content, setContent] = React.useState('')
+    const { state, dispatch } = React.useContext(context)
 
-    client.onmessage = (message: { data: string }) => {
-        const parsedMessage: Message = JSON.parse(message.data)
-        console.log(parsedMessage)
-        if (parsedMessage.type === CHAT_MESSAGE_TYPE) {
-            setMessages([...messages, parsedMessage])
-        }
-    }
-
-    const chatMessages = messages.map(({ content, user }, index) => {
-        return <ChatMessage key={index}><strong>{user}</strong>: {content}</ChatMessage>
+    const chatMessages = state.messages.map(({ content, user, id }) => {
+        return <ChatMessage key={id}><strong>{user}</strong>: {content}</ChatMessage>
     })
 
     const submit = () => {
-        const encodedMessage = JSON.stringify({
-            content,
-            user,
+        const message = {
+            data: {
+                content,
+                user: state.user,
+                id: uuidv4()
+            },
             type: CHAT_MESSAGE_TYPE
-        } as ChatMessage)
-        client.send(encodedMessage)
+        } as ChatMessage
+        dispatch(message)
         setContent('')
     }
 

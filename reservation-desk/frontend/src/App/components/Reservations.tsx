@@ -3,16 +3,11 @@ import { w3cwebsocket } from "websocket"
 import { v4 as uuidv4 } from 'uuid'
 
 import { Body, Title, SubTitle } from 'sharedComponents'
-import { Message, ReservationMessage, RESERVATION_MESSAGE_TYPE } from '../../../../types/websockets'
+import { ReservationMessage, RESERVATION_MESSAGE_TYPE } from '../../../../types/websockets'
 import { context } from '../Context'
 
-type Props = {
-    client: w3cwebsocket,
-}
-
-const Reservations = ({ client }: Props) => {
-    const [reservations, setReservations] = React.useState<ReservationMessage[]>([])
-    const { state } = React.useContext(context)
+const Reservations = () => {
+    const { state, dispatch } = React.useContext(context)
     // React.useEffect(() => { // Fake a message from the server saying desk reserved for 5 seconds.
     //     const id = setTimeout(() => setTimeRemaining(5))
     //     return () => clearTimeout(id)
@@ -27,25 +22,20 @@ const Reservations = ({ client }: Props) => {
     //     return () => clearTimeout(id)
     // }, [timeRemaining])
 
-
-    client.onmessage = (message: { data: string }) => {
-        const parsedMessage: Message = JSON.parse(message.data)
-        if (parsedMessage.type === RESERVATION_MESSAGE_TYPE) {
-            setReservations([...reservations, parsedMessage])
-        }
-    }
-
     const handleSubmit = () => {
         const secondsSinceEpoch = Math.round(Date.now() / 1000)
         const duration = 10
-        const encodedMessage = JSON.stringify({
-            startTime: secondsSinceEpoch,
-            endTime: secondsSinceEpoch + duration,
-            user: state.user,
+        const message = {
+            data: {
+                startTime: secondsSinceEpoch,
+                endTime: secondsSinceEpoch + duration,
+                user: state.user,
+                id: uuidv4()
+            },
             type: RESERVATION_MESSAGE_TYPE,
-            id: uuidv4()
-        } as ReservationMessage)
-        client.send(encodedMessage)
+        } as ReservationMessage
+
+        dispatch(message)
     }
 
     return (
@@ -53,7 +43,7 @@ const Reservations = ({ client }: Props) => {
             <Title>Reservations</Title>
             <SubTitle>Received</SubTitle>
             <ul>
-                {reservations.map(({ user, startTime, endTime, id }) => {
+                {state.reservations.map(({ user, startTime, endTime, id }) => {
                     return (
                         <li key={id}>{user} - {startTime} - {endTime}</li>
                     )

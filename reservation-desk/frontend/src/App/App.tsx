@@ -2,8 +2,10 @@ import * as React from 'react'
 import { w3cwebsocket } from "websocket"
 
 import { GlobalStyle } from 'theme'
-import { Chat, Reservations, Login } from './components'
-import Context, { Action, context } from './Context'
+import { Reservations, Login, Chat } from './components'
+import Context, { context } from './Context'
+import { Message } from '../../../types/websockets'
+
 
 const App = () => {
   const [hasConnected, setHasConnected] = React.useState<boolean>(false)
@@ -18,6 +20,11 @@ const App = () => {
     return <p>Loading</p>
   }
 
+  client.onmessage = (message: { data: string }) => {
+    const parsedMessage: Message = JSON.parse(message.data)
+    dispatch(parsedMessage)
+  }
+
   return (
     <div>
       <GlobalStyle />
@@ -27,8 +34,8 @@ const App = () => {
           : (
             <>
               <h2>Hello, {state.user}</h2>
-              <Reservations client={client} />
-              {/* <Chat client={client}/> */}
+              <Reservations />
+              <Chat />
             </>)
       }
     </ div>
