@@ -23,6 +23,7 @@ const ReservationPicker = ({ handleSubmit }: { handleSubmit: (duration: number) 
 const Reservations = () => {
     const { state, dispatch } = React.useContext(context)
     const [isDisabled, setIsDisabled] = React.useState<boolean>(false)
+    const [timeRemaining, setTimeRemaining] = React.useState<number>(0)
 
     const handleSubmit = (duration: number) => {
         const secondsSinceEpoch = now()
@@ -44,10 +45,22 @@ const Reservations = () => {
             const matchingReservation = state.reservations.find(r => r.user === state.user)
             if (matchingReservation && matchingReservation.endTime > now()) {
                 setIsDisabled(true)
+                setTimeRemaining(matchingReservation.endTime - now())
             }
         }, 1000)
         return () => clearTimeout(id)
     }, [state.reservations.length])
+
+    React.useEffect(() => { // Start countdown after desk has been reserved
+        const id = setTimeout(() => {
+            if (timeRemaining > 0) {
+                setTimeRemaining(timeRemaining - 1)
+            } else {
+                setIsDisabled(false)
+            }
+        }, 1000)
+        return () => clearTimeout(id)
+    }, [timeRemaining])
 
     return (
         <Body>
@@ -61,7 +74,7 @@ const Reservations = () => {
                 })}
             </ul>
             {isDisabled
-                ? `This desk is currently taken by ${state.user} until ${0}`
+                ? `This desk is currently taken by ${state.user}, with ${timeRemaining} time remaining.`
                 : <ReservationPicker handleSubmit={handleSubmit} />
             }
 
