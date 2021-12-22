@@ -5,21 +5,22 @@ type ChatMessage = {
     type: typeof CHAT_MESSAGE_TYPE
 }
 
-const SQS_MESSAGE_TYPE = 'chat_message'
-type SQSMessage = {
+const RESERVATION_MESSAGE_TYPE = 'reservation_message'
+type ReservationMessage = {
     user: string
-    content: string
-    type: typeof SQS_MESSAGE_TYPE
+    startTime: number
+    endTime: number
+    type: typeof RESERVATION_MESSAGE_TYPE
 }
 
 type Message =
     | ChatMessage
-    | SQSMessage
+    | ReservationMessage
 
 export {
     Message,
     CHAT_MESSAGE_TYPE,
-    SQS_MESSAGE_TYPE,
-    SQSMessage,
+    RESERVATION_MESSAGE_TYPE,
+    ReservationMessage,
     ChatMessage
 }

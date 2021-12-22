@@ -25,8 +25,8 @@ const App = () => {
           : (
             <>
               <h2>Hello, {user}</h2>
-              <Reservations />
-              <Chat client={client} user={user} />
+              <Reservations client={client} user={user} />
+              {/* <Chat client={client} user={user} /> */}
             </>)
       }
     </ div>

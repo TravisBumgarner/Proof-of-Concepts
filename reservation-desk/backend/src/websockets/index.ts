@@ -6,6 +6,7 @@ import express from 'express'
 import WebSocket from 'ws'
 
 import { Message } from '../../../types/websockets'
+import { parse } from 'dotenv'
 
 const app = express()
 const server = http.createServer(app)
@@ -21,6 +22,7 @@ wss.on('connection', (ws: WebSocket) => {
 
     ws.on('message', (message: string) => {
         const parsedMessage: Message = JSON.parse(message)
+
         wss.clients
             .forEach(client => {
                 client.send(JSON.stringify(parsedMessage))

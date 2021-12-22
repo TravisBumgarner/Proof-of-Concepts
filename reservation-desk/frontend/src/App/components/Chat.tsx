@@ -38,8 +38,11 @@ const Chat = ({ user, client }: Props) => {
     const [content, setContent] = React.useState('')
 
     client.onmessage = (message: { data: string }) => {
-        console.log(message)
-        setMessages([...messages, JSON.parse(message.data)])
+        const parsedMessage: Message = JSON.parse(message.data)
+        console.log(parsedMessage)
+        if (parsedMessage.type === CHAT_MESSAGE_TYPE) {
+            setMessages([...messages, parsedMessage])
+        }
     }
 
     const chatMessages = messages.map(({ content, user }, index) => {

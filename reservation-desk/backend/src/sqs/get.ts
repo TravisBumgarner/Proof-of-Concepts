@@ -19,8 +19,10 @@ wss.on('connection', (ws: WebSocket) => {
 
   ws.on('message', (message: string) => {
     const parsedMessage = JSON.parse(message)
+    console.log(parsedMessage)
     wss.clients
       .forEach(client => {
+        console.log('sending')
         client.send(JSON.stringify(parsedMessage))
       })
   })
