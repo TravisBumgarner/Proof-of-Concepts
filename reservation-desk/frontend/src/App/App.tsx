@@ -1,12 +1,14 @@
 import * as React from 'react'
-
-import { Chat, Reservations, Login } from './components'
-import { GlobalStyle } from 'theme'
 import { w3cwebsocket } from "websocket"
+
+import { GlobalStyle } from 'theme'
+import { Chat, Reservations, Login } from './components'
+import Context, { Action, context } from './Context'
 
 const App = () => {
   const [hasConnected, setHasConnected] = React.useState<boolean>(false)
-  const [user, setUser] = React.useState<string>('Bob')
+  const { state, dispatch } = React.useContext(context)
+
   const client = new w3cwebsocket('ws://127.0.0.1:5000')
 
   if (!hasConnected) {
@@ -20,17 +22,25 @@ const App = () => {
     <div>
       <GlobalStyle />
       {
-        !user
-          ? <Login setUser={setUser} />
+        !state.user
+          ? <Login />
           : (
             <>
-              <h2>Hello, {user}</h2>
-              <Reservations client={client} user={user} />
-              {/* <Chat client={client} user={user} /> */}
+              <h2>Hello, {state.user}</h2>
+              <Reservations client={client} />
+              {/* <Chat client={client}/> */}
             </>)
       }
     </ div>
   )
 }
 
-export default App
+const AppWithContext = () => {
+  return (
+    <Context>
+      <App />
+    </Context>
+  )
+}
+
+export default AppWithContext
