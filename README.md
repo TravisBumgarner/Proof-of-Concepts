@@ -4,13 +4,20 @@ These are a collection of projects that go beyond just learning the basics of a 
 
 # Projects
 
-### `arduino-and-frontend` ([Link](arduino-and-frontend))
+### ([arduino-and-frontend](arduino-and-frontend))
 
 - Summary: Connect Arduino to the Chrome Browser via Navigator.serial
 - Tech Stack
     - Arduino
     - HTML
     - JavaScript
+
+###  ([chat-app](chat-app))
+
+- Summary: Chat app using websockets
+- Tech Stack
+    - React
+    - Express
 
 ### `reservation-desk`  ([Link](reservation-desk))
 
