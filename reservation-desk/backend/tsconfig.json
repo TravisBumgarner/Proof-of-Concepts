@@ -1,19 +1,22 @@
 {
   "compilerOptions": {
+      "resolveJsonModule": true,
+      "baseUrl": ".",
+      "paths": {
+          "*": [
+              "types/*"
+          ]
+      },
       "module": "commonjs",
-      "strict": true,
-      "baseUrl": "./",
-      "outDir": "build",
+      "noImplicitAny": true,
       "removeComments": true,
-      "experimentalDecorators": true,
-      "target": "es5",
-      "emitDecoratorMetadata": true,
-      "moduleResolution": "node",
-      "importHelpers": true,
-      "types": ["node", "express", "uuidv4"],
-      "typeRoots": ["node_modules/@types"],
-      "lib": ["es2015", "dom"],
+      "preserveConstEnums": true,
+      "sourceMap": true,
+      "strictNullChecks": true,
+      "esModuleInterop": true,
+      "jsx": "react",
   },
-  "include": ["./src/**/*.ts", "server.ts"],
-  "exclude": ["./src/public/"]
+  "exclude": [
+      "node_modules"
+  ]
 }

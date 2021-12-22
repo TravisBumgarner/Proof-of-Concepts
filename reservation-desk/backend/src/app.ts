@@ -1,16 +1,15 @@
-import * as express from 'express';
-
+import express from 'express'
 const app = express()
 
-// const db = require('./db')
+import db from './db'
 
-app.get('/', (req: express.Request, res: express.Response) => {
-  res.send('pong!')
+app.get('/', (request: express.Request, response: express.Response) => {
+  response.send('pong!')
 })
 
 
-// app.get('/', async (req, res) => {
-//   return res.json(await db.selectAll())
-// })
+app.get('/data', async (req: express.Request, res: express.Response) => {
+  return res.json(await db.selectAll())
+})
 
 export default app

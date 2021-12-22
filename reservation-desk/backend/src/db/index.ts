@@ -1,6 +1,12 @@
-const knex = require('./knex')
+import knex from './knex'
 
-const insert = async ({ id, body, timestamp }) => {
+type Insert = {
+    id: string
+    body: string
+    timestamp: number
+}
+
+const insert = async ({ id , body, timestamp }: Insert) => {
     const response = await knex('messages').insert({
         id,
         body,
@@ -15,7 +21,7 @@ const selectAll = async () => {
     return response
 }
 
-module.exports = {
+export default {
     insert,
     selectAll
 }

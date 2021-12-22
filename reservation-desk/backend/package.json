@@ -1,6 +1,6 @@
 {
-  "name": "reservation-desk Backend",  
-  "author": "Travis Bumgarner",  
+  "name": "reservation-desk Backend",
+  "author": "Travis Bumgarner",
   "scripts": {
     "sd:be": "nodemon ./index.ts",
     "km:make": "knex migrate:make --knexfile ./src/knexfile.js --",
@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^10.0.0",
+    "express": "^4.17.2",
     "knex": "^0.95.14",
     "sqlite3": "^5.0.2",
     "ts-node": "^10.4.0"
