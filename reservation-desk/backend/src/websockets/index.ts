@@ -5,6 +5,8 @@ import http from 'http'
 import express from 'express'
 import WebSocket from 'ws'
 
+import { Message } from '../../../types/websockets'
+
 const app = express()
 const server = http.createServer(app)
 const wss = new WebSocket.Server({ server })
@@ -18,11 +20,11 @@ wss.on('connection', (ws: WebSocket) => {
     ws.on('pong', () => { extWs.isAlive = true })
 
     ws.on('message', (message: string) => {
-        const parsedMessage = JSON.parse(message)
+        const parsedMessage: Message = JSON.parse(message)
         wss.clients
-        .forEach(client => {
-            client.send(JSON.stringify(parsedMessage))
-        })
+            .forEach(client => {
+                client.send(JSON.stringify(parsedMessage))
+            })
     })
 
     ws.on('error', (err) => {
@@ -41,7 +43,7 @@ setInterval(() => {
         ws.ping(null, undefined)
     })
 }, 10000)
-const port = 
-server.listen(process.env.PORT_WEBSOCKET, () => {
-    console.log(`Server started on port ${process.env.PORT_WEBSOCKET}`)
-})
+const port =
+    server.listen(process.env.PORT_WEBSOCKET, () => {
+        console.log(`Server started on port ${process.env.PORT_WEBSOCKET}`)
+    })
