@@ -4,7 +4,7 @@ import { Chat, Reservations, Login } from './components'
 import { GlobalStyle } from 'theme'
 
 const App = () => {
-  const [user, setUser] = React.useState<string>('')
+  const [user, setUser] = React.useState<string>('Bob')
 
   return (
     <div>
@@ -14,6 +14,7 @@ const App = () => {
           ? <Login setUser={setUser} />
           : (
             <>
+              <h2>Hello, {user}</h2>
               <Reservations />
               <Chat user={user} />
             </>)
