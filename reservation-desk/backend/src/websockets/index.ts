@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 import http from 'http'
 
 import express from 'express'
@@ -10,7 +12,6 @@ const wss = new WebSocket.Server({ server })
 interface ExtWebSocket extends WebSocket {
     isAlive: boolean
 }
-
 wss.on('connection', (ws: WebSocket) => {
     const extWs = ws as ExtWebSocket
     extWs.isAlive = true
@@ -40,7 +41,7 @@ setInterval(() => {
         ws.ping(null, undefined)
     })
 }, 10000)
-
-server.listen(5000, () => {
-    console.log(`Server started on port 5000`)
+const port = 
+server.listen(process.env.PORT_WEBSOCKET, () => {
+    console.log(`Server started on port ${process.env.PORT_WEBSOCKET}`)
 })

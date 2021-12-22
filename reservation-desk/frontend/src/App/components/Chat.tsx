@@ -1,26 +1,8 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import { w3cwebsocket as W3CWebSocket } from "websocket"
 import styled from 'styled-components'
 
-const client = new W3CWebSocket('ws://127.0.0.1:5000')
-
-const AppWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
-`
-
-const ChatClientWrapper = styled.div`
-    width: 70vw;
-    height: 70vh;
-    border: 2px solid black;
-    padding 10px;
-    display: flex;
-    flex-direction: column;
-`
+import { Title, Body } from 'sharedComponents'
 
 const ChatInputWrapper = styled.div`
     display: flex;
@@ -28,7 +10,6 @@ const ChatInputWrapper = styled.div`
 `
 
 const ChatInput = styled.input`
-    // box-sizing: border-box;
     flex-grow: 1;
     flex: 1;
 `
@@ -45,21 +26,25 @@ const ChatMessagesWrapper = styled.div`
 `
 
 
-const makeFakeUser = () => 'User' + (Math.random() * 1000000 + '').split('.')[0]
-const user = makeFakeUser()
-
 type Message = {
     content: string,
     sender: string
 }
 
-const Chat = () => {
+type Props = {
+    user: String
+}
+
+const Chat = ({ user }: Props) => {
+
     const [hasConnected, setHasConnected] = React.useState<boolean>(false)
     const [messages, setMessages] = React.useState<Message[]>([])
     const [content, setContent] = React.useState('')
 
+    const client = new W3CWebSocket('ws://127.0.0.1:5000')
+
+
     client.onmessage = (message: { data: string }) => {
-        console.log(JSON.parse(message.data))
         setMessages([...messages, JSON.parse(message.data)])
     }
     if (!hasConnected) {
@@ -84,19 +69,16 @@ const Chat = () => {
     }
 
     return (
-        <AppWrapper>
-            <ChatClientWrapper>
-                <h1>Hello {user}</h1>
-                <ChatMessagesWrapper>
-                    {chatMessages}
-                </ChatMessagesWrapper>
-                <ChatInputWrapper>
-                    <ChatInput value={content} onChange={(event) => setContent(event.target.value)} />
-                    <ChatInputSubmit onClick={submit}>Send</ChatInputSubmit>
-                </ChatInputWrapper>
-            </ChatClientWrapper>
-            )
-        </AppWrapper>
+        <Body>
+            <Title>Chat with Other Users</Title>
+            <ChatMessagesWrapper>
+                {chatMessages}
+            </ChatMessagesWrapper>
+            <ChatInputWrapper>
+                <ChatInput value={content} onChange={(event) => setContent(event.target.value)} />
+                <ChatInputSubmit onClick={submit}>Send</ChatInputSubmit>
+            </ChatInputWrapper>
+        </Body>
     )
 }
 

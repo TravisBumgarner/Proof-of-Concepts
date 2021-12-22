@@ -1,18 +1,14 @@
 import styled from 'styled-components'
 
 const Title = styled.h1`
-    color: LightPink;
     font-size: 48px;
 `
 
 const Body = styled.div`
-    background-color: lightslategray;
-    color: LightPink;
-    width: 100vw;
-    height: 100vh;
+    height: 50vh;
+    padding: 10px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
 `
 
 export {

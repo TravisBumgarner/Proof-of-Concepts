@@ -1,7 +1,7 @@
+require('dotenv').config()
+
 import app from './src/app'
 
-const port = 5001
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+app.listen(process.env.PORT_SERVER, () => {
+    console.log(`Example app listening at http://localhost:${process.env.PORT_SERVER}`)
   })
