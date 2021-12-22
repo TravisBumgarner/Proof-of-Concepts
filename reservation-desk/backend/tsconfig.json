@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+      "module": "commonjs",
+      "strict": true,
+      "baseUrl": "./",
+      "outDir": "build",
+      "removeComments": true,
+      "experimentalDecorators": true,
+      "target": "es5",
+      "emitDecoratorMetadata": true,
+      "moduleResolution": "node",
+      "importHelpers": true,
+      "types": ["node", "express", "uuidv4"],
+      "typeRoots": ["node_modules/@types"],
+      "lib": ["es2015", "dom"],
+  },
+  "include": ["./src/**/*.ts", "server.ts"],
+  "exclude": ["./src/public/"]
+}
