@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import { Body } from 'sharedComponents'
 import { context } from '../Context'
-import { ACTIONS } from '../../../../types/websockets'
 
 const Form = styled.form`
 `
@@ -28,7 +27,7 @@ const Login = () => {
 
     return (
         <Body>
-            < Form onSubmit={() => dispatch({ user: nameInput, desk: deskInput, type: ACTIONS.LOGIN })}>
+            < Form>
                 <Label htmlFor="name">Name:</Label>
                 <Input name="name" value={nameInput} onChange={event => setNameInput(event.target.value)} /><br />
                 <Label htmlFor="name">Desk:</Label>

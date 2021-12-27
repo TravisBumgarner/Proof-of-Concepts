@@ -1,18 +1,16 @@
 import React from 'react'
-import { LoginAction, ACTIONS } from '../../../types/websockets'
 
 type State = {
-    user: string,
-    desk: string,
-    messages: any // ChatMessage['data'][],
-    reservations: any //ReservationMessage['data'][]
+    isWSConnected: boolean
 }
 
 const EMPTY_STATE: State = {
-    user: "",
-    desk: "",
-    messages: [],
-    reservations: [],
+    isWSConnected: false,
+}
+
+const WS_CONNECTED_ACTION_TYPE = 'WS_CONNECTED_ACTION_TYPE'
+type WS_CONNECTED_ACTION = {
+    type: typeof WS_CONNECTED_ACTION_TYPE
 }
 
 const context = React.createContext(
@@ -24,26 +22,13 @@ const context = React.createContext(
         dispatch: React.Dispatch<Action>
     })
 
-type Action =
-    LoginAction
-// | UserLoggedIn
-// | Message
-// | Reservation
+type Action = WS_CONNECTED_ACTION
 
 const reducer = (state: State, action: Action): State => {
     switch (action.type) {
-        case ACTIONS.LOGIN: {
-            return { ...state, user: action.user, desk: action.desk }
-            break
+        case WS_CONNECTED_ACTION_TYPE: {
+            return { ...state, isWSConnected: true }
         }
-        // case CHAT_MESSAGE: {
-        //     return { ...state, messages: [...state.messages, action.data] }
-        //     break
-        // }
-        // case RESERVATION_MESSAGE: {
-        //     return { ...state, reservations: [...state.reservations, action.data] }
-        //     break
-        // }
         default: {
             console.error("Swalling action", action)
             return state
@@ -64,4 +49,4 @@ const ResultsContext = ({ children }: { children: React.ReactChild }) => {
 }
 
 export default ResultsContext
-export { context, Action }
+export { context, Action, WS_CONNECTED_ACTION_TYPE }
