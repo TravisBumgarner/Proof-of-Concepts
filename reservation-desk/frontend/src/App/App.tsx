@@ -10,20 +10,26 @@ import Context, { context, WS_CONNECTED_ACTION_TYPE } from './Context'
 const App = () => {
   const { state, dispatch } = React.useContext(context)
 
-  const client = new w3cwebsocket('ws://127.0.0.1:5000')
-
-  client.onopen = async () => {
-    dispatch({ type: WS_CONNECTED_ACTION_TYPE })
-  }
+  let client
+  React.useEffect(() => {
+    client = new w3cwebsocket('ws://127.0.0.1:5000')
+    client.onopen = async () => {
+      dispatch({ type: WS_CONNECTED_ACTION_TYPE })
+    }
+  }, [])
 
   if (!state.isWSConnected) {
     return <p>Connecting to Websocket...</p>
   }
 
+  if (!state.isUserConnected) {
+    return <Login />
+  }
+
   return (
     <div>
       <GlobalStyle />
-      <p>Hi.</p>
+      <p>Hi, {state.user} at desk {state.desk}.</p>
     </ div>
   )
 }
