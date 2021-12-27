@@ -27,13 +27,11 @@ const Login = () => {
 
     return (
         <Body>
-            < Form onSubmit={() => dispatch({ type: USER_CONNECTED_ACTION_TYPE, user, desk })}>
-                <Label htmlFor="name">Name:</Label>
-                <Input name="name" value={user} onChange={event => setUser(event.target.value)} /><br />
-                <Label htmlFor="name">Desk:</Label>
-                <Input name="desk" value={desk} onChange={event => setDesk(event.target.value)} /><br />
-                <Button type='submit'>Reserve Desk</Button>
-            </Form>
+            <Label htmlFor="name">Name:</Label>
+            <Input name="name" value={user} onChange={event => setUser(event.target.value)} /><br />
+            <Label htmlFor="name">Desk:</Label>
+            <Input name="desk" value={desk} onChange={event => setDesk(event.target.value)} /><br />
+            <Button onClick={() => dispatch({ type: USER_CONNECTED_ACTION_TYPE, user, desk })}>Reserve Desk</Button>
         </Body >
     )
 }
