@@ -48,7 +48,7 @@ const reducer = (state: State, action: Action): State => {
             return { ...state, isWSConnected: true }
         }
         default: {
-            console.error("Swalling action", action)
+            console.error("Swallowing action", action)
             return state
         }
     }
