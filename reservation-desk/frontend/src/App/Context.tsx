@@ -1,14 +1,16 @@
 import React from 'react'
-import { ChatMessage, ReservationMessage, CHAT_MESSAGE_TYPE, RESERVATION_MESSAGE_TYPE } from '../../../types/websockets'
+import { LoginAction, ACTIONS } from '../../../types/websockets'
 
 type State = {
     user: string,
-    messages: ChatMessage['data'][],
-    reservations: ReservationMessage['data'][]
+    desk: string,
+    messages: any // ChatMessage['data'][],
+    reservations: any //ReservationMessage['data'][]
 }
 
 const EMPTY_STATE: State = {
     user: "",
+    desk: "",
     messages: [],
     reservations: [],
 }
@@ -22,30 +24,26 @@ const context = React.createContext(
         dispatch: React.Dispatch<Action>
     })
 
-
-type UserLoggedInAction = { type: 'USER_LOGGED_IN', user: string }
-type MessageReceivedInAction = { type: typeof CHAT_MESSAGE_TYPE } & ChatMessage
-type ReservationReceivedInAction = { type: typeof RESERVATION_MESSAGE_TYPE } & ReservationMessage
-
 type Action =
-    | UserLoggedInAction
-    | MessageReceivedInAction
-    | ReservationReceivedInAction
+    LoginAction
+// | UserLoggedIn
+// | Message
+// | Reservation
 
 const reducer = (state: State, action: Action): State => {
     switch (action.type) {
-        case 'USER_LOGGED_IN': {
-            return { ...state, user: action.user }
+        case ACTIONS.LOGIN: {
+            return { ...state, user: action.user, desk: action.desk }
             break
         }
-        case CHAT_MESSAGE_TYPE: {
-            return { ...state, messages: [...state.messages, action.data] }
-            break
-        }
-        case RESERVATION_MESSAGE_TYPE: {
-            return { ...state, reservations: [...state.reservations, action.data] }
-            break
-        }
+        // case CHAT_MESSAGE: {
+        //     return { ...state, messages: [...state.messages, action.data] }
+        //     break
+        // }
+        // case RESERVATION_MESSAGE: {
+        //     return { ...state, reservations: [...state.reservations, action.data] }
+        //     break
+        // }
         default: {
             console.error("Swalling action", action)
             return state

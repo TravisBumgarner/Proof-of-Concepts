@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { Body } from 'sharedComponents'
 import { context } from '../Context'
+import { ACTIONS } from '../../../../types/websockets'
 
 const Form = styled.form`
 `
@@ -21,15 +22,18 @@ const Button = styled.button`
 
 
 const Login = () => {
-    const [textInput, setTextInput] = React.useState<string>('')
+    const [nameInput, setNameInput] = React.useState<string>('bob')
+    const [deskInput, setDeskInput] = React.useState<string>('deadbeef')
     const { dispatch } = React.useContext(context)
 
     return (
         <Body>
-            < Form onSubmit={() => dispatch({ user: textInput, type: "USER_LOGGED_IN" })}>
+            < Form onSubmit={() => dispatch({ user: nameInput, desk: deskInput, type: ACTIONS.LOGIN })}>
                 <Label htmlFor="name">Name:</Label>
-                <Input name="name" value={textInput} onChange={event => setTextInput(event.target.value)} />
-                <Button type='submit'>Submit</Button>
+                <Input name="name" value={nameInput} onChange={event => setNameInput(event.target.value)} /><br />
+                <Label htmlFor="name">Desk:</Label>
+                <Input name="desk" value={deskInput} onChange={event => setDeskInput(event.target.value)} /><br />
+                <Button type='submit'>Reserve Desk</Button>
             </Form>
         </Body>
     )

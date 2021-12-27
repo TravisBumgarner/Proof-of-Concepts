@@ -1,32 +1,56 @@
-const CHAT_MESSAGE_TYPE = 'CHAT_MESSAGE'
-type ChatMessage = {
-    data: {
-        id: string
-        user: string
-        content: string
-    }
-    type: typeof CHAT_MESSAGE_TYPE
+// const CHAT_MESSAGE = 'CHAT_MESSAGE'
+// type ChatMessage = {
+//     data: {
+//         id: string
+//         user: string
+//         content: string
+//     }
+//     type: typeof CHAT_MESSAGE
+// }
+
+// const RESERVATION_MESSAGE = 'RESERVATION_MESSAGE'
+// type ReservationMessage = {
+//     type: typeof RESERVATION_MESSAGE
+//     data: {
+//         id: string
+//         user: string
+//         desk: string
+//         startTime: number
+//         endTime: number
+//     }
+// }
+
+// type Message =
+//     | ChatMessage
+//     | ReservationMessage
+
+const ACTIONS = {
+    LOGIN: "LOGIN_ACTION",
+    LOGOUT: "LOGOUT_ACTION"
+} as const
+
+type LoginAction = {
+    user: string,
+    desk: string
+    type: typeof ACTIONS.LOGIN
 }
 
-const RESERVATION_MESSAGE_TYPE = 'RESERVATION_MESSAGE'
-type ReservationMessage = {
-    type: typeof RESERVATION_MESSAGE_TYPE
-    data: {
-        id: string
-        user: string
-        startTime: number
-        endTime: number
-    }
+type LogoutAction = {
+    user: string,
+    desk: string
+    type: typeof ACTIONS.LOGOUT
 }
 
-type Message =
-    | ChatMessage
-    | ReservationMessage
+type Action = LoginAction | LogoutAction
 
 export {
-    Message,
-    CHAT_MESSAGE_TYPE,
-    RESERVATION_MESSAGE_TYPE,
-    ReservationMessage,
-    ChatMessage
+    // Message,
+    // CHAT_MESSAGE,
+    // RESERVATION_MESSAGE,
+    // ReservationMessage,
+    // ChatMessage
+    LoginAction,
+    LogoutAction,
+    Action,
+    ACTIONS
 }
