@@ -22,14 +22,16 @@ const App = () => {
 
   client.onmessage = (message: { data: string }) => {
     const parsedMessage: Message = JSON.parse(message.data)
+    console.log('server message:', parsedMessage)
     dispatch(parsedMessage)
   }
 
+  console.log('state', state)
   return (
     <div>
       <GlobalStyle />
       {
-        !state.user
+        !state.user.length
           ? <Login />
           : (
             <>

@@ -1,7 +1,7 @@
 require('dotenv').config()
 
-import app from './src/app'
+const PORT = 5000;
 
-app.listen(process.env.PORT_SERVER, () => {
-    console.log(`Example app listening at http://localhost:${process.env.PORT_SERVER}`)
-  })
+import server from './src/app'
+
+server.listen(PORT, () => console.log(`http/ws server listening on ${PORT}`));

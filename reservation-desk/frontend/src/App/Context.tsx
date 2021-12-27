@@ -41,10 +41,14 @@ const reducer = (state: State, action: Action): State => {
         case CHAT_MESSAGE_TYPE: {
             return { ...state, messages: [...state.messages, action.data] }
             break
-    }
+        }
         case RESERVATION_MESSAGE_TYPE: {
             return { ...state, reservations: [...state.reservations, action.data] }
             break
+        }
+        default: {
+            console.error("Swalling action", action)
+            return state
         }
     }
 }
