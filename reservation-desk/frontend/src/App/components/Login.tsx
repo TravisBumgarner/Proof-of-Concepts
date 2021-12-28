@@ -4,7 +4,7 @@ import { w3cwebsocket } from 'websocket'
 
 import { Body } from 'sharedComponents'
 import { context, FRONTEND_USER_CONNECTED_ACTION_TYPE, FrontendUserConnectedAction } from '../Context'
-import { WEBSOCKETS_USER_CONNECTED_ACTION_TYPE, WebsocketsUserConnectionAction } from '../../../../types/websockets'
+import { WEBSOCKETS_USER_CONNECTED_ACTION_TYPE, WebsocketsUserConnectedAction } from '../../../../types/websockets'
 
 type Props = {
     client: w3cwebsocket
@@ -22,7 +22,7 @@ const Login = ({ client }: Props) => {
         }
         dispatch(frontendPayload)
 
-        const websocketsPayload: WebsocketsUserConnectionAction = {
+        const websocketsPayload: WebsocketsUserConnectedAction = {
             type: WEBSOCKETS_USER_CONNECTED_ACTION_TYPE,
             user
         }

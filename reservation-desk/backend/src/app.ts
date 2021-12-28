@@ -3,6 +3,7 @@ import { createServer } from 'http'
 import { createClient, RedisClientType } from 'redis';
 import {
   WEBSOCKETS_USER_CONNECTED_ACTION_TYPE,
+  WEBSOCKETS_USER_DISCONNECTED_ACTION_TYPE,
   WebsocketsAction,
 } from '../../types/websockets'
 
@@ -19,8 +20,15 @@ const messageHandler = async (action: WebsocketsAction) => {
       await publisher.quit()
       break
     }
+    case WEBSOCKETS_USER_DISCONNECTED_ACTION_TYPE: {
+      const publisher = await createClient()
+      await publisher.connect();
+      await publisher.sRem('users', action.user)
+      await publisher.quit()
+      break
+    }
     default: {
-      console.error("swalling action", action)
+      console.error("swallowing action", action)
       break
     }
   }
@@ -29,11 +37,9 @@ const messageHandler = async (action: WebsocketsAction) => {
 wsServer.on('connection', async (ws: any) => { // Todo: What goes here?
   ws.on('message', async (message: string) => {
     const parsedMessage = JSON.parse(message)
-    console.log("message received", parsedMessage)
     messageHandler(parsedMessage)
     wsServer.clients
       .forEach((client: any) => {
-        console.log('messaging clients', JSON.stringify(parsedMessage))
         client.send(JSON.stringify(parsedMessage))
       })
   });

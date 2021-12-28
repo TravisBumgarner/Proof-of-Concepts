@@ -4,6 +4,7 @@ import { w3cwebsocket } from "websocket"
 import { GlobalStyle } from 'theme'
 import {
   Login,
+  Logout,
 } from './components'
 import Context, { context, FRONTEND_WS_CONNECTED_ACTION_TYPE } from './Context'
 
@@ -21,7 +22,7 @@ const App = () => {
   if (!state.isWSConnected) {
     return <p>Connecting to Websocket...</p>
   }
-  
+
   if (!state.isUserConnected) {
     return <Login client={client} />
   }
@@ -30,6 +31,7 @@ const App = () => {
     <div>
       <GlobalStyle />
       <p>Hi, {state.user} at desk {state.desk}.</p>
+      <Logout client={client} />
     </ div>
   )
 }
