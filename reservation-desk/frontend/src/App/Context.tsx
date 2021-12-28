@@ -14,14 +14,14 @@ const EMPTY_STATE: State = {
     desk: ''
 }
 
-const WS_CONNECTED_ACTION_TYPE = 'WS_CONNECTED_ACTION_TYPE'
-type WS_CONNECTED_ACTION = {
-    type: typeof WS_CONNECTED_ACTION_TYPE
+const FRONTEND_WS_CONNECTED_ACTION_TYPE = 'FRONTEND_WS_CONNECTED_ACTION_TYPE'
+type FrontendWSConnectedAction = {
+    type: typeof FRONTEND_WS_CONNECTED_ACTION_TYPE
 }
 
-const USER_CONNECTED_ACTION_TYPE = 'USER_CONNECTED_ACTION_TYPE'
-type USER_CONNECTED_ACTION = {
-    type: typeof USER_CONNECTED_ACTION_TYPE
+const FRONTEND_USER_CONNECTED_ACTION_TYPE = 'FRONTEND_USER_CONNECTED_ACTION_TYPE'
+type FrontendUserConnectedAction = {
+    type: typeof FRONTEND_USER_CONNECTED_ACTION_TYPE
     user: string
     desk: string
 }
@@ -36,15 +36,15 @@ const context = React.createContext(
     })
 
 type Action =
-    | WS_CONNECTED_ACTION
-    | USER_CONNECTED_ACTION
+    | FrontendWSConnectedAction
+    | FrontendUserConnectedAction
 
 const reducer = (state: State, action: Action): State => {
     switch (action.type) {
-        case USER_CONNECTED_ACTION_TYPE: {
+        case FRONTEND_USER_CONNECTED_ACTION_TYPE: {
             return { ...state, isUserConnected: true, user: action.user, desk: action.desk }
         }
-        case WS_CONNECTED_ACTION_TYPE: {
+        case FRONTEND_WS_CONNECTED_ACTION_TYPE: {
             return { ...state, isWSConnected: true }
         }
         default: {
@@ -67,4 +67,11 @@ const ResultsContext = ({ children }: { children: React.ReactChild }) => {
 }
 
 export default ResultsContext
-export { context, Action, WS_CONNECTED_ACTION_TYPE, USER_CONNECTED_ACTION_TYPE }
+export {
+    context,
+    Action,
+    FrontendUserConnectedAction,
+    FrontendWSConnectedAction,
+    FRONTEND_WS_CONNECTED_ACTION_TYPE,
+    FRONTEND_USER_CONNECTED_ACTION_TYPE
+}

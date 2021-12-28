@@ -5,25 +5,25 @@ import { GlobalStyle } from 'theme'
 import {
   Login,
 } from './components'
-import Context, { context, WS_CONNECTED_ACTION_TYPE } from './Context'
+import Context, { context, FRONTEND_WS_CONNECTED_ACTION_TYPE } from './Context'
 
+let client: w3cwebsocket
 const App = () => {
   const { state, dispatch } = React.useContext(context)
 
-  let client
   React.useEffect(() => {
     client = new w3cwebsocket('ws://127.0.0.1:5000')
     client.onopen = async () => {
-      dispatch({ type: WS_CONNECTED_ACTION_TYPE })
+      dispatch({ type: FRONTEND_WS_CONNECTED_ACTION_TYPE })
     }
   }, [])
 
   if (!state.isWSConnected) {
     return <p>Connecting to Websocket...</p>
   }
-
+  
   if (!state.isUserConnected) {
-    return <Login />
+    return <Login client={client} />
   }
 
   return (
