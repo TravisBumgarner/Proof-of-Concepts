@@ -4,14 +4,16 @@ type State = {
     isWSConnected: boolean
     isUserConnected: boolean
     user: string,
-    desk: string
+    desk: string,
+    activeUsers: string[]
 }
 
 const EMPTY_STATE: State = {
     isWSConnected: false,
     isUserConnected: false,
     user: '',
-    desk: ''
+    desk: '',
+    activeUsers: []
 }
 
 const FRONTEND_WS_CONNECTED_ACTION_TYPE = 'FRONTEND_WS_CONNECTED_ACTION_TYPE'
@@ -24,6 +26,18 @@ type FrontendUserConnectedAction = {
     type: typeof FRONTEND_USER_CONNECTED_ACTION_TYPE
     user: string
     desk: string
+}
+
+const FRONTEND_NEW_USER_CONNECTED_ACTION_TYPE = 'FRONTEND_NEW_USER_CONNECTED_ACTION_TYPE'
+type FrontendNewUserConnectedAction = {
+    type: typeof FRONTEND_NEW_USER_CONNECTED_ACTION_TYPE
+    user: string
+}
+
+const FRONTEND_FETCH_ACTIVE_USERS_ACTION_TYPE = 'FRONTEND_FETCH_ACTIVE_USERS_ACTION_TYPE'
+type FrontendFetchActiveUsersAction = {
+    type: typeof FRONTEND_FETCH_ACTIVE_USERS_ACTION_TYPE
+    activeUsers: string[]
 }
 
 const FRONTEND_USER_DISCONNECTED_ACTION_TYPE = 'FRONTEND_USER_DISCONNECTED_ACTION_TYPE'
@@ -44,6 +58,8 @@ type Action =
     | FrontendWSConnectedAction
     | FrontendUserConnectedAction
     | FrontendUserDisconnectedAction
+    | FrontendNewUserConnectedAction
+    | FrontendFetchActiveUsersAction
 
 const reducer = (state: State, action: Action): State => {
     switch (action.type) {
@@ -52,6 +68,12 @@ const reducer = (state: State, action: Action): State => {
         }
         case FRONTEND_USER_DISCONNECTED_ACTION_TYPE: {
             return { ...state, isUserConnected: false, user: '', desk: '' }
+        }
+        case FRONTEND_NEW_USER_CONNECTED_ACTION_TYPE: {
+            return { ...state, activeUsers: [...state.activeUsers, action.user] }
+        }
+        case FRONTEND_FETCH_ACTIVE_USERS_ACTION_TYPE: {
+            return { ...state, activeUsers: [...state.activeUsers, ...action.activeUsers] }
         }
         case FRONTEND_WS_CONNECTED_ACTION_TYPE: {
             return { ...state, isWSConnected: true }
@@ -82,7 +104,10 @@ export {
     FrontendUserConnectedAction,
     FrontendUserDisconnectedAction,
     FrontendWSConnectedAction,
+    FrontendFetchActiveUsersAction,
     FRONTEND_WS_CONNECTED_ACTION_TYPE,
     FRONTEND_USER_CONNECTED_ACTION_TYPE,
-    FRONTEND_USER_DISCONNECTED_ACTION_TYPE
+    FRONTEND_USER_DISCONNECTED_ACTION_TYPE,
+    FRONTEND_NEW_USER_CONNECTED_ACTION_TYPE,
+    FRONTEND_FETCH_ACTIVE_USERS_ACTION_TYPE
 }

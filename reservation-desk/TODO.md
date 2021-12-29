@@ -1,0 +1,5 @@
+- [x] Create a way to view current users on front end
+- [x] Get current users from backend
+- [ Create a way to dispatch message that user has left
+- [ ] Set chat back up
+- [ ] Set up Reservations

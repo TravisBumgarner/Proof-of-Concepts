@@ -30,7 +30,6 @@ const Logout = ({ client }: Props) => {
 
     return (
         <Body>
-
             <button onClick={handleSubmit}>Logout</button>
         </Body >
     )
