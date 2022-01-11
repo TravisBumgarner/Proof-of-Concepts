@@ -47,3 +47,8 @@ These are a collection of projects that go beyond just learning the basics of a 
     - TypeScript
     - Node.js
 
+# Notes for Adding a new Project
+
+- Code Project
+- Add readme with resources used and setup instructions
+- Update this readme
