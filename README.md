@@ -1,6 +1,6 @@
 # Intro
 
-These are a collection of projects that go beyond just learning the basics of a tool. 
+These are a collection of projects that go beyond just learning the basics of a tool. Technologies learned with project denoted with a (*)
 
 # Projects
 
@@ -8,6 +8,7 @@ These are a collection of projects that go beyond just learning the basics of a 
 
 - Summary: Connect Arduino to the Chrome Browser via Navigator.serial
 - Tech Stack
+    - (*) Navigator.serial
     - Arduino
     - HTML
     - JavaScript
@@ -16,7 +17,7 @@ These are a collection of projects that go beyond just learning the basics of a 
 
 - Summary: Use a UI to click 3 different colored buttons and track those button clicks with Kafka and SQLITE.
 - Tech Stack
-    - Kafka
+    - (*) Kafka
     - React
     - SQLite
 
@@ -24,17 +25,25 @@ These are a collection of projects that go beyond just learning the basics of a 
 
 - Summary: Chat app using websockets
 - Tech Stack
+    - (*) Websockets
     - React
+    - Express
+
+###  [chatgraphql-books-and-authors](chatgraphql-books-and-authors)
+
+- Summary: An API for fetching books and their authors
+- Tech Stack
+    - (*) GraphQL
     - Express
 
 ###  [reservation-desk](reservation-desk)
 
 - Summary: Connects various computers to a central hub. Track which computers are available for people to use and which are taken.
 - Tech Stack
+    - (*) Websockets
+    - (*) Redis
     - React
     - Express
     - TypeScript
     - Node.js
-    - Websockets
-    - Redis
 
