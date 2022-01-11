@@ -2,9 +2,12 @@
     "name": "gql",
     "version": "1.0.0",
     "description": "",
-    "main": "server.js",
+    "main": "server.ts",
     "scripts": {
-        "sd:be": "nodemon server.js"
+        "sd:be": "nodemon ./server.ts",
+        "km:make": "knex migrate:make --knexfile ./src/db/knexfile.ts --",
+        "ks:make": "knex seed:make --knexfile ./src/db/knexfile.ts --",
+        "ks:run": "knex seed:run --knexfile ./src/db/knexfile.ts"
     },
     "keywords": [],
     "author": "",
@@ -13,6 +16,9 @@
         "express": "^4.17.2",
         "express-graphql": "^0.12.0",
         "graphql": "^15.8.0",
-        "nodemon": "^2.0.15"
+        "knex": "^0.95.15",
+        "nodemon": "^2.0.15",
+        "sqlite3": "^5.0.2",
+        "ts-node": "^10.4.0"
     }
 }
