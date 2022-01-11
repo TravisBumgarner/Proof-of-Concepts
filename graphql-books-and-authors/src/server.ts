@@ -11,9 +11,9 @@ const {
 } = require('graphql')
 
 import * as dbQueries from './db/queries'
+import { Book, Author } from './types'
 
 const app = express()
-
 
 const BookType = new GraphQLObjectType({
     name: 'Book',
@@ -22,36 +22,37 @@ const BookType = new GraphQLObjectType({
         id: { type: GraphQLNonNull(GraphQLInt) },
         name: { type: GraphQLNonNull(GraphQLString) },
         authorId: { type: GraphQLNonNull(GraphQLInt) },
-        // author: {
-        //     type: AuthorType,
-        //     resolve: (book: Book) => {
-        //         return authors.find(author => author.id === book.authorId)
-        //     }
-        // }
+        author: {
+            type: AuthorType,
+            resolve: async (book: Book) => {
+                const data = await dbQueries.selectAuthorsByIds([book.id])
+                return data[0]
+            }
+        }
     })
 })
 
-// const AuthorType = new GraphQLObjectType({
-//     name: 'Author',
-//     description: 'This represents a author of a book',
-//     fields: () => ({
-//         id: { type: GraphQLNonNull(GraphQLInt) },
-//         name: { type: GraphQLNonNull(GraphQLString) },
-//         books: {
-//             type: new GraphQLList(BookType),
-//             resolve: (author: Author) => {
-//                 return books.filter(book => book.authorId === author.id)
-//             }
-//         }
-//     })
-// })
+const AuthorType = new GraphQLObjectType({
+    name: 'Author',
+    description: 'This represents a author of a book',
+    fields: () => ({
+        id: { type: GraphQLNonNull(GraphQLInt) },
+        name: { type: GraphQLNonNull(GraphQLString) },
+        books: {
+            type: new GraphQLList(BookType),
+            resolve: (author: Author) => {
+                return dbQueries.selectBooksByAuthorIds([author.id])
+            }
+        }
+    })
+})
 
 type BookQueryArgs = {
     ids?: number[]
 }
 
 type AuthorQueryArgs = {
-    filterIds?: number[]
+    ids?: number[]
 }
 
 const RootQueryType = new GraphQLObjectType({
@@ -67,14 +68,14 @@ const RootQueryType = new GraphQLObjectType({
             resolve: (parent: any, args: BookQueryArgs) => dbQueries.selectBooksByIds(args.ids)
 
         },
-        // authors: {
-        //     type: new GraphQLList(AuthorType),
-        //     description: 'List of All Authors',
-        //     resolve: (parent: undefined, args: AuthorQueryArgs) => typeof args.filterIds !== 'undefined' ? authors.filter(author => args.filterIds?.includes(author.id)) : authors,
-        //     args: {
-        //         filterIds: { type: GraphQLList(GraphQLInt) }
-        //     }
-        // }
+        authors: {
+            type: new GraphQLList(AuthorType),
+            description: 'List of All Authors',
+            args: {
+                ids: { type: GraphQLList(GraphQLInt) }
+            },
+            resolve: (parent: any, args: AuthorQueryArgs) => dbQueries.selectAuthorsByIds(args.ids)
+        }
     })
 })
 
