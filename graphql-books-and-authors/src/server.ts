@@ -1,4 +1,4 @@
-const express = require('express')
+import express, { Request, Response } from 'express'
 const expressGraphQL = require('express-graphql').graphqlHTTP
 const {
     GraphQLSchema,
@@ -88,41 +88,29 @@ type AuthorMutationArgs = {
     name: string
 }
 
-// const RootMutationType = new GraphQLObjectType({
-//     name: 'Mutation',
-//     description: 'Root Mutation',
-//     fields: () => ({
-//         addBook: {
-//             type: BookType,
-//             description: 'Add a book',
-//             args: {
-//                 name: { type: GraphQLNonNull(GraphQLString) },
-//                 authorId: { type: GraphQLNonNull(GraphQLInt) }
-//             },
-//             resolve: (parent: undefined, args: BookMutationArgs) => {
-//                 const book = { id: books.length + 1, name: args.name, authorId: args.authorId }
-//                 books.push(book)
-//                 return book
-//             }
-//         },
-//         addAuthor: {
-//             type: AuthorType,
-//             description: 'Add an author',
-//             args: {
-//                 name: { type: GraphQLNonNull(GraphQLString) }
-//             },
-//             resolve: (parent: undefined, args: AuthorMutationArgs) => {
-//                 const author = { id: authors.length + 1, name: args.name }
-//                 authors.push(author)
-//                 return author
-//             }
-//         }
-//     })
-// })
+const RootMutationType = new GraphQLObjectType({
+    name: 'Mutation',
+    description: 'Root Mutation',
+    fields: () => ({
+        addAuthor: {
+            type: AuthorType,
+            description: 'Add an author',
+            args: {
+                name: { type: GraphQLNonNull(GraphQLString) }
+            },
+            resolve: (parent: undefined, args: AuthorMutationArgs) => dbQueries.insertAuthorByName(args.name)
+        }
+    })
+})
 
 const schema = new GraphQLSchema({
     query: RootQueryType,
-    // mutation: RootMutationType
+    mutation: RootMutationType
+})
+
+app.get('/', async (req: Request, res: Response) => {
+    await dbQueries.insertAuthorByName('foo')
+    return res.send('success')
 })
 
 app.use('/graphql', expressGraphQL({

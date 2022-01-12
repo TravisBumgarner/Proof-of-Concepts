@@ -11,8 +11,21 @@ const selectAuthorsByIds = async (ids?: Author['id'][]) => {
     return knexResponse
 }
 
+const insertAuthorByName = async (name: string) => {
+    let rawgetQuery = `select count(*) from authors;`
+    const getResponse = await knex.raw(rawgetQuery)
+    const authorCount = getResponse[0]['count(*)']
+
+    let rawInsertQuery = `insert into authors (id, name) values (${authorCount + 1}, "${name}")`
+    const knexResponse = await knex.raw(rawInsertQuery)
+    return {
+        id: authorCount + 1,
+        name
+    }
+}
+
 const selectBooksByIds = async (ids?: Book['id'][]) => {
-    let rawQuery = `select * from books`
+    let rawQuery = `select count(*) from authors`
     if (ids) {
         rawQuery += ` where id in (${ids.join(', ')})`
     }
@@ -33,5 +46,6 @@ const selectBooksByAuthorIds = async (ids?: Author['id'][]) => {
 export {
     selectBooksByIds,
     selectAuthorsByIds,
-    selectBooksByAuthorIds
+    selectBooksByAuthorIds,
+    insertAuthorByName,
 }
