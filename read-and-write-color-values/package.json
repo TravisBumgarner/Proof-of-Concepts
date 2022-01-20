@@ -5,12 +5,15 @@
   "license": "MIT",
   "scripts": {
     "sd:es": "docker-compose up",
-    "sd:write": "nodemon src/write.ts",
-    "sd:read": "nodemon src/write.ts"
+    "sd:query": "nodemon src/streams/colors-clicked/query.ts",
+    "sd:write": "nodemon src/streams/colors-clicked/write.ts"
   },
   "dependencies": {
     "@eventstore/db-client": "^2.1.1",
     "nodemon": "^2.0.15",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/uuid": "^8.3.4"
   }
 }
