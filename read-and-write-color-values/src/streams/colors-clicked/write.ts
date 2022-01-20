@@ -1,7 +1,7 @@
 import { jsonEvent } from '@eventstore/db-client';
 import { v4 as uuidv4 } from 'uuid'
 
-import { client } from '../../eventstore'
+import { client } from '../../services/eventstore'
 import { ColorClickedEvent, ValidColors } from './types'
 import { STREAM_NAME } from './consts'
 

@@ -1,0 +1,4 @@
+postgres-data/
+.env/
+sql/
+node_modules/

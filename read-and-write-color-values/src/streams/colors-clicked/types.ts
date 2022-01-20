@@ -16,7 +16,14 @@ type ColorClickedEvent = JSONEventType<
     }
 >;
 
+type ColorsProjectionDBRow = {
+    color: ValidColors,
+    timestamp: Date,
+    id: string
+}
+
 export {
     ValidColors,
-    ColorClickedEvent
+    ColorClickedEvent,
+    ColorsProjectionDBRow
 }

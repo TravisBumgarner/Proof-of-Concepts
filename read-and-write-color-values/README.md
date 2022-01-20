@@ -12,3 +12,9 @@ https://developers.eventstore.com/clients/grpc/reading-events.html#reading-from-
 3. `npm run sd:read`
 
 Events are written and read once per second. 
+
+# Resources
+
+https://github.com/typeorm/typeorm/issues/2797
+https://levelup.gitconnected.com/creating-and-filling-a-postgres-db-with-docker-compose-e1607f6f882f
+https://typeorm.io/#/
