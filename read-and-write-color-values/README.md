@@ -7,9 +7,11 @@ https://developers.eventstore.com/clients/grpc/reading-events.html#reading-from-
 
 # Setup
 
-1. 
-
-Events are written and read once per second. 
+1. `npm install`
+2. `docker-compose up` Bring up eventstoredb and postgres
+3. `npm run migrate:run` Create database migrations
+4. `npm run sd:write` Start writing queries to eventstore
+5.`npm run sd:query` Write queries from eventstore into postgres
 
 # Resources
 
