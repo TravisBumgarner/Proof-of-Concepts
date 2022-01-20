@@ -76,3 +76,10 @@ symbolCache.db
 # Config
 .env
 *.pem
+
+# Mine
+
+postgres-data/
+.env/
+sql/
+node_modules/

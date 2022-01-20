@@ -4,7 +4,7 @@ export class colorsTable1642707845567 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-            create type color_t as enum('red', 'green', 'blue');
+            create type color_t as enum('RED', 'GREEN', 'BLUE');
 
             CREATE TABLE color (
                 id uuid PRIMARY KEY,

@@ -7,9 +7,7 @@ https://developers.eventstore.com/clients/grpc/reading-events.html#reading-from-
 
 # Setup
 
-1. `npm run sd:es` 
-2. `npm run sd:write`
-3. `npm run sd:read`
+1. 
 
 Events are written and read once per second. 
 
