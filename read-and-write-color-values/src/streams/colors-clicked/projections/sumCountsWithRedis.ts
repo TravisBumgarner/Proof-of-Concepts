@@ -1,14 +1,13 @@
 import { START, FORWARDS } from '@eventstore/db-client';
 import { client as eventstoreClient } from '../../../services/eventstore'
-import { createClient } from 'redis';
 
+import redis from '../../../services/redis'
 import { STREAM_NAME } from '../consts'
 import { colorCodec } from '../types'
 import { decodeAPIResponse } from '../../../utilities'
 
 const query = async () => {
-    const redisClient = await createClient()
-    await redisClient.connect()
+    const redisClient = await redis()
 
     const events = await eventstoreClient.readStream(STREAM_NAME, {
         direction: FORWARDS,
@@ -22,10 +21,9 @@ const query = async () => {
             rawResponse: resolvedEvent?.event?.data,
             onError: () => console.error(`\tBad Event ID: ${resolvedEvent?.event?.id}`),
             onSuccess: async (decodedResponse) => {
-                console.log('\t New ID: ' + decodedResponse.id)
+                console.log('\tNew ID: ' + decodedResponse.id)
                 await redisClient.incr(decodedResponse.color)
                 console.log(`\tSuccess count increase ID: ${decodedResponse.id}`)
-                console.log('hi')
             }
         })
     }
