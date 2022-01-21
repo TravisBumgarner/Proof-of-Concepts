@@ -1,10 +1,10 @@
 import { START, FORWARDS } from '@eventstore/db-client';
-import { client as eventstoreClient } from '../../../services/eventstore'
-import createConnection from '../../../services/postgres';
+import { client as eventstoreClient } from '../../../../services/eventstore'
+import createConnection from '../../../../services/postgres';
 
-import { STREAM_NAME } from '../consts'
-import { colorCodec } from '../types'
-import { decodeAPIResponse } from '../../../utilities'
+import { STREAM_NAME } from '../../consts'
+import { colorCodec } from '../../types'
+import { decodeAPIResponse } from '../../../../utilities'
 
 const query = async () => {
     const dbClient = await createConnection()

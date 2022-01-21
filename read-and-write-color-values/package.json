@@ -6,8 +6,8 @@
   "scripts": {
     "sd:be": "ts-node-dev index.ts",
     "sd:es": "docker-compose up",
-    "sd:query-redis": "ts-node-dev src/streams/colors-clicked/projections/sumCountsWithRedis.ts",
-    "sd:query-postgres": "ts-node-dev src/streams/colors-clicked/projections/writeAllColorEventsToPostgres.ts",
+    "sd:query-redis": "ts-node-dev src/streams/colors-clicked/projections/redis/sumCounts.ts",
+    "sd:query-postgres": "ts-node-dev src/streams/colors-clicked/projections/postgres/writeAllColorEvents.ts",
     "sd:write": "ts-node-dev src/streams/colors-clicked/write.ts",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
     "migrate:run": "npm run typeorm migration:run",

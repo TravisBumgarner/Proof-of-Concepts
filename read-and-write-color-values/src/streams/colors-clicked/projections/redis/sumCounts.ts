@@ -1,10 +1,10 @@
 import { START, FORWARDS } from '@eventstore/db-client';
-import { client as eventstoreClient } from '../../../services/eventstore'
+import { client as eventstoreClient } from '../../../../services/eventstore'
 
-import redis from '../../../services/redis'
-import { STREAM_NAME } from '../consts'
-import { colorCodec } from '../types'
-import { decodeAPIResponse } from '../../../utilities'
+import redis from '../../../../services/redis'
+import { STREAM_NAME } from '../../consts'
+import { colorCodec } from '../../types'
+import { decodeAPIResponse } from '../../../../utilities'
 
 const query = async () => {
     const redisClient = await redis()
