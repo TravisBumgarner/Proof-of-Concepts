@@ -11,10 +11,14 @@ https://developers.eventstore.com/clients/grpc/reading-events.html#reading-from-
 2. `docker-compose up` Bring up eventstoredb and postgres
 3. `npm run migrate:run` Create database migrations
 4. `npm run sd:write` Start writing queries to eventstore
-5.`npm run sd:query` Write queries from eventstore into postgres
+5. Check out projections:
+    `sd:query-redis` - Summarize counts of event log in redis
+    `sd:query-postgres` - Write all data from event stream into postgres
+
 
 # Resources
 
 https://github.com/typeorm/typeorm/issues/2797
 https://levelup.gitconnected.com/creating-and-filling-a-postgres-db-with-docker-compose-e1607f6f882f
 https://typeorm.io/#/
+https://kb.objectrocket.com/redis/run-redis-with-docker-compose-1055
