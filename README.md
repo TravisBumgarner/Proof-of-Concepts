@@ -36,6 +36,13 @@ These are a collection of projects that go beyond just learning the basics of a 
     - (*) GraphQL
     - Express
 
+###  [cli-todo-app](cli-todo-app)
+
+- Summary: A todo list in the terminal
+- Tech Stack
+    - (*) Ink
+    - React
+
 ###  [reservation-desk](reservation-desk)
 
 - Summary: Connects various computers to a central hub. Track which computers are available for people to use and which are taken.
