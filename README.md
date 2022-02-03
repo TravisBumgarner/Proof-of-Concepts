@@ -42,6 +42,18 @@ These are a collection of projects that go beyond just learning the basics of a 
 - Tech Stack
     - (*) Ink
     - React
+###  [read-and-write-color-values](read-and-write-color-values)
+
+- Summary: Write values to an event store and create projections with redis and postgres.
+- Tech Stack
+    - (*) EventStoreDB
+    - Redis
+    - Postgres
+    - Express
+    - TypeScript
+    - Node.js
+    - io-ts
+    - typeorm
 
 ###  [reservation-desk](reservation-desk)
 
