@@ -29,19 +29,20 @@ These are a collection of projects that go beyond just learning the basics of a 
     - React
     - Express
 
-###  [chatgraphql-books-and-authors](chatgraphql-books-and-authors)
-
-- Summary: An API for fetching books and their authors
-- Tech Stack
-    - (*) GraphQL
-    - Express
-
 ###  [cli-todo-app](cli-todo-app)
 
 - Summary: A todo list in the terminal
 - Tech Stack
     - (*) Ink
     - React
+
+###  [graphql-books-and-authors](graphql-books-and-authors)
+
+- Summary: An API for fetching books and their authors
+- Tech Stack
+    - (*) GraphQL
+    - Express
+
 ###  [read-and-write-color-values](read-and-write-color-values)
 
 - Summary: Write values to an event store and create projections with redis and postgres.
