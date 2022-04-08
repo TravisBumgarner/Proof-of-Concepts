@@ -23,7 +23,9 @@
 3. Deploy to NPM (After creating an account)
 
 `npm run compile && npm publish`
+
 `npm i -g your-app-name`
+
 `the-command-to-run-in-the-cli`
 
 Notes
