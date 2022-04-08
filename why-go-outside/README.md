@@ -2,6 +2,12 @@
 
 - I have not setup a backend for this app. The `OPEN_WEATHER_API_KEY` in the `.env` shouldn't be stored the way it is. I'd recommend setting up your own server to fetch the API weather and return it.
 
+# Setup
+
+1. Get an API key from Open Weather, copy `.env.sample` to `.env` and populate with the API Key
+2. `npm install`
+3. To run locally: `npm run compile` && `npm run cli`  
+
 # How to deploy an NPM App
 
 1. Add the following to your package JSON
