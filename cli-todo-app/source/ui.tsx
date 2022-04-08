@@ -27,6 +27,8 @@ const MainMenu = () => {
 	const [selectedMenuIndex, setSelectedMenuIndex] = React.useState(0)
 	const [showNewItemInput, setShowNewItemInput] = React.useState(false)
 
+	const isAddItemSelceted = selectedMenuIndex === todoItems.length
+
 	const handleNewItem = (newItem: string) => {
 		setTodoItems([...todoItems, newItem])
 		setShowNewItemInput(false)
@@ -54,10 +56,10 @@ const MainMenu = () => {
 		<Newline />
 		{
 			todoItems.map((item, index) => {
-				return <Text key={index} color={selectedMenuIndex === index ? "green" : "white"}>{item}</Text>
+				return <Text key={index} color={selectedMenuIndex === index ? "green" : "white"}>{selectedMenuIndex === index ? " ! " : "   "}{item}</Text>
 			})
 		}
-		<Text key='additem' color={selectedMenuIndex === todoItems.length ? "green" : "white"}>Add Item</Text>
+		<Text key='additem' color={isAddItemSelceted ? "green" : "white"}>{isAddItemSelceted ? " ! " : "   "}Add Item</Text>
 		{showNewItemInput ? <NewItemInput handleNewItem={handleNewItem} /> : null}
 		<Newline />
 	</Box >

@@ -67,6 +67,14 @@ These are a collection of projects that go beyond just learning the basics of a 
     - TypeScript
     - Node.js
 
+###  [why-go-outside](why-go-outside)
+
+- Summary: A weather app for weather in Paris (Yes, just Paris lol.)
+- Tech Stack
+    - (*) Ink
+    - (*) NPM Package Deployment
+    - React
+
 # Notes for Adding a new Project
 
 - Code Project

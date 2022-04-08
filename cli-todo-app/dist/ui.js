@@ -32,6 +32,7 @@ const MainMenu = () => {
     const [todoItems, setTodoItems] = react_1.default.useState([]);
     const [selectedMenuIndex, setSelectedMenuIndex] = react_1.default.useState(0);
     const [showNewItemInput, setShowNewItemInput] = react_1.default.useState(false);
+    const isAddItemSelceted = selectedMenuIndex === todoItems.length;
     const handleNewItem = (newItem) => {
         setTodoItems([...todoItems, newItem]);
         setShowNewItemInput(false);
@@ -55,9 +56,13 @@ const MainMenu = () => {
         react_1.default.createElement(H1, null, "What would you like todo?"),
         react_1.default.createElement(ink_1.Newline, null),
         todoItems.map((item, index) => {
-            return react_1.default.createElement(ink_1.Text, { key: index, color: selectedMenuIndex === index ? "green" : "white" }, item);
+            return react_1.default.createElement(ink_1.Text, { key: index, color: selectedMenuIndex === index ? "green" : "white" },
+                selectedMenuIndex === index ? " ! " : "   ",
+                item);
         }),
-        react_1.default.createElement(ink_1.Text, { key: 'additem', color: selectedMenuIndex === todoItems.length ? "green" : "white" }, "Add Item"),
+        react_1.default.createElement(ink_1.Text, { key: 'additem', color: isAddItemSelceted ? "green" : "white" },
+            isAddItemSelceted ? " ! " : "   ",
+            "Add Item"),
         showNewItemInput ? react_1.default.createElement(NewItemInput, { handleNewItem: handleNewItem }) : null,
         react_1.default.createElement(ink_1.Newline, null));
 };
