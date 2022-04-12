@@ -1,10 +1,11 @@
 {
   "name": "travis-weather-app",
-  "version": "1.0.4",
+  "version": "1.0.13",
   "scripts": {
-    "compile": "tsc && chmod +x dist/cli.js",
-    "cli": "node dist/cli",
-    "send-it": "npm run compile && npm publish"
+    "compile": "webpack --mode=production --config=webpack.js && chmod +x dist/cli.js",
+    "addShebang": "printf '%s\n%s\n' \"#!/usr/bin/env node\n\" \"$(cat dist/cli.js)\" >dist/cli.js",
+    "start": "node dist/cli",
+    "deploy": "npm run compile && npm run addShebang && npm publish"
   },
   "bin": {
     "weather-please": "./dist/cli.js"
@@ -16,6 +17,7 @@
     "ink": "^3.2.0",
     "react": "^17.0.2",
     "travis-weather-app": "^1.0.2",
+    "ts-loader": "^9.2.8",
     "typescript": "^4.6.3"
   },
   "devDependencies": {
@@ -23,6 +25,8 @@
     "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
-    "@types/node": "^17.0.23"
+    "@types/node": "^17.0.23",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
   }
 }

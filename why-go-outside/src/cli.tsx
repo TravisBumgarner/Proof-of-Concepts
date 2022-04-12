@@ -16,7 +16,6 @@ const App = () => {
             {location.length === 0
                 ? <UserInput label="Where to" handleSubmit={setLocation} />
                 : <WeatherPage location={location} />
-
             }
         </>
     )

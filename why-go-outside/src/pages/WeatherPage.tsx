@@ -18,7 +18,7 @@ const WeatherPage = ({ location }: WeatherPageProps) => {
             setCurrentWeather(r)
             setTimeout(() => setIsLoading(false), 1000) // Just to add dramatic timing for <Loading /> animation to shine!
         })
-    })
+    }, [])
 
     if (isLoading) return <Loading />
 
