@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const dontDoThis = () => {
-    return `ce062de4922aa43abdd213142c4ee87a`
+    return `68d5989edc60f980cf880191ed2d5c98`
 
 }
 
@@ -11,7 +11,6 @@ const availableCities: Record<string, { lat: number, lon: number }> = {
         lon: -71.058884
     }
 }
-
 const getWeather = async (city) => {
     let response: string
     const apiKey = dontDoThis()

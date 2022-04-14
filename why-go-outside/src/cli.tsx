@@ -1,8 +1,5 @@
-#!/usr/bin/env node
-
 import React from 'react';
 import { render } from 'ink';
-require('dotenv').config()
 
 import { WeatherPage } from './pages'
 import { Header, UserInput } from './components';

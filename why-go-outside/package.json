@@ -1,6 +1,6 @@
 {
   "name": "travis-weather-app",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "scripts": {
     "compile": "webpack --mode=production --config=webpack.js && chmod +x dist/cli.js",
     "addShebang": "printf '%s\n%s\n' \"#!/usr/bin/env node\n\" \"$(cat dist/cli.js)\" >dist/cli.js",
@@ -13,7 +13,6 @@
   "dependencies": {
     "@types/react": "^18.0.0",
     "axios": "^0.26.1",
-    "dotenv": "^16.0.0",
     "ink": "^3.2.0",
     "react": "^17.0.2",
     "travis-weather-app": "^1.0.2",
