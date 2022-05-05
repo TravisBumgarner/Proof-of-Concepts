@@ -22,13 +22,6 @@ const typeDefs = gql`
   type Subscription {
     colorCreated: Color
   }
-
-  subscription PostFeed {
-    colorCreated {
-      color
-      comment
-    }
-  }
 `;
 
 const colors = [
