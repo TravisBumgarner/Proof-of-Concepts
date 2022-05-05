@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
     postgres:
-        container_name: pg
+        container_name: pg-paint-app
         image: postgres:10.5
         restart: always
         environment:
@@ -14,7 +14,7 @@ services:
         volumes:
             - ./docker-volumes/postgres-data:/var/lib/postgresql/data
     eventstore:
-        container_name: es
+        container_name: es-paint-app
         image: ghcr.io/eventstore/eventstore:21.10.0-alpha-arm64v8
         environment:
             - EVENTSTORE_CLUSTER_SIZE=1
