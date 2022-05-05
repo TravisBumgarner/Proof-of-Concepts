@@ -63,13 +63,6 @@ const COLORS_SUBSCRIPTION = gql`
 `;
 
 
-enum ValidColors {
-   RED = "RED",
-   GREEN = "GREEN",   
-   BLUE = "BLUE",
-   BLACK = "BLACK"   
-}
-
 const App = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [colors, setColors] = React.useState<string[]>([])
@@ -112,18 +105,10 @@ const App = () => {
       </div>
       <Title>Color Picker</Title>
       <div>
-        {Object.values(ValidColors).map((color) => (
-          <FakePixel
-            color={color}
-            key={color}
-            onClick={() => setSelectedColor(color)}
-          />)
-        )}
-      </div>
-      <Title>Selected Color</Title>
-      <div>
-          <FakePixel
-            color={selectedColor}
+          <input
+            type="color"
+            value={selectedColor}
+            onChange={(event) => setSelectedColor(event.target.value)}
           />
       </div>
     </Body>
