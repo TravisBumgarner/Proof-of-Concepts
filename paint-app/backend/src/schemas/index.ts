@@ -20,9 +20,9 @@ const typeDefs = gql`
 `;
 
 const colors = [
-  'red',
-  'blue',
-  'green',
+  'black',
+  'black',
+  'black',
 ];
 
 

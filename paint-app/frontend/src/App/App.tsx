@@ -47,6 +47,7 @@ const FakePixel = styled.button`
   background-color: ${({ color }) => color};
   width: 50px;
   height: 50px;
+  margin: 1px;
 `
 
 const COLORS_QUERY = gql`
@@ -61,9 +62,18 @@ const COLORS_SUBSCRIPTION = gql`
   }
 `;
 
+
+enum ValidColors {
+   RED = "RED",
+   GREEN = "GREEN",   
+   BLUE = "BLUE",
+   BLACK = "BLACK"   
+}
+
 const App = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [colors, setColors] = React.useState<string[]>([])
+  const [selectedColor, setSelectedColor] = React.useState<string>('black')
 
   useQuery<{colors: string[]}>(COLORS_QUERY, {
     onCompleted: (data) => {
@@ -93,9 +103,28 @@ const App = () => {
           <FakePixel
             color={color}
             key={index}
-            onClick={() => console.log('dispatching new color')}
+            onClick={() => setColors(prev => {
+              const modifiedColors = [...prev]
+              modifiedColors[index] = selectedColor
+              return modifiedColors
+            })}
+          />))}
+      </div>
+      <Title>Color Picker</Title>
+      <div>
+        {Object.values(ValidColors).map((color) => (
+          <FakePixel
+            color={color}
+            key={color}
+            onClick={() => setSelectedColor(color)}
           />)
         )}
+      </div>
+      <Title>Selected Color</Title>
+      <div>
+          <FakePixel
+            color={selectedColor}
+          />
       </div>
     </Body>
   )

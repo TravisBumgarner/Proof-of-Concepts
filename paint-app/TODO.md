@@ -6,11 +6,12 @@
 - [x] Change to Apollo Server
 - [x] Add GraphQL Subscription
     - [x] Finalize subscription
-- [ ] Clean up subscriptions
-- [ ] Setup Subscription to use colors
+- [x] Clean up subscriptions
+- [x] Setup Subscription to use colors
+- [ ] Start tracking position clicked
 - [ ] Create mutation to send color from front end to backend
-
 - [ ] Add support for separate rooms
+
 
 Notes
 
