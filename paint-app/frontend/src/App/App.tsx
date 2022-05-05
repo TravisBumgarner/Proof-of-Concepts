@@ -57,10 +57,7 @@ query ColorsQuery {
 
 const COLORS_SUBSCRIPTION = gql`
   subscription ColorFeed {
-    colorCreated {
-      color,
-      comment
-    }
+    colorCreated 
   }
 `;
 

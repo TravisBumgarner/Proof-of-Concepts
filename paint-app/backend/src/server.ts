@@ -13,10 +13,7 @@ app.use(cors())
 
 app.get('/', async (req: express.Request, res: express.Response) => {
   await pubsub.publish('COLOR_CREATED', {
-    colorCreated: {
-      color: 'red',
-      comment: 'Open sesame'
-    }
+    colorCreated: 'red'
   });
   res.send('pong!')
 })

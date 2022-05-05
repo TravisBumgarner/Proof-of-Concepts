@@ -13,14 +13,9 @@ const typeDefs = gql`
   type Subscription {
     hello: String
   }
-  
-  type Color {
-    color: String
-    comment: String
-  }
 
   type Subscription {
-    colorCreated: Color
+    colorCreated: String
   }
 `;
 
