@@ -1,7 +1,7 @@
-- [ ] Refactor backend into folder
-- [ ] Update Run commands
-- [ ] Add Concurrently 
-- [ ] Add GraphQL
+- [x] Refactor backend into folder
+- [x] Update Run commands
+- [x] Add Concurrently 
+- [x] Add GraphQL
 - [ ] Add GraphQL Query for Getting current colors
 - [ ] Add GraphQL Subscription
 

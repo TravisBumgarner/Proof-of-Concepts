@@ -1,34 +1,20 @@
 import express from 'express';
-import { jsonEvent, JSONEventType } from '@eventstore/db-client';
+import { graphqlHTTP } from 'express-graphql'
+import cors from 'cors'
 
-import eventstoreClient from './eventstore'
+import schema from './schemas'
 
 const app = express()
+app.use(cors())
 
 app.get('/', (req: express.Request, res: express.Response) => {
   res.send('pong!')
 })
 
-type TestEvent = JSONEventType<
-    "TestEvent",
-    {
-        importantData: string;
-    }
->;
-
-app.get('/write', async(req: express.Request, res: express.Response) => {
-    const event = jsonEvent < TestEvent > ({
-        type: "TestEvent",
-        data: {
-            importantData: `Event #: ${Math.random()}`,
-        },
-    });
-    await eventstoreClient.appendToStream("my-demo-stream", event);
-
-    res.send(`write success! ${event.data.importantData}`)
-  })
-
-export default app
+app.use('/graphql', graphqlHTTP((req: express.Request) => ({
+  schema,
+  graphiql: true,
+})))
 
 const port = 5001
 
