@@ -3,6 +3,7 @@
     "author": "Travis Bumgarner",
     "dependencies": {
         "@apollo/client": "^3.6.2",
+        "graphql-ws": "^5.8.1",
         "react": "^16.14.0",
         "react-dom": "^16.14.0",
         "styled-components": "^5.3.3"

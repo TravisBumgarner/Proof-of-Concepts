@@ -25,12 +25,14 @@ module.exports = {
             utilities: path.resolve(__dirname, 'src/utilities/'),
         },
     },
+    devtool: 'source-map',
     devServer: {
         compress: true,
         port: 3000,
         hot: true,
         historyApiFallback: true,
     },
+
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/static/index.template.ejs',
