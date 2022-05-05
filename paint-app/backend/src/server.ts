@@ -12,9 +12,9 @@ const app = express()
 app.use(cors())
 
 app.get('/', async (req: express.Request, res: express.Response) => {
-  await pubsub.publish('POST_CREATED', {
-    postCreated: {
-      author: 'Ali Baba',
+  await pubsub.publish('COLOR_CREATED', {
+    colorCreated: {
+      color: 'red',
       comment: 'Open sesame'
     }
   });

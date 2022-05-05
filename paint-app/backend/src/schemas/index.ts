@@ -12,21 +12,20 @@ const typeDefs = gql`
 
   type Subscription {
     hello: String
-    colorCreated: String
   }
   
-  type Post {
-    author: String
+  type Color {
+    color: String
     comment: String
   }
 
   type Subscription {
-    postCreated: Post
+    colorCreated: Color
   }
 
   subscription PostFeed {
-    postCreated {
-      author
+    colorCreated {
+      color
       comment
     }
   }
@@ -52,9 +51,9 @@ const resolvers = {
         }
       },
     },
-    postCreated: {
+    colorCreated: {
       // More on pubsub below
-      subscribe: () => pubsub.asyncIterator(['POST_CREATED']),
+      subscribe: () => pubsub.asyncIterator(['COLOR_CREATED']),
     },
   },
 };

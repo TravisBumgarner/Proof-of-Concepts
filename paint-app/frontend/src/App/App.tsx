@@ -56,9 +56,10 @@ query ColorsQuery {
 `
 
 const COLORS_SUBSCRIPTION = gql`
-  subscription PostCreated {
-    postCreated {
-      author,
+  subscription ColorFeed {
+    colorCreated {
+      color,
+      comment
     }
   }
 `;
