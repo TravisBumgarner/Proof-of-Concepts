@@ -22,27 +22,29 @@ const FakePixel = styled.button`
   height: 50px;
 `
 
-const PING = gql`
-query Ping {
-    ping
+const GetColors = gql`
+query GetColors {
+    colors 
 }
 `
 
-const COLORS = ['red', 'green', 'blue', 'yellow']
-
-const getRandomColor = (colors: string[]) => colors[Math.floor(Math.random() * colors.length)];
-
 const App = () => {
-  useQuery<String>(PING, {
+  const [isLoading, setIsLoading] = React.useState<boolean>(true)
+  const [colors, setColors] = React.useState<string[]>([])
+
+  useQuery<{colors: string[]}>(GetColors, {
     onCompleted: (data) => {
-      console.log("GraphQL Response", data)
+      setColors(data.colors)
+      setIsLoading(false)
     },
     onError: (error) => {
       console.log(JSON.stringify(error))
+      setIsLoading(false)
     },
   })
 
-  const [colors, setColors] = React.useState<string[]>(COLORS)
+  if(isLoading) <p>Loading...</p>
+
   return (
     <Body>
       <Title>Canvas</Title>
@@ -51,11 +53,7 @@ const App = () => {
           <FakePixel
             color={color}
             key={index}
-            onClick={() => setColors(prev => {
-              const newColors = [...prev]
-              newColors[index] = getRandomColor(COLORS)
-              return newColors
-            })}
+            onClick={() => console.log('dispatching new color')}
           />)
         )}
       </div>
