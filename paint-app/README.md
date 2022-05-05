@@ -1,11 +1,9 @@
 # Setup
 
-1. `npm install`
-2. `npm run migration:run`
-2. `npm run sd`
-3. Create event by visiting http://localhost:5001/write
-4. Observe logs in terminal with data
-5. Stop `sd` command.
-6. Run `npm run sd` again.
-7. Observe stream starts at offset. 
-(Note I haven't looked into events with `undefined` data.)
+1. `npm run fill-it` to install dependencies
+2. (on initial setup) Switch to the backend and run `npm run migration:run`
+3. `npm run sd` to launch app
+
+Notes
+
+- eventHandler will complain about a lack of a Postgres connection. This is a race condition I couldn't figure out how to resolve with `wait-on` once PG is up just save a page in the backend to force a hot reload.
