@@ -1,13 +1,67 @@
-import {
-    GraphQLSchema,
-} from 'graphql'
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { PubSub } from 'graphql-subscriptions';
+import { gql } from 'apollo-server'
 
-import RootQueryType from './queries'
-import RootSubscriptionType from './subscriptions'
+const pubsub = new PubSub();
 
-const schema = new GraphQLSchema({
-    query: RootQueryType,
-    subscription: RootSubscriptionType
-})
 
-export default schema
+const typeDefs = gql`
+  type Query {
+    colors: [String]
+  }
+
+  type Subscription {
+    hello: String
+    colorCreated: String
+  }
+  
+  type Post {
+    author: String
+    comment: String
+  }
+
+  type Subscription {
+    postCreated: Post
+  }
+
+  subscription PostFeed {
+    postCreated {
+      author
+      comment
+    }
+  }
+`;
+
+const colors = [
+  'red',
+  'blue',
+  'green',
+];
+
+
+const resolvers = {
+  Query: {
+    colors: () => colors,
+  },
+  Subscription: {
+    hello: {
+      // Example using an async generator
+      subscribe: async function* () {
+        for await (const word of ["Hello", "Bonjour", "Ciao"]) {
+          yield { hello: word };
+        }
+      },
+    },
+    postCreated: {
+      // More on pubsub below
+      subscribe: () => pubsub.asyncIterator(['POST_CREATED']),
+    },
+  },
+};
+
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+
+export {
+    schema,
+    pubsub
+}
