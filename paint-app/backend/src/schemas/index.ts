@@ -19,18 +19,22 @@ const typeDefs = gql`
     hello: String
     colorCreated: [Color]
   }
+
+  type Mutation {
+    createColor(color: String, index: Int): Color
+  }
 `;
 
-const colors = [
-  {index: 0, color: '#000000'},
-  {index: 1, color: '#000000'},
-  {index: 2, color: '#000000'}
+const THIS_IS_THE_SOURCE_OF_TRUTH_LOL = [
+  {index: 0, color: '#FF0000'},
+  {index: 1, color: '#00FF00'},
+  {index: 2, color: '#0000FF'}
 ];
 
 
 const resolvers = {
   Query: {
-    colors: () => colors,
+    colors: () => THIS_IS_THE_SOURCE_OF_TRUTH_LOL,
   },
   Subscription: {
     hello: {
@@ -44,6 +48,19 @@ const resolvers = {
       subscribe: () => pubsub.asyncIterator(['COLOR_CREATED']),
     },
   },
+  Mutation: {
+    createColor: async (_, {color, index}) => {
+      THIS_IS_THE_SOURCE_OF_TRUTH_LOL[index] = color
+      console.log(THIS_IS_THE_SOURCE_OF_TRUTH_LOL)
+      await pubsub.publish('COLOR_CREATED', {
+        colorCreated: [{
+          index,
+          color
+        }]
+      });
+      return {color, index}
+    }
+  }
 };
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });

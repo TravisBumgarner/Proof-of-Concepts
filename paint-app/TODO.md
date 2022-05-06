@@ -8,7 +8,7 @@
     - [x] Finalize subscription
 - [x] Clean up subscriptions
 - [x] Setup Subscription to use colors
-- [ ] Start tracking position clicked
+- [x] Start tracking position clicked
 - [ ] Create mutation to send color from front end to backend
 - [ ] Add support for separate rooms
 

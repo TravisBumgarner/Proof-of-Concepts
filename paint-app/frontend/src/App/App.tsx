@@ -8,7 +8,8 @@ import {
   useQuery,
   useSubscription,
   split,
-  HttpLink
+  HttpLink,
+  useMutation
 } from '@apollo/client'
 import { getMainDefinition } from '@apollo/client/utilities';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
@@ -67,11 +68,20 @@ const COLORS_SUBSCRIPTION = gql`
   }
 `;
 
+
+const CREATE_COLOR_MUTATION = gql`
+  mutation CreateColor($index: Int!, $color: String!) {
+    createColor(index: $index, color: $color) {
+      color,
+      index
+    }
+  }
+`;
+
 type ColorMessage = {
   index: number
   color: string
 }[]
-
 
 const App = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
@@ -97,6 +107,9 @@ const App = () => {
     },
   })
 
+  const [createColor, { data, loading, error }] = useMutation(CREATE_COLOR_MUTATION);
+
+
   useSubscription<{colorCreated: ColorMessage}>(COLORS_SUBSCRIPTION, {
     onSubscriptionData: (data) => {
       console.log(data)
@@ -114,11 +127,7 @@ const App = () => {
           <FakePixel
             color={color}
             key={index}
-            onClick={() => setColors(prev => {
-              const modifiedColors = [...prev]
-              modifiedColors[index] = selectedColor
-              return modifiedColors
-            })}
+            onClick={() => createColor({variables: {index, color: selectedColor}})}
           />))}
       </div>
       <Title>Color Picker</Title>
