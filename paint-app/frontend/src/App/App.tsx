@@ -51,25 +51,44 @@ const FakePixel = styled.button`
 
 const COLORS_QUERY = gql`
 query ColorsQuery {
-    colors 
+    colors {
+      color,
+      index
+    }
 }
 `
 
 const COLORS_SUBSCRIPTION = gql`
   subscription ColorFeed {
-    colorCreated 
+    colorCreated {
+      color,
+      index
+    }
   }
 `;
+
+type ColorMessage = {
+  index: number
+  color: string
+}[]
 
 
 const App = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [colors, setColors] = React.useState<string[]>([])
-  const [selectedColor, setSelectedColor] = React.useState<string>('black')
+  const [selectedColor, setSelectedColor] = React.useState<string>('#000000')
 
-  useQuery<{colors: string[]}>(COLORS_QUERY, {
+  const handleNewColors = (colors: ColorMessage) => {
+    setColors(prev => {
+      const updatedColors = [...prev]
+      colors.forEach(({index, color}) => updatedColors[index] = color)
+      return updatedColors
+    })
+  }
+
+  useQuery<{colors: ColorMessage}>(COLORS_QUERY, {
     onCompleted: (data) => {
-      setColors(data.colors)
+      handleNewColors(data.colors)
       setIsLoading(false)
     },
     onError: (error) => {
@@ -78,10 +97,10 @@ const App = () => {
     },
   })
 
-  useSubscription<{colors: string[]}>(COLORS_SUBSCRIPTION, {
+  useSubscription<{colorCreated: ColorMessage}>(COLORS_SUBSCRIPTION, {
     onSubscriptionData: (data) => {
-      console.log('data received from subscription')
-      console.log(data.subscriptionData.data)
+      console.log(data)
+      handleNewColors(data.subscriptionData.data.colorCreated)
     }
   })
 
