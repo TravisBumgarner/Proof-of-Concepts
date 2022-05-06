@@ -17,6 +17,12 @@ import { createClient } from 'graphql-ws';
 
 import { Body, Title } from 'sharedComponents'
 
+enum ROOMS {
+  modernism = "modernism",
+  justChillin = "justChillin",
+  abstract = "abstract"
+}
+
 const wsLink = new GraphQLWsLink(createClient({
   url: 'ws://localhost:5001/graphql',
 }));
@@ -42,36 +48,50 @@ const apolloClient = new ApolloClient({
   link: splitLink
 });
 
-const FakePixel = styled.button`
+const PIXEL_LENGTH = 20
+const PIXELS_PER_ROW = 10
+
+const FakePixel = styled.div`
   border: 0;
   background-color: ${({ color }) => color};
-  width: 50px;
-  height: 50px;
-  margin: 1px;
+  width: ${PIXEL_LENGTH}px;
+  height: ${PIXEL_LENGTH}px;
+  margin: 0px;
+  padding: 0;
+  line-height: 0;
+  display: inline-block;
+  font-size: 0;
+`
+
+const FakePixelWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: ${PIXELS_PER_ROW * PIXEL_LENGTH}px;
 `
 
 const COLORS_QUERY = gql`
-query ColorsQuery {
-    colors {
+  query ColorsQuery($room: Room!) {
+    colors(room: $room) {
       color,
       index
     }
-}
+  }
 `
 
 const COLORS_SUBSCRIPTION = gql`
   subscription ColorFeed {
     colorCreated {
       color,
-      index
+      index,
+      room
     }
   }
 `;
 
 
 const CREATE_COLOR_MUTATION = gql`
-  mutation CreateColor($index: Int!, $color: String!) {
-    createColor(index: $index, color: $color) {
+  mutation CreateColor($index: Int!, $color: String!, $room: Room!) {
+    createColor(index: $index, color: $color, room: $room) {
       color,
       index
     }
@@ -81,22 +101,29 @@ const CREATE_COLOR_MUTATION = gql`
 type ColorMessage = {
   index: number
   color: string
+  room: string
 }[]
 
 const App = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [colors, setColors] = React.useState<string[]>([])
   const [selectedColor, setSelectedColor] = React.useState<string>('#000000')
+  const [room, setRoom] = React.useState<ROOMS | ''>(ROOMS.abstract)
+  const [createColor, { data, loading, error }] = useMutation(CREATE_COLOR_MUTATION);
 
   const handleNewColors = (colors: ColorMessage) => {
     setColors(prev => {
       const updatedColors = [...prev]
-      colors.forEach(({index, color}) => updatedColors[index] = color)
+      colors.forEach(({ index, color }) => updatedColors[index] = color)
       return updatedColors
     })
   }
 
-  useQuery<{colors: ColorMessage}>(COLORS_QUERY, {
+  useQuery<{ colors: ColorMessage }>(COLORS_QUERY, {
+    variables: {
+      room
+    },
+    skip: room === '',
     onCompleted: (data) => {
       handleNewColors(data.colors)
       setIsLoading(false)
@@ -107,36 +134,54 @@ const App = () => {
     },
   })
 
-  const [createColor, { data, loading, error }] = useMutation(CREATE_COLOR_MUTATION);
 
-
-  useSubscription<{colorCreated: ColorMessage}>(COLORS_SUBSCRIPTION, {
+  useSubscription<{ colorCreated: ColorMessage }>(COLORS_SUBSCRIPTION, {
     onSubscriptionData: (data) => {
-      console.log(data)
-      handleNewColors(data.subscriptionData.data.colorCreated)
+      console.log(data.subscriptionData.data)
+      if (data.subscriptionData.data.colorCreated[0].room === room) {
+        handleNewColors(data.subscriptionData.data.colorCreated)
+      }
     }
   })
 
-  if(isLoading) <p>Loading...</p>
+  const PickARoom = (
+    <select value={room} onChange={(event) => setRoom(event.target.value as ROOMS)}>
+      <option value={''}>Pick One</option>
+      {
+        Object.keys(ROOMS).map((key: keyof typeof ROOMS) => <option key={key} value={key}>{ROOMS[key]}</option>)
+      }
+    </select>
+  )
+
+  if (isLoading) <p>Loading...</p>
+
+  if (!room) {
+    return (
+      <Body>
+        {PickARoom}
+      </Body>
+    )
+  }
 
   return (
     <Body>
-      <Title>Canvas</Title>
-      <div>
+      {PickARoom}
+      <Title>You're Drawing in {room}</Title>
+      <FakePixelWrapper>
         {colors.map((color, index) => (
           <FakePixel
             color={color}
             key={index}
-            onClick={() => createColor({variables: {index, color: selectedColor}})}
+            onClick={() => createColor({ variables: { index, color: selectedColor, room } })}
           />))}
-      </div>
+      </FakePixelWrapper>
       <Title>Color Picker</Title>
       <div>
-          <input
-            type="color"
-            value={selectedColor}
-            onChange={(event) => setSelectedColor(event.target.value)}
-          />
+        <input
+          type="color"
+          value={selectedColor}
+          onChange={(event) => setSelectedColor(event.target.value)}
+        />
       </div>
     </Body>
   )

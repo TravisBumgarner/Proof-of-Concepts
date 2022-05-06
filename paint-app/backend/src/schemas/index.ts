@@ -6,13 +6,20 @@ const pubsub = new PubSub();
 
 
 const typeDefs = gql`
+  enum Room {
+    modernism
+    justChillin,
+    abstract
+  }
+
   type Color {
-    color: String
-    index: Int
+    color: String!
+    index: Int!
+    room: Room!
   }
 
   type Query {
-    colors: [Color]
+    colors(room: Room!): [Color]
   }
   
   type Subscription {
@@ -21,20 +28,27 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createColor(color: String, index: Int): Color
+    createColor(color: String!, index: Int!, room: Room!): Color
   }
 `;
 
-const THIS_IS_THE_SOURCE_OF_TRUTH_LOL = [
-  "#FFFFFF",
-  "#FFFFFF",
-  "#FFFFFF",
-];
+const THIS_IS_THE_SOURCE_OF_TRUTH_LOL = Array.apply(null, Array(100)).map(() => "#00FF00")
 
+enum ROOMS {
+  modernism = "modernism",
+  justChillin = "justChillin",
+  abstract = "abstract"
+}
+
+const SourceOfTruthByRoom = {
+  [ROOMS.modernism]: [...THIS_IS_THE_SOURCE_OF_TRUTH_LOL],
+  [ROOMS.justChillin]: [...THIS_IS_THE_SOURCE_OF_TRUTH_LOL],
+  [ROOMS.abstract]: [...THIS_IS_THE_SOURCE_OF_TRUTH_LOL],
+}
 
 const resolvers = {
   Query: {
-    colors: () => THIS_IS_THE_SOURCE_OF_TRUTH_LOL.map((color, index) => ({color, index})),
+    colors: (_, args) =>  SourceOfTruthByRoom[args.room].map((color, index) => ({color, index}))
   },
   Subscription: {
     hello: {
@@ -49,16 +63,16 @@ const resolvers = {
     },
   },
   Mutation: {
-    createColor: async (_, {color, index}) => {
-      THIS_IS_THE_SOURCE_OF_TRUTH_LOL[index] = color
-      console.log(THIS_IS_THE_SOURCE_OF_TRUTH_LOL)
+    createColor: async (_, {color, index, room}) => {
+      SourceOfTruthByRoom[room][index] = color
       await pubsub.publish('COLOR_CREATED', {
         colorCreated: [{
           index,
-          color
+          color,
+          room
         }]
       });
-      return {color, index}
+      return {color, index, room}
     }
   }
 };
