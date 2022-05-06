@@ -9,12 +9,9 @@ const typeDefs = gql`
   type Query {
     colors: [String]
   }
-
+  
   type Subscription {
     hello: String
-  }
-
-  type Subscription {
     colorCreated: String
   }
 `;
@@ -32,7 +29,6 @@ const resolvers = {
   },
   Subscription: {
     hello: {
-      // Example using an async generator
       subscribe: async function* () {
         for await (const word of ["Hello", "Bonjour", "Ciao"]) {
           yield { hello: word };
@@ -40,7 +36,6 @@ const resolvers = {
       },
     },
     colorCreated: {
-      // More on pubsub below
       subscribe: () => pubsub.asyncIterator(['COLOR_CREATED']),
     },
   },
