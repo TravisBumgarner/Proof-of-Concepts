@@ -17,7 +17,7 @@ import { createClient } from 'graphql-ws';
 
 import { Body, Title } from 'sharedComponents'
 
-import { ROOMS } from '../../../shared/types'
+import { ROOMS, ColorMessage } from '../../../shared/types'
 
 
 const wsLink = new GraphQLWsLink(createClient({
@@ -94,12 +94,6 @@ const CREATE_COLOR_MUTATION = gql`
     }
   }
 `;
-
-type ColorMessage = {
-  index: number
-  color: string
-  room: string
-}[]
 
 const App = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true)

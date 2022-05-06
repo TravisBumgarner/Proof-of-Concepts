@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server'
 
-import currentStateByRoom from '../projections/currentStateByRoom'
+import currentStateByRoom from '../inMemoryProjections/currentStateByRoom'
 
 const queryTypeDefs = gql`
   type Query {

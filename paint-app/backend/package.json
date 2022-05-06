@@ -10,7 +10,7 @@
         "migration:revert": "npm run typeorm migration:revert",
         "migration:generate": "export NODE_ENV=local && npm run typeorm migration:generate -- -n",
         "sd:server": "nodemon ./src/server.ts",
-        "sd:handler": "nodemon ./src/eventHandler.ts"
+        "sd:handler": "nodemon ./src/eventHandlerService.ts"
     },
     "keywords": [],
     "license": "ISC",

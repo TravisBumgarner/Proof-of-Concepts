@@ -2,7 +2,6 @@ import { EventStoreDBClient, ResolvedEvent, SubscribeToAllOptions, SubscribeToSt
 
 export const client = new EventStoreDBClient({endpoint: 'localhost:2113'}, { insecure: true })
 
-
 type AllStreamEventHandler = (e: ResolvedEvent) => void
 const connectHandlerToAllStreamEvents = async (options: SubscribeToAllOptions, handler: AllStreamEventHandler) => {
     client.subscribeToAll(options).on('data', handler)

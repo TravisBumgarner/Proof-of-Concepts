@@ -4,6 +4,13 @@ enum ROOMS {
     abstract = "abstract"
   }
 
+  type ColorMessage = {
+    index: number
+    color: string
+    room: string
+  }[]
+
   export {
-      ROOMS
+      ROOMS,
+      ColorMessage
   }

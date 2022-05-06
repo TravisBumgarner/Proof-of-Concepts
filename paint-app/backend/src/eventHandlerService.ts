@@ -4,7 +4,7 @@ import { SubscribeToAllOptions, SubscribeToStreamOptions } from "@eventstore/db-
 import {
     connectHandlerToStream,
     connectHandlerToAllStreamEvents
-} from './eventstore'
+} from './eventstore/eventstore'
 import ormconfig from './postgres/ormconfig'
 import entity from './postgres'
 
@@ -45,7 +45,7 @@ const allStreamsHandler = async () => {
 
     connectHandlerToAllStreamEvents(options, event => {
         if (event.commitPosition) {
-            console.log(`Stream: all ---  Offset: ${event.commitPosition} --- importantData: ${event.event?.data['importantData']}`)
+            console.log(`Stream: all ---  Offset: ${event.commitPosition} --- importantData: ${JSON.stringify(event.event?.data)}`)
             const projectionRepository = getRepository(entity.ProjectionOffset)
 
             const projectionOffset = new entity.ProjectionOffset
