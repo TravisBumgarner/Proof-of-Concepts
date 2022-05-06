@@ -26,15 +26,15 @@ const typeDefs = gql`
 `;
 
 const THIS_IS_THE_SOURCE_OF_TRUTH_LOL = [
-  {index: 0, color: '#FF0000'},
-  {index: 1, color: '#00FF00'},
-  {index: 2, color: '#0000FF'}
+  "#FFFFFF",
+  "#FFFFFF",
+  "#FFFFFF",
 ];
 
 
 const resolvers = {
   Query: {
-    colors: () => THIS_IS_THE_SOURCE_OF_TRUTH_LOL,
+    colors: () => THIS_IS_THE_SOURCE_OF_TRUTH_LOL.map((color, index) => ({color, index})),
   },
   Subscription: {
     hello: {
