@@ -37,7 +37,8 @@ const wsServer = new WebSocketServer({ server: httpServer, path: '/graphql' });
 
 const serverCleanup = useServer({ schema }, wsServer);
 
-apolloServer.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
-httpServer.listen(5001, () => console.log("http server listening 5001"))
+export {
+  apolloServer,
+  httpServer
+}
+

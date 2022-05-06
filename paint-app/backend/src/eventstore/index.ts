@@ -1,18 +1,22 @@
-import { createConnection, getRepository } from 'typeorm'
-import { SubscribeToAllOptions } from "@eventstore/db-client"
+import { EventStoreDBClient, ResolvedEvent, SubscribeToAllOptions } from '@eventstore/db-client'
+import { getConnection, getRepository } from 'typeorm'
 
-import {
-    connectHandlerToAllStreamEvents
-} from './eventstore/eventstore'
-import ormconfig from './postgres/ormconfig'
-import entity from './postgres'
+import ormconfig from '../postgres/ormconfig'
+import entity from '../postgres'
+
+const client = new EventStoreDBClient({endpoint: 'localhost:2113'}, { insecure: true })
+
+type AllStreamEventHandler = (e: ResolvedEvent) => void
+const connectHandlerToAllStreamEvents = async (options: SubscribeToAllOptions, handler: AllStreamEventHandler) => {
+    client.subscribeToAll(options).on('data', handler)
+}
 
 BigInt.prototype["toJSON"] = function () {
     return this.toString();
 };
 
 const getOffsetForStream = async (stream: string): Promise<bigint | null> => {
-    const postgresConnection = await createConnection(ormconfig)
+    const postgresConnection = await getConnection()
 
     const result = await postgresConnection
         .getRepository(entity.ProjectionOffset)
@@ -56,4 +60,8 @@ const allStreamsHandler = async () => {
         }
     })
 }
-allStreamsHandler()
+
+export {
+    client,
+    allStreamsHandler
+}

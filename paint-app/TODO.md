@@ -1,6 +1,9 @@
 # PR-1
 
 - [x] Do some refactoring
+- [x] Refactor eventstore code
+- [x] Add index files
+- [x] Refactor createConnection to getConnection
 - [ ] Get rid of pubsub, including library
 - [ ] Figure out how to write sendEvent tpe more cleanly
 - [ ] Add eventstore to keep track of painting.
