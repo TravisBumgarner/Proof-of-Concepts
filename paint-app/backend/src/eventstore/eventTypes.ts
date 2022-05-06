@@ -8,7 +8,8 @@ enum EEventName {
 }
 
 enum EStreamPrefix {
-    Paint = "paint-"
+    Paint = "paint",
+    NonExistantStream = "fake"
 }
 
 type TPaintEvent = JSONEventType<

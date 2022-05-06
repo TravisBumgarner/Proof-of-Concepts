@@ -3,6 +3,7 @@ import { getConnection, getRepository } from 'typeorm'
 
 import ormconfig from '../postgres/ormconfig'
 import entity from '../postgres'
+import handleEvent from './handleEvent'
 
 const client = new EventStoreDBClient({endpoint: 'localhost:2113'}, { insecure: true })
 
@@ -48,13 +49,14 @@ const allStreamsHandler = async () => {
 
     connectHandlerToAllStreamEvents(options, event => {
         if (event.commitPosition) {
-            console.log(`Stream: all ---  Offset: ${event.commitPosition} --- importantData: ${JSON.stringify(event.event?.data)}`)
             const projectionRepository = getRepository(entity.ProjectionOffset)
 
             const projectionOffset = new entity.ProjectionOffset
             projectionOffset.offset = event.commitPosition
             projectionOffset.stream = "all"
             projectionRepository.save(projectionOffset)
+
+            handleEvent(event)
         } else {
             console.log(`Event does not have offset for stream all`)
         }

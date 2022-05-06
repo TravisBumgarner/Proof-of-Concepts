@@ -4,9 +4,11 @@
 - [x] Refactor eventstore code
 - [x] Add index files
 - [x] Refactor createConnection to getConnection
+- [ ] Setup first eventstore projection with postgres
+- [ ] Redis time?
 - [ ] Get rid of pubsub, including library
 - [ ] Figure out how to write sendEvent tpe more cleanly
-- [ ] Add eventstore to keep track of painting.
+- [x] Add eventstore to keep track of painting.
 Notes
 
 

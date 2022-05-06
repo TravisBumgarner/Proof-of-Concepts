@@ -6,7 +6,7 @@ import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { ApolloServer } from 'apollo-server'
 
-import { schema } from './graphql'
+import { schema } from '../graphql'
 
 const app = express()
 app.use(cors())

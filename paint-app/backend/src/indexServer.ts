@@ -1,5 +1,5 @@
 import { createConnection } from 'typeorm';
-import { apolloServer, httpServer } from './server'
+import { apolloServer, httpServer } from './express'
 
 import ormconfig from "./postgres/ormconfig";
 
