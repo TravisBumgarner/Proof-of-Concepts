@@ -2,34 +2,36 @@ import { jsonEvent, JSONEventType } from '@eventstore/db-client';
 
 import { ColorMessage } from '../../../shared/types'
 
-enum EventName {
-    PaintEvent = "PaintEvent",
+enum EEventName {
+    TPaintEvent = "TPaintEvent",
     DummyEventForTesting = "DummyEventForTesting"
 }
 
-type PaintEvent = JSONEventType<
-    EventName.PaintEvent,
+enum EStreamPrefix {
+    Paint = "paint-"
+}
+
+type TPaintEvent = JSONEventType<
+    EEventName.TPaintEvent,
     {
         payload: ColorMessage
     }
 >;
 
 type DummyEventForTesting = JSONEventType<
-    EventName.DummyEventForTesting,
+    EEventName.DummyEventForTesting,
     {
         payload: 'hello'
     }
 >;
 
-type Event =
-    | PaintEvent
+type TEvent =
+    | TPaintEvent
     | DummyEventForTesting
 
-
-
-
-export default Event
+export default TEvent
 export {
-    PaintEvent,
-    EventName
+    TPaintEvent,
+    EEventName,
+    EStreamPrefix
 }

@@ -1,11 +1,11 @@
 import { jsonEvent } from '@eventstore/db-client';
 
 import eventstoreClient from './eventstore'
-import Event, { EventName } from './eventTypes'
+import TEvent, { EEventName } from './eventTypes'
 
 
-const sendEvent = async (type: EventName, stream: string, data) => {
-    const event = jsonEvent<Event>({
+const sendEvent = async (type: EEventName, stream: string, data) => {
+    const event = jsonEvent<TEvent>({
         type,
         data,
     });

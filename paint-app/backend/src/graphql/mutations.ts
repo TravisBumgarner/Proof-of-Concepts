@@ -1,7 +1,7 @@
 import { PubSub } from 'graphql-subscriptions';
 import { gql } from 'apollo-server'
 
-import { EventName, PaintEvent } from '../eventstore/eventTypes';
+import { EEventName } from '../eventstore/eventTypes';
 import currentStateByRoom from '../inMemoryProjections/currentStateByRoom'
 import sendEvent from '../eventstore/sendEvent'
 
@@ -18,7 +18,7 @@ const mutationResolvers = {
     createColor: async (_, { color, index, room }) => {
         currentStateByRoom[room][index] = color
 
-        await sendEvent(EventName.PaintEvent, `paint-${room}`, [{color, index}])
+        await sendEvent(EEventName.TPaintEvent, `paint-${room}`, [{color, index}])
 
         await pubsub.publish('COLOR_CREATED', {
             colorCreated: [{

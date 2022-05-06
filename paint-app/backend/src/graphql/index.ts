@@ -1,7 +1,4 @@
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import { PubSub } from 'graphql-subscriptions';
-import { gql } from 'apollo-server'
-import { jsonEvent, JSONEventType } from '@eventstore/db-client';
 
 import { mutationTypeDefs, mutationResolvers } from './mutations'
 import { queryTypeDefs, queryResolvers } from './queries'

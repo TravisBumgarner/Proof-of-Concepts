@@ -1,8 +1,7 @@
 import { createConnection, getRepository } from 'typeorm'
-import { SubscribeToAllOptions, SubscribeToStreamOptions } from "@eventstore/db-client"
+import { SubscribeToAllOptions } from "@eventstore/db-client"
 
 import {
-    connectHandlerToStream,
     connectHandlerToAllStreamEvents
 } from './eventstore/eventstore'
 import ormconfig from './postgres/ormconfig'
@@ -58,26 +57,3 @@ const allStreamsHandler = async () => {
     })
 }
 allStreamsHandler()
-
-const streamHandler = async (stream: string) => {
-    const offset = await getOffsetForStream(stream)
-
-    const options: SubscribeToStreamOptions = offset
-        ? { fromRevision: offset }
-        : { fromRevision: 'start' }
-
-    console.log(`Starting stream ${stream} at with options ${JSON.stringify(options)}`)
-
-    connectHandlerToStream(stream, options, event => {
-        // Could also be event.link
-        if (event.event) {
-            console.log(`Stream: ${stream} --- Offset: ${event.commitPosition} --- importantData: ${event.event?.data['importantData']}`)
-            const projectionRepository = getRepository(entity.ProjectionOffset)
-            const projectionOffset = new entity.ProjectionOffset
-            projectionOffset.offset = event.event.revision
-            projectionOffset.stream = stream
-            projectionRepository.save(projectionOffset)
-        }
-    })
-}
-streamHandler('my-demo-stream')
