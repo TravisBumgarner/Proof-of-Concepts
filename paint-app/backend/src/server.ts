@@ -6,18 +6,12 @@ import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { ApolloServer } from 'apollo-server'
 
-import { schema, pubsub } from './schemas'
+import { schema } from './schemas'
 
 const app = express()
 app.use(cors())
 
 app.get('/', async (req: express.Request, res: express.Response) => {
-  await pubsub.publish('COLOR_CREATED', {
-    colorCreated: [{
-      index: 0,
-      color: '#ABABAB'
-    }]
-  });
   res.send('pong!')
 })
 

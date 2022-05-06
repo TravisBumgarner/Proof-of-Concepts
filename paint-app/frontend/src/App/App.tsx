@@ -17,11 +17,8 @@ import { createClient } from 'graphql-ws';
 
 import { Body, Title } from 'sharedComponents'
 
-enum ROOMS {
-  modernism = "modernism",
-  justChillin = "justChillin",
-  abstract = "abstract"
-}
+import { ROOMS } from '../../../shared/types'
+
 
 const wsLink = new GraphQLWsLink(createClient({
   url: 'ws://localhost:5001/graphql',

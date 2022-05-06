@@ -5,8 +5,8 @@ import {
     connectHandlerToStream,
     connectHandlerToAllStreamEvents
 } from './eventstore'
-import ormconfig from './db/ormconfig'
-import entity from './db'
+import ormconfig from './postgres/ormconfig'
+import entity from './postgres'
 
 BigInt.prototype["toJSON"] = function () {
     return this.toString();

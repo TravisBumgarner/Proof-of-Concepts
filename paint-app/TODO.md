@@ -1,7 +1,7 @@
 # PR-1
-- [x] Add support for separate rooms
 
-
+- [ ] Do some refactoring
+- [ ] Add eventstore to keep track of painting.
 Notes
 
 - There will be no Mutations. Or will there?
