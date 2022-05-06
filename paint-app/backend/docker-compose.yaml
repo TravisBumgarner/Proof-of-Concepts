@@ -1,6 +1,13 @@
 version: '3.4'
 
 services:
+    redis:
+        image: "redis:alpine"
+        ports:
+        - "6379:6379"
+        volumes:
+        - ./docker-volumes/redis-data:/var/lib/redis
+        - ./docker-volumes/redis.conf:/usr/local/etc/redis/redis.conf
     postgres:
         container_name: pg-paint-app
         image: postgres:10.5

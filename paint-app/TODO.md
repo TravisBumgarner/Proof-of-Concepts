@@ -11,6 +11,31 @@
 - [x] Add eventstore to keep track of painting.
 Notes
 
+Implement this.
+```
+const main = async () => {
+    await client.connect();
+    client.del('paint-foo')
+    const data = []
+    for (let i = 0; i < 100; i++){
+        data.push(i, "FFFFFF")
+    }
+    client.hSet('paint-foo', data)
+    await setColor(client, 0, "00FF00")
+    await setColor(client, 95, "FFFF00")
+    await setColor(client, 99, "FFFFFF")
+    elements = await client.hGetAll( "paint-foo")
+    console.log(Object.values(elements))
+    await client.disconnect()
+}
+
+const setColor = async (client, index, color) => {
+    await client.hSet('paint-foo', index, color)
+}
+
+main()
+```
+
 
 - Start batching events
 - if Hydrating, perhaps tell the user to refresh the page.
