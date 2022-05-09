@@ -1,31 +1,40 @@
-import { ResolvedEvent, EventType} from '@eventstore/db-client'
+import { ResolvedEvent } from '@eventstore/db-client'
 
-import { EEventName, EStreamPrefix } from '../eventTypes'
+import TEvent, { EEventName } from '../eventTypes'
+import {PaintHistory} from '../../postgres/entity'
+import { getRepository } from 'typeorm'
 
-const handleEvent = (event: ResolvedEvent<EventType>) => {
-    if(!event.event) {
+const handleEvent = async (event: ResolvedEvent<TEvent>) => {
+    if (!event.event) {
         console.log('Discarding event: ', JSON.stringify(event))
         return
     }
 
-    if(event.event.metadata){
+    if (event.event.metadata) {
         console.log(`Discarding metadata event: streamId - ${event.event.streamId} id - ${event.event.id}`)
         return
     }
 
-    const streamPrefix = event.event.streamId.split("-")[0] as EStreamPrefix
+    switch (event.event.type) {
+        case EEventName.TPaintEvent: {
+            const paintHistoryRepository = getRepository(PaintHistory)
 
-    switch (streamPrefix) {
-        case EStreamPrefix.Paint: {
-            console.log(event.event.data)
+            const room = event.event.streamId.split("-")[1]
+            
+            const paintHistoryEvent = new PaintHistory
+            paintHistoryEvent.id = event.event.id
+            paintHistoryEvent.color = event.event.data[0].color
+            paintHistoryEvent.index = event.event.data[0].index
+            paintHistoryEvent.room = room
+            paintHistoryRepository.save(paintHistoryEvent)
             break;
         }
-        case EStreamPrefix.NonExistantStream: {
+        case EEventName.DummyEventForTesting: {
             // Remove once there's a second case.
             break
         }
         default: {
-            const _: never = streamPrefix
+            // const _: never = event
             console.log("Unknown Stream passed to handleEvent", JSON.stringify(event))
         }
 

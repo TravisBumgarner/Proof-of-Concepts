@@ -7,11 +7,6 @@ enum EEventName {
     DummyEventForTesting = "DummyEventForTesting"
 }
 
-enum EStreamPrefix {
-    Paint = "paint",
-    NonExistantStream = "fake"
-}
-
 type TPaintEvent = JSONEventType<
     EEventName.TPaintEvent,
     {
@@ -34,5 +29,4 @@ export default TEvent
 export {
     TPaintEvent,
     EEventName,
-    EStreamPrefix
 }

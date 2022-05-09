@@ -1,13 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, PrimaryColumn } from 'typeorm'
 
 @Entity()
 export default class PaintHistory {
-    @PrimaryGeneratedColumn('increment')
-    public id: number;
+    @PrimaryColumn({ nullable: false })
+    public id: string;
 
     @Column({ nullable: false })
     index: number
-    
+
     @Column({ nullable: false })
     color: string
 
