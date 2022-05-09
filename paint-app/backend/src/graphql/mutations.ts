@@ -2,7 +2,7 @@ import { PubSub } from 'graphql-subscriptions';
 import { gql } from 'apollo-server'
 
 import { EEventName } from '../eventstore/eventTypes';
-import currentStateByRoom from '../inMemoryProjections/currentStateByRoom'
+import {currentStateByRoom} from '../inMemoryProjections/paintState'
 import sendEvent from '../eventstore/sendEvent'
 
 

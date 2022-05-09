@@ -5,7 +5,7 @@
 - [x] Add index files
 - [x] Refactor createConnection to getConnection
 - [x] Setup first eventstore projection with postgres
-- [ ] Add query to fetch data from Postgres
+- [x] Add query to fetch data from Postgres
 - [ ] Redis time?
 - [ ] Get rid of pubsub, including library
 - [ ] Figure out how to write sendEvent tpe more cleanly

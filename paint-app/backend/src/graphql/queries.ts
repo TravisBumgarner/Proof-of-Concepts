@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server'
 
-import currentStateByRoom from '../inMemoryProjections/currentStateByRoom'
+import { currentStateByRoom } from '../inMemoryProjections/paintState'
 
 const queryTypeDefs = gql`
   type Query {
@@ -9,7 +9,7 @@ const queryTypeDefs = gql`
 `;
 
 const queryResolvers = {
-    colors: (_, args) => currentStateByRoom[args.room].map((color, pixelIndex) => ({ color, pixelIndex }))
+  colors: (_, args) => currentStateByRoom[args.room].map((color, pixelIndex) => ({ color, pixelIndex }))
 };
 
 export {
