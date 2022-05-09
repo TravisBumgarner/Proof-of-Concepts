@@ -6,36 +6,13 @@
 - [x] Refactor createConnection to getConnection
 - [x] Setup first eventstore projection with postgres
 - [x] Add query to fetch data from Postgres
-- [ ] Redis time?
-- [ ] Get rid of pubsub, including library
+- [x] Redis time?
+- [ ] Figure out how to get pubsub in Event handler
+    - does it need to be there?
 - [ ] Figure out how to write sendEvent tpe more cleanly
 - [x] Add eventstore to keep track of painting.
 Notes
 
-Implement this.
-```
-const main = async () => {
-    await client.connect();
-    client.del('paint-foo')
-    const data = []
-    for (let i = 0; i < 100; i++){
-        data.push(i, "FFFFFF")
-    }
-    client.hSet('paint-foo', data)
-    await setColor(client, 0, "00FF00")
-    await setColor(client, 95, "FFFF00")
-    await setColor(client, 99, "FFFFFF")
-    elements = await client.hGetAll( "paint-foo")
-    console.log(Object.values(elements))
-    await client.disconnect()
-}
-
-const setColor = async (client, index, color) => {
-    await client.hSet('paint-foo', index, color)
-}
-
-main()
-```
 
 
 - Start batching events

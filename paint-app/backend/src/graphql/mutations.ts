@@ -1,4 +1,4 @@
-import { PubSub } from 'graphql-subscriptions';
+import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { gql } from 'apollo-server'
 
 import { EEventName } from '../eventstore/eventTypes';
@@ -6,7 +6,7 @@ import {currentStateByRoom} from '../inMemoryProjections/paintState'
 import sendEvent from '../eventstore/sendEvent'
 
 
-const pubsub = new PubSub();
+const pubsub = new RedisPubSub();
 
 const mutationTypeDefs = gql`
   type Mutation {
@@ -33,6 +33,5 @@ const mutationResolvers = {
 
 export {
     mutationTypeDefs,
-    mutationResolvers,
-    pubsub
+    mutationResolvers
 }

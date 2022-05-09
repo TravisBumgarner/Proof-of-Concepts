@@ -5,6 +5,8 @@ import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { ApolloServer } from 'apollo-server'
+import { RedisPubSub } from 'graphql-redis-subscriptions';
+const pubsub = new RedisPubSub();
 
 import { schema } from '../graphql'
 
@@ -12,6 +14,8 @@ const app = express()
 app.use(cors())
 
 app.get('/', async (req: express.Request, res: express.Response) => {
+  pubsub.publish('test', {test: 'test'});
+
   res.send('pong!')
 })
 

@@ -85,6 +85,13 @@ const COLORS_SUBSCRIPTION = gql`
   }
 `;
 
+const TEST_SUBSCRIPTION = gql`
+  subscription Test {
+    test
+  }
+`;
+
+
 
 const CREATE_COLOR_MUTATION = gql`
   mutation CreateColor($pixelIndex: Int!, $color: String!, $room: Room!) {
@@ -126,9 +133,15 @@ const App = () => {
   })
 
 
+  useSubscription<string>(TEST_SUBSCRIPTION, {
+    onSubscriptionData: (data) => {
+      console.log('data received', data)
+    }
+  })
+
   useSubscription<{ colorCreated: ColorMessage }>(COLORS_SUBSCRIPTION, {
     onSubscriptionData: (data) => {
-      console.log(data.subscriptionData.data)
+      console.log('data received', data.subscriptionData.data)
       if (data.subscriptionData.data.colorCreated[0].room === room) {
         handleNewColors(data.subscriptionData.data.colorCreated)
       }

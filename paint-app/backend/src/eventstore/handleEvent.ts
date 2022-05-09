@@ -1,8 +1,11 @@
 import { ResolvedEvent } from '@eventstore/db-client'
+import { RedisPubSub } from 'graphql-redis-subscriptions';
 
 import TEvent, { EEventName } from './eventTypes'
 import { PaintHistory } from '../postgres/entity'
 import { getRepository } from 'typeorm'
+
+const pubsub = new RedisPubSub();
 
 const handleEvent = async (event: ResolvedEvent<TEvent>) => {
     if (!event.event) {
@@ -29,7 +32,6 @@ const handleEvent = async (event: ResolvedEvent<TEvent>) => {
                 return paintHistoryEvent
             })
             await paintHistoryRepository.save(paintHistoryEvents)
-
             break;
         }
         case EEventName.DummyEventForTesting: {
