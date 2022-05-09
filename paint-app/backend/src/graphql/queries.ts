@@ -9,7 +9,7 @@ const queryTypeDefs = gql`
 `;
 
 const queryResolvers = {
-    colors: (_, args) => currentStateByRoom[args.room].map((color, index) => ({ color, index }))
+    colors: (_, args) => currentStateByRoom[args.room].map((color, pixelIndex) => ({ color, pixelIndex }))
 };
 
 export {

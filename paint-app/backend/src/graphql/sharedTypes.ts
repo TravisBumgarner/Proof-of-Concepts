@@ -9,7 +9,7 @@ const sharedTypeDefs = gql`
 
   type Color {
     color: String!
-    index: Int!
+    pixelIndex: Int!
     room: Room!
   }
 `;

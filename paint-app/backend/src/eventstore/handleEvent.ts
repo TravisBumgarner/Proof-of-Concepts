@@ -1,7 +1,7 @@
 import { ResolvedEvent } from '@eventstore/db-client'
 
-import TEvent, { EEventName } from '../eventTypes'
-import {PaintHistory} from '../../postgres/entity'
+import TEvent, { EEventName } from './eventTypes'
+import { PaintHistory } from '../postgres/entity'
 import { getRepository } from 'typeorm'
 
 const handleEvent = async (event: ResolvedEvent<TEvent>) => {
@@ -18,15 +18,18 @@ const handleEvent = async (event: ResolvedEvent<TEvent>) => {
     switch (event.event.type) {
         case EEventName.TPaintEvent: {
             const paintHistoryRepository = getRepository(PaintHistory)
-
             const room = event.event.streamId.split("-")[1]
-            
-            const paintHistoryEvent = new PaintHistory
-            paintHistoryEvent.id = event.event.id
-            paintHistoryEvent.color = event.event.data[0].color
-            paintHistoryEvent.index = event.event.data[0].index
-            paintHistoryEvent.room = room
-            paintHistoryRepository.save(paintHistoryEvent)
+            const paintHistoryEvents = event.event.data.map(({ pixelIndex, color }, paintEventIndex) => {
+                const paintHistoryEvent = new PaintHistory
+                paintHistoryEvent.paintEventIndex = paintEventIndex
+                paintHistoryEvent.color = color
+                paintHistoryEvent.commitPosition = event.commitPosition as bigint
+                paintHistoryEvent.pixelIndex = pixelIndex
+                paintHistoryEvent.room = room
+                return paintHistoryEvent
+            })
+            await paintHistoryRepository.save(paintHistoryEvents)
+
             break;
         }
         case EEventName.DummyEventForTesting: {
@@ -39,6 +42,7 @@ const handleEvent = async (event: ResolvedEvent<TEvent>) => {
         }
 
     }
+
 }
 
 export default handleEvent

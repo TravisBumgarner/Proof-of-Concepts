@@ -5,7 +5,7 @@ enum ROOMS {
   }
 
   type ColorMessage = {
-    index: number
+    pixelIndex: number
     color: string
     room: string
   }[]

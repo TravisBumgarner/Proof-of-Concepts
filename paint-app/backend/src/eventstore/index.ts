@@ -5,7 +5,7 @@ import ormconfig from '../postgres/ormconfig'
 import entity from '../postgres'
 import handleEvent from './handleEvent'
 
-const client = new EventStoreDBClient({endpoint: 'localhost:2113'}, { insecure: true })
+const client = new EventStoreDBClient({ endpoint: 'localhost:2113' }, { insecure: true })
 
 type AllStreamEventHandler = (e: ResolvedEvent) => void
 const connectHandlerToAllStreamEvents = async (options: SubscribeToAllOptions, handler: AllStreamEventHandler) => {
@@ -47,7 +47,7 @@ const allStreamsHandler = async () => {
 
     console.log(`Starting stream all at with options ${JSON.stringify(options)}`)
 
-    connectHandlerToAllStreamEvents(options, event => {
+    connectHandlerToAllStreamEvents(options, async event => {
         if (event.commitPosition) {
             const projectionRepository = getRepository(entity.ProjectionOffset)
 
@@ -56,7 +56,17 @@ const allStreamsHandler = async () => {
             projectionOffset.stream = "all"
             projectionRepository.save(projectionOffset)
 
-            handleEvent(event)
+            try {
+                await handleEvent(event)
+            } catch (error) {
+                console.log(`
+                    Garbage event in stream ${event.event?.streamId}
+                    Data ${JSON.stringify(event.event?.data)}
+                    Error: ${JSON.stringify(error.message)}      
+                `)
+            }
+
+
         } else {
             console.log(`Event does not have offset for stream all`)
         }

@@ -2,11 +2,14 @@ import { Column, Entity, PrimaryColumn } from 'typeorm'
 
 @Entity()
 export default class PaintHistory {
+    @PrimaryColumn({ nullable: false, type:'bigint' })
+    commitPosition: bigint
+
     @PrimaryColumn({ nullable: false })
-    public id: string;
+    paintEventIndex: number
 
     @Column({ nullable: false })
-    index: number
+    pixelIndex: number
 
     @Column({ nullable: false })
     color: string

@@ -10,24 +10,24 @@ const pubsub = new PubSub();
 
 const mutationTypeDefs = gql`
   type Mutation {
-    createColor(color: String!, index: Int!, room: Room!): Color
+    createColor(color: String!, pixelIndex: Int!, room: Room!): Color
   }
 `;
 
 const mutationResolvers = {
-    createColor: async (_, { color, index, room }) => {
-        currentStateByRoom[room][index] = color
+    createColor: async (_, { color, pixelIndex, room }) => {
+        currentStateByRoom[room][pixelIndex] = color
 
-        await sendEvent(EEventName.TPaintEvent, `paint-${room}`, [{color, index}])
+        await sendEvent(EEventName.TPaintEvent, `paint-${room}`, [{color, pixelIndex}])
 
         await pubsub.publish('COLOR_CREATED', {
             colorCreated: [{
-                index,
+                pixelIndex,
                 color,
                 room
             }]
         });
-        return { color, index, room }
+        return { color, pixelIndex, room }
     }
 };
 

@@ -70,7 +70,7 @@ const COLORS_QUERY = gql`
   query ColorsQuery($room: Room!) {
     colors(room: $room) {
       color,
-      index
+      pixelIndex
     }
   }
 `
@@ -79,7 +79,7 @@ const COLORS_SUBSCRIPTION = gql`
   subscription ColorFeed {
     colorCreated {
       color,
-      index,
+      pixelIndex,
       room
     }
   }
@@ -87,10 +87,10 @@ const COLORS_SUBSCRIPTION = gql`
 
 
 const CREATE_COLOR_MUTATION = gql`
-  mutation CreateColor($index: Int!, $color: String!, $room: Room!) {
-    createColor(index: $index, color: $color, room: $room) {
+  mutation CreateColor($pixelIndex: Int!, $color: String!, $room: Room!) {
+    createColor(pixelIndex: $pixelIndex, color: $color, room: $room) {
       color,
-      index
+      pixelIndex
     }
   }
 `;
@@ -105,7 +105,7 @@ const App = () => {
   const handleNewColors = (colors: ColorMessage) => {
     setColors(prev => {
       const updatedColors = [...prev]
-      colors.forEach(({ index, color }) => updatedColors[index] = color)
+      colors.forEach(({ pixelIndex, color }) => updatedColors[pixelIndex] = color)
       return updatedColors
     })
   }
@@ -159,11 +159,11 @@ const App = () => {
       {PickARoom}
       <Title>You're Drawing in {room}</Title>
       <FakePixelWrapper>
-        {colors.map((color, index) => (
+        {colors.map((color, pixelIndex) => (
           <FakePixel
             color={color}
-            key={index}
-            onClick={() => createColor({ variables: { index, color: selectedColor, room } })}
+            key={pixelIndex}
+            onClick={() => createColor({ variables: { pixelIndex, color: selectedColor, room } })}
           />))}
       </FakePixelWrapper>
       <Title>Color Picker</Title>

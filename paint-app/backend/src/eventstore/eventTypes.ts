@@ -9,9 +9,7 @@ enum EEventName {
 
 type TPaintEvent = JSONEventType<
     EEventName.TPaintEvent,
-    {
-        payload: ColorMessage
-    }
+    ColorMessage
 >;
 
 type DummyEventForTesting = JSONEventType<
