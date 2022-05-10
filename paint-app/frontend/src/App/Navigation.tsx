@@ -4,9 +4,9 @@ import { useLocation, NavLink } from 'react-router-dom'
 
 const StyledNav = styled.ul`
     list-style: none;
-    margin: 2rem 0;
-    padding: 0rem;
+    padding: 2rem;
     display: flex;
+    background-color: transparent;
     flex-direction: row;
     li {
         margin-right: 1rem;

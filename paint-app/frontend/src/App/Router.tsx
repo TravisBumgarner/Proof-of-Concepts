@@ -1,13 +1,8 @@
 import React from 'react'
 import { Routes, Route } from 'react-router'
 
-const Paint = () => {
-    return <p>Hi.</p>
-}
-
-const History = () => {
-    return <p>Hisd.</p>
-}
+import Paint from './Paint'
+import History from './History'
 
 
 const Router = () => {
