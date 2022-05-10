@@ -41,8 +41,8 @@ const handleEvent = async (event: ResolvedEvent<TEvent>) => {
             paintHistoryEvent.room = room
             await paintHistoryRepository.save([paintHistoryEvent])
 
-            await pubsub.publish('COLOR_CREATED', {
-                colorCreated: [{
+            await pubsub.publish('PAINT_EVENT', {
+                paintEvent: [{
                     pixelIndex,
                     color,
                     room

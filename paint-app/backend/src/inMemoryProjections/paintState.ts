@@ -1,5 +1,5 @@
 import { EntityRepository, getManager } from "typeorm"
-import { ROOMS, ColorMessage } from "../../../shared/types"
+import { ROOMS, PaintEvent } from "../../../shared/types"
 
 const BLANK_CANVAS = Array.apply(null, Array(100)).map(() => "#FFFFFF")
 
@@ -7,7 +7,7 @@ let currentStateByRoom
 
 const getInitialPaintState = async () => {
   const manager = getManager()
-  const data: ColorMessage = await manager.query(`
+  const data: PaintEvent = await manager.query(`
     SELECT
       DISTINCT ON ("pixelIndex")
       "pixelIndex",

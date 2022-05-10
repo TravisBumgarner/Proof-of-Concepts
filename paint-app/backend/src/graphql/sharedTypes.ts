@@ -7,7 +7,7 @@ const sharedTypeDefs = gql`
     abstract
   }
 
-  type Color {
+  type Pixel {
     color: String!
     pixelIndex: Int!
     room: Room!

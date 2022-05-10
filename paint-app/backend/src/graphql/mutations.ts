@@ -5,17 +5,14 @@ import { EEventName } from '../eventstore/eventTypes';
 import {currentStateByRoom} from '../inMemoryProjections/paintState'
 import sendEvent from '../eventstore/sendEvent'
 
-
-const pubsub = new RedisPubSub();
-
 const mutationTypeDefs = gql`
   type Mutation {
-    createColor(color: String!, pixelIndex: Int!, room: Room!): Color
+    paintEvent(color: String!, pixelIndex: Int!, room: Room!): Pixel
   }
 `;
 
 const mutationResolvers = {
-    createColor: async (_, { color, pixelIndex, room }) => {
+    paintEvent: async (_, { color, pixelIndex, room }) => {
         currentStateByRoom[room][pixelIndex] = color
 
         await sendEvent(EEventName.TPaintEvent, `paint-${room}`, [{color, pixelIndex}])

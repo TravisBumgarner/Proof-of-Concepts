@@ -5,7 +5,7 @@ const pubsub = new RedisPubSub();
 const subscriptionTypeDefs = gql`
   type Subscription {
     hello: String
-    colorCreated: [Color]
+    paintEvent: [Pixel]
   }
 `;
 
@@ -17,8 +17,8 @@ const subscriptionResolvers = {
       }
     },
   },
-  colorCreated: {
-    subscribe: () => pubsub.asyncIterator('COLOR_CREATED'),
+  paintEvent: {
+    subscribe: () => pubsub.asyncIterator('PAINT_EVENT'),
   }
 };
 

@@ -4,12 +4,12 @@ import { currentStateByRoom } from '../inMemoryProjections/paintState'
 
 const queryTypeDefs = gql`
   type Query {
-    colors(room: Room!): [Color]
+    painting(room: Room!): [Pixel]
   }
 `;
 
 const queryResolvers = {
-  colors: (_, args) => currentStateByRoom[args.room].map((color, pixelIndex) => ({ color, pixelIndex }))
+  painting: (_, args) => currentStateByRoom[args.room].map((color, pixelIndex) => ({ color, pixelIndex }))
 };
 
 export {

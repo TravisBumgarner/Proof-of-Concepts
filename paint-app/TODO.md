@@ -11,6 +11,9 @@
 - [x] Figure out how to get pubsub in Event handler
     - does it need to be there?
 - [x] Add eventstore to keep track of painting.
+- [x] Add painting for real
+- [ ] Clean up variable names
+- [ ] Setup history playback
 Notes
 
 

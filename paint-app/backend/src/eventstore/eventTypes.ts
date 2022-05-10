@@ -1,6 +1,6 @@
 import { jsonEvent, JSONEventType } from '@eventstore/db-client';
 
-import { ColorMessage } from '../../../shared/types'
+import { PaintEvent } from '../../../shared/types'
 
 enum EEventName {
     TPaintEvent = "TPaintEvent",
@@ -9,7 +9,7 @@ enum EEventName {
 
 type TPaintEvent = JSONEventType<
     EEventName.TPaintEvent,
-    ColorMessage
+    PaintEvent
 >;
 
 type DummyEventForTesting = JSONEventType<

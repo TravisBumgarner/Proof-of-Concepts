@@ -4,7 +4,7 @@ enum ROOMS {
     abstract = "abstract"
   }
 
-  type ColorMessage = {
+  type PaintEvent = {
     pixelIndex: number
     color: string
     room: string
@@ -12,5 +12,5 @@ enum ROOMS {
 
   export {
       ROOMS,
-      ColorMessage
+      PaintEvent
   }

@@ -17,7 +17,7 @@ import { createClient } from 'graphql-ws';
 
 import { Body, Title } from 'sharedComponents'
 
-import { ROOMS, ColorMessage } from '../../../shared/types'
+import { ROOMS, PaintEvent } from '../../../shared/types'
 
 
 const wsLink = new GraphQLWsLink(createClient({
@@ -66,18 +66,18 @@ const FakePixelWrapper = styled.div`
   width: ${PIXELS_PER_ROW * PIXEL_LENGTH}px;
 `
 
-const COLORS_QUERY = gql`
-  query ColorsQuery($room: Room!) {
-    colors(room: $room) {
+const PAINTING_QUERY = gql`
+  query PaintingQuery($room: Room!) {
+    painting(room: $room) {
       color,
       pixelIndex
     }
   }
 `
 
-const COLORS_SUBSCRIPTION = gql`
-  subscription ColorFeed {
-    colorCreated {
+const PAINTING_SUBSCRIPTION = gql`
+  subscription PixelFeed {
+    paintEvent {
       color,
       pixelIndex,
       room
@@ -94,8 +94,8 @@ const TEST_SUBSCRIPTION = gql`
 
 
 const CREATE_COLOR_MUTATION = gql`
-  mutation CreateColor($pixelIndex: Int!, $color: String!, $room: Room!) {
-    createColor(pixelIndex: $pixelIndex, color: $color, room: $room) {
+  mutation paintEvent($pixelIndex: Int!, $color: String!, $room: Room!) {
+    paintEvent(pixelIndex: $pixelIndex, color: $color, room: $room) {
       color,
       pixelIndex
     }
@@ -104,10 +104,10 @@ const CREATE_COLOR_MUTATION = gql`
 
 const App = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
-  const [colors, setColors] = React.useState<string[]>([])
+  const [painting, setPainting] = React.useState<string[]>([])
   const [selectedColor, setSelectedColor] = React.useState<string>('#000000')
   const [room, setRoom] = React.useState<ROOMS | ''>(ROOMS.abstract)
-  const [createColor, { data, loading, error }] = useMutation(CREATE_COLOR_MUTATION);
+  const [paintEvent, { data, loading, error }] = useMutation(CREATE_COLOR_MUTATION);
   const [mouseDown, setMouseDown] = React.useState<boolean>(false)
 
   React.useEffect(() => {
@@ -115,21 +115,22 @@ const App = () => {
     document.addEventListener('mouseup', () => setMouseDown(false))
   }, [])
 
-  const handleNewColors = (colors: ColorMessage) => {
-    setColors(prev => {
-      const updatedColors = [...prev]
-      colors.forEach(({ pixelIndex, color }) => updatedColors[pixelIndex] = color)
-      return updatedColors
+  const handleNewPaintEvent = (pixels: PaintEvent) => {
+    setPainting(prev => {
+      const updatedPainting = [...prev]
+
+      pixels.forEach(({ pixelIndex, color }) => updatedPainting[pixelIndex] = color)
+      return updatedPainting
     })
   }
 
-  useQuery<{ colors: ColorMessage }>(COLORS_QUERY, {
+  useQuery<{ painting: PaintEvent }>(PAINTING_QUERY, {
     variables: {
       room
     },
     skip: room === '',
     onCompleted: (data) => {
-      handleNewColors(data.colors)
+      handleNewPaintEvent(data.painting)
       setIsLoading(false)
     },
     onError: (error) => {
@@ -138,10 +139,10 @@ const App = () => {
     },
   })
 
-  useSubscription<{ colorCreated: ColorMessage }>(COLORS_SUBSCRIPTION, {
+  useSubscription<{ paintEvent: PaintEvent }>(PAINTING_SUBSCRIPTION, {
     onSubscriptionData: (data) => {
-      if (data.subscriptionData.data.colorCreated[0].room === room) {
-        handleNewColors(data.subscriptionData.data.colorCreated)
+      if (data.subscriptionData.data.paintEvent[0].room === room) {
+        handleNewPaintEvent(data.subscriptionData.data.paintEvent)
       }
     }
   })
@@ -170,12 +171,12 @@ const App = () => {
       {PickARoom}
       <Title>You're Drawing in {room}</Title>
       <FakePixelWrapper>
-        {colors.map((color, pixelIndex) => (
+        {painting.map((color, pixelIndex) => (
           <FakePixel
             color={color}
             key={pixelIndex}
-            onMouseEnter={mouseDown ? () => createColor({ variables: { pixelIndex, color: selectedColor, room } }) : null}
-            onClick={() => createColor({ variables: { pixelIndex, color: selectedColor, room }}) }
+            onMouseEnter={mouseDown ? () => paintEvent({ variables: { pixelIndex, color: selectedColor, room } }) : null}
+            onClick={() => paintEvent({ variables: { pixelIndex, color: selectedColor, room }}) }
           />))}
       </FakePixelWrapper>
       <Title>Color Picker</Title>
