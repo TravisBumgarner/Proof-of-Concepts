@@ -14,11 +14,12 @@ import {
 import { getMainDefinition } from '@apollo/client/utilities';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
+import { BrowserRouter } from 'react-router-dom'
 
 import { Body, Title } from 'sharedComponents'
-
 import { ROOMS, PaintEvent } from '../../../shared/types'
-
+import Navigation from './Navigation';
+import Router from './Router';
 
 const wsLink = new GraphQLWsLink(createClient({
   url: 'ws://localhost:5001/graphql',
@@ -84,14 +85,6 @@ const PAINTING_SUBSCRIPTION = gql`
     }
   }
 `;
-
-const TEST_SUBSCRIPTION = gql`
-  subscription Test {
-    test
-  }
-`;
-
-
 
 const CREATE_COLOR_MUTATION = gql`
   mutation paintEvent($pixelIndex: Int!, $color: String!, $room: Room!) {
@@ -193,9 +186,13 @@ const App = () => {
 
 const WrappedApp = () => {
   return (
+    <BrowserRouter>
     <ApolloProvider client={apolloClient}>
+      <Navigation />
+      <Router />
       <App />
     </ApolloProvider>
+    </BrowserRouter>
   )
 }
 
