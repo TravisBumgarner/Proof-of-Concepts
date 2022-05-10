@@ -108,6 +108,12 @@ const App = () => {
   const [selectedColor, setSelectedColor] = React.useState<string>('#000000')
   const [room, setRoom] = React.useState<ROOMS | ''>(ROOMS.abstract)
   const [createColor, { data, loading, error }] = useMutation(CREATE_COLOR_MUTATION);
+  const [mouseDown, setMouseDown] = React.useState<boolean>(false)
+
+  React.useEffect(() => {
+    document.addEventListener('mousedown', () => setMouseDown(true))
+    document.addEventListener('mouseup', () => setMouseDown(false))
+  }, [])
 
   const handleNewColors = (colors: ColorMessage) => {
     setColors(prev => {
@@ -134,7 +140,6 @@ const App = () => {
 
   useSubscription<{ colorCreated: ColorMessage }>(COLORS_SUBSCRIPTION, {
     onSubscriptionData: (data) => {
-      console.log('data received', data.subscriptionData.data)
       if (data.subscriptionData.data.colorCreated[0].room === room) {
         handleNewColors(data.subscriptionData.data.colorCreated)
       }
@@ -169,7 +174,8 @@ const App = () => {
           <FakePixel
             color={color}
             key={pixelIndex}
-            onClick={() => createColor({ variables: { pixelIndex, color: selectedColor, room } })}
+            onMouseEnter={mouseDown ? () => createColor({ variables: { pixelIndex, color: selectedColor, room } }) : null}
+            onClick={() => createColor({ variables: { pixelIndex, color: selectedColor, room }}) }
           />))}
       </FakePixelWrapper>
       <Title>Color Picker</Title>

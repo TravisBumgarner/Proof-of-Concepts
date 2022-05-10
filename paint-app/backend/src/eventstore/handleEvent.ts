@@ -22,16 +22,33 @@ const handleEvent = async (event: ResolvedEvent<TEvent>) => {
         case EEventName.TPaintEvent: {
             const paintHistoryRepository = getRepository(PaintHistory)
             const room = event.event.streamId.split("-")[1]
-            const paintHistoryEvents = event.event.data.map(({ pixelIndex, color }, paintEventIndex) => {
-                const paintHistoryEvent = new PaintHistory
-                paintHistoryEvent.paintEventIndex = paintEventIndex
-                paintHistoryEvent.color = color
-                paintHistoryEvent.commitPosition = event.commitPosition as bigint
-                paintHistoryEvent.pixelIndex = pixelIndex
-                paintHistoryEvent.room = room
-                return paintHistoryEvent
-            })
-            await paintHistoryRepository.save(paintHistoryEvents)
+            // Note -> Half the app can only create one pixel per event. But it still sits in an array.
+            // const paintHistoryEvents = event.event.data.map(({ pixelIndex, color }, paintEventIndex) => {
+            //     const paintHistoryEvent = new PaintHistory
+            //     paintHistoryEvent.paintEventIndex = paintEventIndex
+            //     paintHistoryEvent.color = color
+            //     paintHistoryEvent.commitPosition = event.commitPosition as bigint
+            //     paintHistoryEvent.pixelIndex = pixelIndex
+            //     paintHistoryEvent.room = room
+            //     return paintHistoryEvent
+            // })
+            const {color, pixelIndex} = event.event.data[0]
+            const paintHistoryEvent = new PaintHistory
+            paintHistoryEvent.paintEventIndex = 0
+            paintHistoryEvent.color = color
+            paintHistoryEvent.commitPosition = event.commitPosition as bigint
+            paintHistoryEvent.pixelIndex = pixelIndex
+            paintHistoryEvent.room = room
+            await paintHistoryRepository.save([paintHistoryEvent])
+
+            await pubsub.publish('COLOR_CREATED', {
+                colorCreated: [{
+                    pixelIndex,
+                    color,
+                    room
+                }]
+            });
+
             break;
         }
         case EEventName.DummyEventForTesting: {

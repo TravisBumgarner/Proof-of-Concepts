@@ -19,14 +19,6 @@ const mutationResolvers = {
         currentStateByRoom[room][pixelIndex] = color
 
         await sendEvent(EEventName.TPaintEvent, `paint-${room}`, [{color, pixelIndex}])
-
-        await pubsub.publish('COLOR_CREATED', {
-            colorCreated: [{
-                pixelIndex,
-                color,
-                room
-            }]
-        });
         return { color, pixelIndex, room }
     }
 };
