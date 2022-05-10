@@ -7,6 +7,7 @@
 - [x] Setup first eventstore projection with postgres
 - [x] Add query to fetch data from Postgres
 - [x] Redis time?
+- [x] Fix bug with room changing not working
 - [ ] Figure out how to get pubsub in Event handler
     - does it need to be there?
 - [ ] Figure out how to write sendEvent tpe more cleanly

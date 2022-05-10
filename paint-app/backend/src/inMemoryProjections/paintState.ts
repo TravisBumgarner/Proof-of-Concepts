@@ -20,12 +20,14 @@ const getInitialPaintState = async () => {
       ("commitPosition"::bigint + "paintEventIndex"::bigint) DESC
   `)
   
+  const EMPTY_STATE = {}
+  Object.values(ROOMS).forEach(room => EMPTY_STATE[room] = [...BLANK_CANVAS] )
+
   const state = data.reduce((accumulator, {pixelIndex, room, color}) => {
-    if(!(room in accumulator)) accumulator[room] = [...BLANK_CANVAS]
     accumulator[room][pixelIndex] = color
     return accumulator
-  }, {} as Record<string, string[]>)
-  console.log('state', state)
+  }, {...EMPTY_STATE} as Record<string, string[]>)
+
   currentStateByRoom = state
 }
 

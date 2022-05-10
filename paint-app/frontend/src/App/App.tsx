@@ -132,13 +132,6 @@ const App = () => {
     },
   })
 
-
-  useSubscription<string>(TEST_SUBSCRIPTION, {
-    onSubscriptionData: (data) => {
-      console.log('data received', data)
-    }
-  })
-
   useSubscription<{ colorCreated: ColorMessage }>(COLORS_SUBSCRIPTION, {
     onSubscriptionData: (data) => {
       console.log('data received', data.subscriptionData.data)
