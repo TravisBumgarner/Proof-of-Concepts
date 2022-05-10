@@ -16,7 +16,6 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 import { BrowserRouter } from 'react-router-dom'
 
-import { ROOMS, PaintEvent } from '../../../shared/types'
 import Navigation from './Navigation';
 import Router from './Router';
 import { GlobalStyle } from 'theme';

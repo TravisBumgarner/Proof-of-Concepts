@@ -1,4 +1,4 @@
-import { EntityRepository, getManager } from "typeorm"
+import { getManager } from "typeorm"
 import { ROOMS, PaintEvent } from "../../../shared/types"
 
 const BLANK_CANVAS = Array.apply(null, Array(100)).map(() => "#FFFFFF")

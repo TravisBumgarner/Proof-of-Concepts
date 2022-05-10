@@ -12,8 +12,9 @@
     - does it need to be there?
 - [x] Add eventstore to keep track of painting.
 - [x] Add painting for real
-- [ ] Clean up variable names
-- [ ] Setup history playback
+- [x] Clean up variable names
+- [x] Setup history playback
+- [ ] Add a way to create a room
 Notes
 
 
