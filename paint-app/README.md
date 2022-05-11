@@ -7,8 +7,3 @@
 Notes
 
 - eventHandler will complain about a lack of a Postgres connection. This is a race condition I couldn't figure out how to resolve with `wait-on` once PG is up just save a file in the backend to force a hot reload.
-
-
-Future Dev Notes
-
-- Shouldn't be using pubsub library in production
