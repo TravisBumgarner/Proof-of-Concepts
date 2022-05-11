@@ -6,7 +6,7 @@
 
 Notes
 
-- eventHandler will complain about a lack of a Postgres connection. This is a race condition I couldn't figure out how to resolve with `wait-on` once PG is up just save a page in the backend to force a hot reload.
+- eventHandler will complain about a lack of a Postgres connection. This is a race condition I couldn't figure out how to resolve with `wait-on` once PG is up just save a file in the backend to force a hot reload.
 
 
 Future Dev Notes
