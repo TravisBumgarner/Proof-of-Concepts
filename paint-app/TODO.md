@@ -2,7 +2,7 @@ PR-2
 - [ ] Add a way to create a room
 Notes
 
-
+- Need to figure out how to trigger new room creation for in memory storage
 
 - Start batching events
 - if Hydrating, perhaps tell the user to refresh the page.

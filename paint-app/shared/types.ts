@@ -10,7 +10,13 @@ enum ROOMS {
     room: string
   }[]
 
+type Room = {
+  id: string,
+  title: string
+}
+
   export {
       ROOMS,
-      PaintEvent
+      PaintEvent,
+      Room
   }

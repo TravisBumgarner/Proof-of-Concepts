@@ -1,12 +1,9 @@
 import styled from "styled-components"
 import * as React from 'react'
 import {
-    useQuery,
-    useSubscription,
     useMutation,
     gql
 } from '@apollo/client'
-import { ROOMS } from "../../../shared/types"
 
 const PIXEL_LENGTH = 20
 const PIXELS_PER_ROW = 10
@@ -31,7 +28,7 @@ const FakePixelWrapper = styled.div`
 `
 
 const CREATE_PAINTING_MUTATION = gql`
-  mutation paintEvent($pixelIndex: Int!, $color: String!, $room: Room!) {
+  mutation paintEvent($pixelIndex: Int!, $color: String!, $room: String!) {
     paintEvent(pixelIndex: $pixelIndex, color: $color, room: $room) {
       color,
       pixelIndex
@@ -39,7 +36,7 @@ const CREATE_PAINTING_MUTATION = gql`
   }
 `;
 
-const Canvas = ({ room, painting, readonly }: { room: ROOMS, painting: string[], readonly: boolean }) => {
+const Canvas = ({ room, painting, readonly }: { room: string, painting: string[], readonly: boolean }) => {
     const [mouseDown, setMouseDown] = React.useState<boolean>(false)
     const [paintEvent, { data, loading, error }] = useMutation(CREATE_PAINTING_MUTATION);
     const [selectedColor, setSelectedColor] = React.useState<string>('#000000')

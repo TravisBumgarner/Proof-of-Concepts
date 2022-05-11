@@ -1,19 +1,26 @@
 import React from 'react'
 import {
   useQuery,
-  useSubscription,
-  useMutation,
   gql
 } from '@apollo/client'
 
 import Canvas from './Canvas'
-import { ROOMS, PaintEvent } from '../../../shared/types'
+import { PaintEvent, Room } from '../../../shared/types'
 
 const HISTORY_QUERY = gql`
-  query HistoryQuery($room: Room!, $page: Int!) {
+  query HistoryQuery($room: String!, $page: Int!) {
     history(room: $room, page: $page) {
       color,
       pixelIndex
+    }
+  }
+`
+
+const ROOMS_QUERY = gql`
+  query Rooms {
+    rooms {
+      id,
+      title
     }
   }
 `
@@ -47,10 +54,12 @@ const queue = new PaintHistoryQueue()
 
 const History = () => {
   const [painting, setPainting] = React.useState<string[]>([...BLANK_CANVAS])
-  const [room, setRoom] = React.useState<ROOMS | ''>('')
+  const [room, setRoom] = React.useState<string>('')
+  const [rooms, setRooms] = React.useState<Room[]>([]) 
   const [currentPage, setCurrentPage] = React.useState<number>(0)
   const [shouldFetchMoreData, setShouldFetchMoreData] = React.useState<boolean>(false)
   const [hasFetchedAllData, setHasFetchedAllData] = React.useState<boolean>(false)
+  const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
   React.useEffect(() => {
     setPainting([...BLANK_CANVAS])
@@ -78,6 +87,7 @@ const History = () => {
       page: currentPage
     },
     skip: shouldFetchMoreData === false,
+    fetchPolicy: "network-only",
     onCompleted: (data) => {
       if(data.history.length === 0 ){
         console.log('fetched all data')
@@ -94,11 +104,21 @@ const History = () => {
     },
   },)
 
+  useQuery<{ rooms: Room[] }>(ROOMS_QUERY, {
+    onCompleted: (data) => {
+      setRooms(data.rooms)
+      setIsLoading(false)
+    },
+    onError: (error) => {
+      console.log(JSON.stringify(error))
+      setIsLoading(false)
+    },
+  })
   const PickARoom = (
-    <select value={room} onChange={(event) => setRoom(event.target.value as ROOMS)}>
+    <select value={room} onChange={(event) => setRoom(event.target.value)}>
       <option value={''}>Pick One</option>
       {
-        Object.keys(ROOMS).map((key: keyof typeof ROOMS) => <option key={key} value={key}>{ROOMS[key]}</option>)
+        rooms.map(({id, title}) => <option key={id} value={id}>{title}</option>)
       }
     </select>
   )

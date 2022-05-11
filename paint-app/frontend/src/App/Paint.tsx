@@ -7,10 +7,19 @@ import {
 } from '@apollo/client'
 
 import Canvas from './Canvas'
-import { ROOMS, PaintEvent } from '../../../shared/types'
+import { PaintEvent, Room } from '../../../shared/types'
+
+const HYDRATE_APP = gql`
+  query HydrateQuery {
+    rooms {
+      id,
+      title
+    }
+  }
+`
 
 const PAINTING_QUERY = gql`
-  query PaintingQuery($room: Room!) {
+  query PaintingQuery ($room: String!) {
     painting(room: $room) {
       color,
       pixelIndex
@@ -28,12 +37,26 @@ const PAINTING_SUBSCRIPTION = gql`
   }
 `;
 
+const CREATE_ROOM_MUTATION = gql`
+  mutation CreateRoom($id: String!, $title: String!) {
+    createRoom(id: $id, title: $title) {
+      id,
+      title
+    }
+  }
+`;
+
+
 
 const Paint = () => {
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
     const [painting, setPainting] = React.useState<string[]>([])
-    const [room, setRoom] = React.useState<ROOMS | ''>(ROOMS.abstract)
-  
+    const [room, setRoom] = React.useState<Room['id'] | ''>('')
+    const [newRoomInput, setNewRoomInput] = React.useState<string>('')
+    const [rooms, setRooms] = React.useState<Room[]>([]) 
+    const [createRoom, { data, loading, error }] = useMutation(CREATE_ROOM_MUTATION);
+
+
     const handleNewPaintEvent = (pixels: PaintEvent) => {
       setPainting(prev => {
         const updatedPainting = [...prev]
@@ -42,19 +65,36 @@ const Paint = () => {
         return updatedPainting
       })
     }
+    const handleRoomChange = (room: Room['id']) => {
+      setIsLoading(true)
+      setRoom(room)
+    }
+
+    const handleRoomCreate = () => {
+      createRoom({variables: {title: newRoomInput, id: newRoomInput.toLowerCase().replace(' ', '_')}})
+    } 
+
+    useQuery<{ rooms: Room[] }>(HYDRATE_APP, {
+      onCompleted: (data) => {
+        setRooms(data.rooms)
+        setIsLoading(false)
+      },
+      onError: (error) => {
+        console.log(JSON.stringify(error))
+        setIsLoading(false)
+      },
+    })
   
-    useQuery<{ painting: PaintEvent }>(PAINTING_QUERY, {
+    useQuery<{ painting: PaintEvent, rooms: Room[] }>(PAINTING_QUERY, {
       variables: {
         room
       },
       skip: room === '',
       onCompleted: (data) => {
         handleNewPaintEvent(data.painting)
-        setIsLoading(false)
       },
       onError: (error) => {
         console.log(JSON.stringify(error))
-        setIsLoading(false)
       },
     })
   
@@ -66,21 +106,24 @@ const Paint = () => {
       }
     })
   
+    if (isLoading) <p>Loading...</p>
+    console.log(rooms)
     const PickARoom = (
-      <select value={room} onChange={(event) => setRoom(event.target.value as ROOMS)}>
+      <select value={room} onChange={(event) => setRoom(event.target.value)}>
         <option value={''}>Pick One</option>
         {
-          Object.keys(ROOMS).map((key: keyof typeof ROOMS) => <option key={key} value={key}>{ROOMS[key]}</option>)
+          rooms.map(({id, title}) => <option key={id} value={id}>{title}</option>)
         }
       </select>
     )
-  
-    if (isLoading) <p>Loading...</p>
   
     if (!room) {
       return (
         <div>
           {PickARoom}
+          <p>or</p>
+          <input value={newRoomInput} onChange={event => setNewRoomInput(event.target.value)} />
+          <button onClick={handleRoomCreate} disabled={newRoomInput.length === 0}>Create Room</button>
         </div>
       )
     }

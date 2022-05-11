@@ -1,8 +1,9 @@
 import { gql } from 'apollo-server'
-import { getManager } from "typeorm"
+import { getConnection, getManager } from "typeorm"
 
 import { PaintEvent, ROOMS } from '../../../shared/types';
 import { currentStateByRoom } from '../inMemoryProjections/paintState'
+import { Room } from '../postgres/entity'
 
 const queryTypeDefs = gql`
   type HistoryPixel {
@@ -11,20 +12,30 @@ const queryTypeDefs = gql`
   }
 
   type Query {
-    painting(room: Room!): [Pixel]
-    history(room: Room!, page: Int!): [HistoryPixel]
+    painting(room: String!): [Pixel]
+    history(room: String!, page: Int!): [HistoryPixel]
+    rooms: [RoomRoom]
   }
 `;
 
 const queryResolvers = {
   painting: (_, args) => currentStateByRoom[args.room].map((color, pixelIndex) => ({ color, pixelIndex })),
+  rooms: async () => {
+    return await getConnection()
+      .getRepository(Room)
+      .createQueryBuilder('room')
+      .getMany()
+  },
   history: async (_, args) => {
     const manager = getManager()
 
+    const rooms = await getConnection()
+      .getRepository(Room)
+      .createQueryBuilder('room')
+      .getMany()
     const page = parseInt(args.page, 10) || 0
-    const room = Object.values(ROOMS).includes(args.room) ? args.room : ROOMS.abstract
-
-    const data: {pixelIndex: number, color: string} = await manager.query(`
+    const room = rooms.some(({ id }) => args.room === id ) ? args.room : rooms[0].id // just throw em in the first room if it doesn't exist
+    const data: { pixelIndex: number, color: string } = await manager.query(`
       SELECT
         "pixelIndex",
         color

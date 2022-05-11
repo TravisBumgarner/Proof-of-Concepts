@@ -7,7 +7,8 @@ import sendEvent from '../eventstore/sendEvent'
 
 const mutationTypeDefs = gql`
   type Mutation {
-    paintEvent(color: String!, pixelIndex: Int!, room: Room!): Pixel
+    paintEvent(color: String!, pixelIndex: Int!, room: String!): Pixel
+    createRoom(id: String!, title: String!): RoomRoom
   }
 `;
 
@@ -17,6 +18,10 @@ const mutationResolvers = {
 
         await sendEvent(EEventName.TPaintEvent, `paint-${room}`, [{color, pixelIndex}])
         return { color, pixelIndex, room }
+    },
+    createRoom: async (_, {title, id}) => {
+      await sendEvent(EEventName.NewRoomEvent, `newroom`, {id, title})
+      return { title, id }
     }
 };
 

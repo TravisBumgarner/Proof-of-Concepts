@@ -2,7 +2,7 @@ import { ResolvedEvent } from '@eventstore/db-client'
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 
 import TEvent, { EEventName } from './eventTypes'
-import { PaintHistory } from '../postgres/entity'
+import { PaintHistory, Room } from '../postgres/entity'
 import { getRepository } from 'typeorm'
 
 const pubsub = new RedisPubSub();
@@ -51,8 +51,16 @@ const handleEvent = async (event: ResolvedEvent<TEvent>) => {
 
             break;
         }
-        case EEventName.DummyEventForTesting: {
-            // Remove once there's a second case.
+        case EEventName.NewRoomEvent: {
+            console.log('hi')
+            const newRoomRepository = getRepository(Room)
+            const {id, title} = event.event.data
+            const newRoom = new Room
+            newRoom.id = id
+            newRoom.title = title
+
+            await newRoomRepository.save(newRoom)
+
             break
         }
         default: {

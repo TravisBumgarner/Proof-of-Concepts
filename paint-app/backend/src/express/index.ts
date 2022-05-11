@@ -11,7 +11,7 @@ const pubsub = new RedisPubSub();
 import { schema } from '../graphql'
 
 const app = express()
-app.use(cors())
+app.use(cors({origin: '*'}))
 
 app.get('/', async (req: express.Request, res: express.Response) => {
   pubsub.publish('test', {test: 'test'});

@@ -1,10 +1,10 @@
 import { jsonEvent, JSONEventType } from '@eventstore/db-client';
 
-import { PaintEvent } from '../../../shared/types'
+import { PaintEvent, Room } from '../../../shared/types'
 
 enum EEventName {
     TPaintEvent = "TPaintEvent",
-    DummyEventForTesting = "DummyEventForTesting"
+    NewRoomEvent = "NewRoomEvent"
 }
 
 type TPaintEvent = JSONEventType<
@@ -12,16 +12,14 @@ type TPaintEvent = JSONEventType<
     PaintEvent
 >;
 
-type DummyEventForTesting = JSONEventType<
-    EEventName.DummyEventForTesting,
-    {
-        payload: 'hello'
-    }
+type NewRoomEvent = JSONEventType<
+    EEventName.NewRoomEvent,
+    Room
 >;
 
 type TEvent =
     | TPaintEvent
-    | DummyEventForTesting
+    | NewRoomEvent
 
 export default TEvent
 export {
