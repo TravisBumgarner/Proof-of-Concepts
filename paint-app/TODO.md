@@ -1,19 +1,4 @@
-# PR-1
-
-- [x] Do some refactoring
-- [x] Refactor eventstore code
-- [x] Add index files
-- [x] Refactor createConnection to getConnection
-- [x] Setup first eventstore projection with postgres
-- [x] Add query to fetch data from Postgres
-- [x] Redis time?
-- [x] Fix bug with room changing not working
-- [x] Figure out how to get pubsub in Event handler
-    - does it need to be there?
-- [x] Add eventstore to keep track of painting.
-- [x] Add painting for real
-- [x] Clean up variable names
-- [x] Setup history playback
+PR-2
 - [ ] Add a way to create a room
 Notes
 
