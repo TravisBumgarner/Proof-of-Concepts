@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "wait-for-docker": "wait-on http-get://localhost:2113",
+        "wait-for-docker": "wait-on http-get://localhost:2113 && wait-on tcp:5432",
         "sd:be:docker": "cd backend && docker-compose up",
         "sd:fe": "npm run wait-for-docker && cd frontend && npm run sd:fe",
         "sd:be:server": "npm run wait-for-docker && cd backend && npm run sd:server",
