@@ -65,13 +65,7 @@ bin/
 obj/
 symbolCache.db
 
-# Images
-*.jpg
-*.gif
-*.jpeg
-*.png
-*.raw
-*.nef
+
 
 # Config
 .env
