@@ -56,6 +56,17 @@ These are a collection of projects that go beyond just learning the basics of a 
     - io-ts
     - typeorm
 
+###  [paint-app](paint-app)
+
+- Summary: Paint in real time with friends. Painting on the front creates events. Those events are sent to other users via a GraphQL Subscription. Users can also replay the entire paint history of a room with the play button. 
+    - (*) Websockets
+    - (*) GraphQL Subscriptions
+    - Postgres
+    - React
+    - Express
+    - TypeScript
+    - Node.js
+
 ###  [reservation-desk](reservation-desk)
 
 - Summary: Connects various computers to a central hub. Track which computers are available for people to use and which are taken.
