@@ -7,4 +7,8 @@
 
 # Current Architecture
 
+Notes
+
+- Cacheing in Node doesn't actually work with > 1 instances of the server running. 
+
 ![alt text](current_architecture.png "Current Architecture")
