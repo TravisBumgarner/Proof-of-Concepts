@@ -66,6 +66,12 @@ const App = () => {
             })
     }, [])
 
+    React.useEffect(() => {
+        if (!window.ethereum) {
+            alert("You need to install Metamask")
+        }
+    }, [])
+
     if (isLoading) {
         return <p>One sec...</p>
     }

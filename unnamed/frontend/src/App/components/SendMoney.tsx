@@ -22,7 +22,10 @@ const SendMoney = ({ closeSendMoney }: SendMoneyProps) => {
         setAmount(0)
     }
 
-    const handleSend = () => {
+    const handleSend = async () => {
+        await window.ethereum.request()
+
+
         handleClear()
         setShowConfirmModal(false)
         closeSendMoney()
