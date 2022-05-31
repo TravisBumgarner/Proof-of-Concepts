@@ -48,24 +48,51 @@ const Wallet = () => {
     <div>
       <div>ChainId: {chainId}</div>
       <div>Account: {account}</div>
-      {active ? (
-        <div>✅ </div>
-      ) : (
-        <button type="button" onClick={onClick}>
-          Connect
-        </button>
-      )}
     </div>
   )
 }
 
 const App = () => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(true)
+  const [hasErrored, setHasErrored] = React.useState<boolean>(false)
+  const { activate, active } = useWeb3React<Web3Provider>()
+
+  React.useEffect(() => {
+    activate(injectedConnector)
+      .then(() => {
+        console.log('success')
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        console.log(error)
+        setIsLoading(false)
+        setHasErrored(true)
+      })
+  }, [])
+
+  if (isLoading) {
+    return <p>One sec...</p>
+  }
+
+  if (hasErrored) {
+    return <p>Something went wrong...</p>
+  }
+
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
+    <>
       <Wallet />
       <Balance />
-    </Web3ReactProvider>
+    </>
   )
 }
 
-export default App
+const WrappedApp = () => {
+  return (
+    < Web3ReactProvider getLibrary={getLibrary} >
+      <App />
+    </Web3ReactProvider >
+  )
+
+}
+
+export default WrappedApp
