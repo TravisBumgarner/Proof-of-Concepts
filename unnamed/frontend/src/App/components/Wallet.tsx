@@ -4,7 +4,7 @@ import { useWeb3React } from '@web3-react/core'
 
 
 const Wallet = () => {
-    const { chainId, account, activate, active } = useWeb3React<Web3Provider>()
+    const { chainId, account } = useWeb3React<Web3Provider>()
 
     return (
         <div>

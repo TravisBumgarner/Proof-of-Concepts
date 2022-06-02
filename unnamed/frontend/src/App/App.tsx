@@ -8,6 +8,7 @@ import styled from 'styled-components'
 
 import { Wallet, Balance, SendMoney } from './components'
 import { Modal } from 'sharedComponents'
+import Context, { context } from 'Context'
 
 const ModalBackground = styled.div`
     display: flex;
@@ -48,12 +49,13 @@ function getLibrary(provider: any): Web3Provider {
 }
 
 const App = () => {
+    const { state, dispatch } = React.useContext(context)
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
     const [hasErrored, setHasErrored] = React.useState<boolean>(false)
     const [showSendMoneyModal, setShowSendMoneyModal] = React.useState<boolean>(false)
-    const { activate, active } = useWeb3React<Web3Provider>()
+    const { activate, active, account } = useWeb3React<Web3Provider>()
 
-    React.useEffect(() => {
+    const getAccount = () => {
         activate(injectedConnector)
             .then(() => {
                 console.log('success')
@@ -64,7 +66,9 @@ const App = () => {
                 setIsLoading(false)
                 setHasErrored(true)
             })
-    }, [])
+    }
+
+    React.useEffect(getAccount, [])
 
     React.useEffect(() => {
         if (!window.ethereum) {
@@ -72,12 +76,32 @@ const App = () => {
         }
     }, [])
 
+    // const fetchAccounts = () => {
+    //     window.ethereum.request({
+    //         method: 'eth_requestAccounts',
+    //     }).then((accounts: string[]) => {
+    //         console.log(accounts)
+    //         dispatch({ type: "UPDATE_ACCOUNTS", payload: { accounts } })
+    //     }).catch(error => {
+    //         console.log('something went wrong', error)
+    //     })
+    // }
+
     if (isLoading) {
         return <p>One sec...</p>
     }
 
     if (hasErrored) {
         return <p>Something went wrong...</p>
+    }
+
+    if (!account) {
+        return (
+            <div>
+                <p>You have no accounts connected.</p>
+                <button onClick={getAccount}>Connect accounts.</button>
+            </div>
+        )
     }
 
     return (
@@ -98,11 +122,13 @@ const App = () => {
 
 const WrappedApp = () => {
     return (
-        < Web3ReactProvider getLibrary={getLibrary} >
-            <ModalProvider backgroundComponent={ModalBackground}>
-                <App />
-            </ModalProvider>
-        </Web3ReactProvider >
+        <Context>
+            < Web3ReactProvider getLibrary={getLibrary} >
+                <ModalProvider backgroundComponent={ModalBackground}>
+                    <App />
+                </ModalProvider>
+            </Web3ReactProvider >
+        </Context>
     )
 
 }
