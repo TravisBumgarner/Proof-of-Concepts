@@ -43,6 +43,15 @@ These are a collection of projects that go beyond just learning the basics of a 
     - (*) GraphQL
     - Express
 
+###  [mongo-todo-list](mongo-todo-list)
+
+- Summary: Todolist App with Mongo
+- Tech Stack
+    - (*) MongoDB
+    - TypeScript
+    - React
+    - Express
+
 ###  [read-and-write-color-values](read-and-write-color-values)
 
 - Summary: Write values to an event store and create projections with redis and postgres.
