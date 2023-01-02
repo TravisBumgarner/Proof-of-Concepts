@@ -13,6 +13,12 @@ These are a collection of projects that go beyond just learning the basics of a 
     - HTML
     - JavaScript
 
+### [arduino-keyboard](arduino-keyboard)
+
+- Summary: Use an Arduino and a Painless Prototyping Button Board as a keyboard
+- Tech Stack
+    - (*) Arduino
+
 ### [button-presses](button-presses)
 
 - Summary: Use a UI to click 3 different colored buttons and track those button clicks with Kafka and SQLITE.
