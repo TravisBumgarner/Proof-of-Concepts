@@ -15,7 +15,7 @@ These are a collection of projects that go beyond just learning the basics of a 
 
 ### [arduino-keyboard](arduino-keyboard)
 
-- Summary: Use an Arduino and a Painless Prototyping Button Board as a keyboard
+- Summary: Use an Arduino and a Painless Prototyping Button Board as a keyboard. This was what launched my second startup.
 - Tech Stack
     - (*) Arduino
 
