@@ -1,7 +1,0 @@
-config:
-  aws-ts-slack:slackToken:
-    secure: AAABAGS6PYzwKupB9Ncl6YSqhtYGwhhaFQXE53JfxLAuwCVr3ZTP5Kk2iVtlMo0uOsLE6wLckONjCSwvO4b65VeUvRHWGZCRqNsXUeN4bgEc0FKYivHlu9U=
-  aws-ts-slack:verificationToken:
-    secure: AAABAJVkML5vZx3uyGpK6Kp1pEQpuDkXAFUZdrVbj5hTl+O9ZZdvqr4oHokYHA0q2Scye5hDxHc=
-  aws:profile: pulumi-demo
-  aws:region: us-east-1

@@ -36,6 +36,13 @@ These are a collection of projects that go beyond just learning the basics of a 
     - (*) Ink
     - React
 
+###  [digi-physi](digi-physi)
+
+- Summary: Exploration of the intersection of digital and physical experiences
+- Tech Stack
+    - (*) opencv
+    - python
+
 ###  [graphql-books-and-authors](graphql-books-and-authors)
 
 - Summary: An API for fetching books and their authors
