@@ -56,6 +56,14 @@ These are a collection of projects that go beyond just learning the basics of a 
     - (*) GraphQL
     - Express
 
+###  [make-a-camera](make-a-camera)
+
+- Summary: Research into how Arduino could be used in a "make your own camera kit". Project scrapped when Arduino ran out of memory after loading the require libraries just to get started.
+- Tech Stack
+    - (*) Arduino
+    - (*) Arducam
+
+
 ###  [mongo-todo-list](mongo-todo-list)
 
 - Summary: Todolist App with Mongo
