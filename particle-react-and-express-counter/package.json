@@ -1,0 +1,12 @@
+{
+    "name": "particle-react-and-express-counter",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "start": "concurrently -n frontend,backend -c \"bgBlue.bold,bgMagenta.bold\" \"cd frontend && yarn start\" \"cd backend && yarn start\" "
+    },
+    "devDependencies": {
+        "concurrently": "^8.0.1"
+    }
+}
