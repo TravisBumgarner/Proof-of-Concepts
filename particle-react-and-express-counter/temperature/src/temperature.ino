@@ -30,7 +30,6 @@ unsigned long lastPublishMs;
 
 void setup(void)
 {
-    // analogReference(EXTERNAL); Doesn't work.
 }
 
 void loop(void)
