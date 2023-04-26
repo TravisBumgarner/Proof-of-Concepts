@@ -4,6 +4,7 @@ import cors from 'cors'
 import bodyParser, { raw } from 'body-parser';
 
 import { MongoClient } from "mongodb";
+import { getCelcius, getFarenheit } from './utilities';
 
 const getClient = async () => {
   // This bad, I'm lazy.
@@ -32,32 +33,34 @@ app.get('/', (req: express.Request, res: express.Response) => {
   res.send('pong!')
 })
 
-type RawCounterEvent = {
-  event: 'counterEvent',
+type RawTemperatureEvent = {
+  event: 'temperatureEvent',
   data: string // '9',
   published_at: string // '2023-04-26T02:24:00.652Z',
   coreid: string // 'e00fce687cc15f2e42da5d0a'
 }
 
-type ParsedCounterEvent = {
-  event: 'counterEvent',
+type ParsedTemperatureEvent = {
+  event: 'temperatureEvent',
   data: number // '9',
   publishedAt: Date // '2023-04-26T02:24:00.652Z',
   id: string // 'e00fce687cc15f2e42da5d0a'
 }
 
 type ParsedEvent =
-  | ParsedCounterEvent
+  | ParsedTemperatureEvent
 
 type RawEvent =
-  | RawCounterEvent
+  | RawTemperatureEvent
 
-const parseEvent = ({ event, data, published_at, coreid }: RawEvent): ParsedEvent => {
+const parseEvent = ({ event, data, published_at, coreid }: RawEvent): ParsedEvent | undefined => {
   const parsedPublishedAt = new Date(published_at)
   let parsedData
   switch (event) {
-    case 'counterEvent': {
-      parsedData = parseInt(data)
+    case 'temperatureEvent': {
+      console.log('data', data)
+      parsedData = getFarenheit(getCelcius(parseFloat(data))) // This bad, whatevs.
+      console.log(parsedData)
       return {
         id: coreid,
         event,
@@ -66,28 +69,35 @@ const parseEvent = ({ event, data, published_at, coreid }: RawEvent): ParsedEven
       }
     }
     default: {
-      throw new Error("Received unknown event")
+      console.log("Received unknown event")
     }
   }
 
 }
 
-
+app.get('/temperature', async (req: express.Request, res: express.Response) => {
+  const db = await getClient()
+  let collection = await db.collection("temperature");
+  const data = await collection.find({}).toArray()
+  res.json(data)
+})
 
 app.post('/webhook', async (req: express.Request, res: express.Response) => {
   const rawEvent = (req.body as RawEvent)
+  console.log(rawEvent)
 
   const parsedEvent = parseEvent(rawEvent)
+  if (parsedEvent === undefined) return
 
   switch (parsedEvent.event) {
-    case 'counterEvent': {
+    case 'temperatureEvent': {
       const db = await getClient()
-      let collection = await db.collection("counter");
-      collection.insertOne({ date: parsedEvent.publishedAt, counter: parsedEvent.data })
+      let collection = await db.collection("temperature");
+      collection.insertOne({ publishedAt: parsedEvent.publishedAt, temperature: parsedEvent.data })
       break
     }
     default: {
-      throw new Error("Received unknown event")
+      console.log("Received unknown event")
     }
   }
 
