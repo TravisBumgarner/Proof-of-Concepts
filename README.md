@@ -97,6 +97,14 @@ These are a collection of projects that go beyond just learning the basics of a 
     - TypeScript
     - Node.js
 
+### [particle-react-and-express-temperature](particle-react-and-express-temperature)
+
+- Summary: A temperature sensor in the real world, connected to particle, streaming data to Express/Mongo via a webhook, and visible on frontend in react.
+    - (*) Particle
+    - React
+    - Express
+    - Mongo
+
 ###  [reservation-desk](reservation-desk)
 
 - Summary: Connects various computers to a central hub. Track which computers are available for people to use and which are taken.
