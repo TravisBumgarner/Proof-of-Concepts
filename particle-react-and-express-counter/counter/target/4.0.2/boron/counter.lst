@@ -7,37 +7,37 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .dynalib      00000004  000b4018  000b4018  00004018  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  2 .text         000031e4  000b401c  000b401c  0000401c  2**2
+  2 .text         000031f4  000b401c  000b401c  0000401c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  3 .note.gnu.build-id 00000024  000b7200  000b7200  00007200  2**2
+  3 .note.gnu.build-id 00000024  000b7210  000b7210  00007210  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  4 .backup       00000004  2003f400  000b7224  0000f400  2**2
+  4 .backup       00000004  2003f400  000b7234  0000f400  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  5 .data         00000084  2003e5d0  000b7228  0001e5d0  2**3
+  5 .data         00000084  2003e5d0  000b7238  0001e5d0  2**3
                   CONTENTS, ALLOC, LOAD, DATA
   6 .bss          000001a0  2003e654  2003e654  0002e654  2**2
                   ALLOC
-  7 .module_info_suffix 00000028  000b72ac  000b72ac  000272ac  2**0
+  7 .module_info_suffix 00000028  000b72bc  000b72bc  000272bc  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  8 .module_info_crc 00000004  000b72d4  000b72d4  000272d4  2**0
+  8 .module_info_crc 00000004  000b72e4  000b72e4  000272e4  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  9 .debug_info   000fbcd3  00000000  00000000  000272d8  2**0
+  9 .debug_info   000fbcd3  00000000  00000000  000272e8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 10 .debug_abbrev 0000f9d4  00000000  00000000  00122fab  2**0
+ 10 .debug_abbrev 0000f9d4  00000000  00000000  00122fbb  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 11 .debug_loc    00038272  00000000  00000000  0013297f  2**0
+ 11 .debug_loc    00038272  00000000  00000000  0013298f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 12 .debug_aranges 00002738  00000000  00000000  0016abf1  2**0
+ 12 .debug_aranges 00002738  00000000  00000000  0016ac01  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_ranges 00009ff0  00000000  00000000  0016d329  2**0
+ 13 .debug_ranges 00009ff0  00000000  00000000  0016d339  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_macro  000319a3  00000000  00000000  00177319  2**0
+ 14 .debug_macro  000319a3  00000000  00000000  00177329  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_line   000338c3  00000000  00000000  001a8cbc  2**0
+ 15 .debug_line   000338c3  00000000  00000000  001a8ccc  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_str    001358b6  00000000  00000000  001dc57f  2**0
+ 16 .debug_str    001358b6  00000000  00000000  001dc58f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_frame  000071dc  00000000  00000000  00311e38  2**2
+ 17 .debug_frame  000071dc  00000000  00000000  00311e48  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -77,7 +77,7 @@ void* module_user_pre_init() {
    b4040:	bd08      	pop	{r3, pc}
    b4042:	bf00      	nop
    b4044:	2003e5d0 	.word	0x2003e5d0
-   b4048:	000b7228 	.word	0x000b7228
+   b4048:	000b7238 	.word	0x000b7238
    b404c:	2003e654 	.word	0x2003e654
    b4050:	2003e654 	.word	0x2003e654
    b4054:	2003e7f1 	.word	0x2003e7f1
@@ -115,8 +115,8 @@ void module_user_init()
     for (size_t ctor_num=0; ctor_num < link_constructors_size/sizeof(constructor_ptr_t); ctor_num++ )
    b4074:	3501      	adds	r5, #1
    b4076:	e7f7      	b.n	b4068 <module_user_init+0x10>
-   b4078:	000b71dc 	.word	0x000b71dc
-   b407c:	000b7200 	.word	0x000b7200
+   b4078:	000b71e0 	.word	0x000b71e0
+   b407c:	000b7204 	.word	0x000b7204
 
 000b4080 <module_user_setup>:
 
@@ -653,7 +653,7 @@ SerialLogHandler logHandler; // This allows for USB serial debug logs
    b4380:	2003e654 	.word	0x2003e654
    b4384:	2003e660 	.word	0x2003e660
    b4388:	000b6de0 	.word	0x000b6de0
-   b438c:	000b6f58 	.word	0x000b6f58
+   b438c:	000b6f5c 	.word	0x000b6f5c
    b4390:	000b6df8 	.word	0x000b6df8
 
 000b4394 <os_mutex_recursive_create>:
@@ -1687,7 +1687,7 @@ inline spark::Vector<T, AllocatorT>::~Vector() {
    b48c2:	bd10      	pop	{r4, pc}
    b48c4:	2003e690 	.word	0x2003e690
    b48c8:	2003e688 	.word	0x2003e688
-   b48cc:	000b6e1c 	.word	0x000b6e1c
+   b48cc:	000b6e20 	.word	0x000b6e20
 
 000b48d0 <_ZNSt15_Sp_counted_ptrIPN8particle6detail10FutureImplIbNS1_13FutureContextEEELN9__gnu_cxx12_Lock_policyE0EED1Ev>:
     class _Sp_counted_ptr final : public _Sp_counted_base<_Lp>
@@ -1968,7 +1968,7 @@ inline particle::Error::~Error() {
 	}
    b4a04:	4620      	mov	r0, r4
    b4a06:	bd38      	pop	{r3, r4, r5, pc}
-   b4a08:	000b6e58 	.word	0x000b6e58
+   b4a08:	000b6e5c 	.word	0x000b6e5c
 
 000b4a0c <_ZNSt8functionIFvRKN8particle5ErrorEEEC1ERKS5_>:
     function<_Res(_ArgTypes...)>::
@@ -2708,7 +2708,7 @@ EthernetClass Ethernet;
 } // spark
    b4e72:	4770      	bx	lr
    b4e74:	2003e6b8 	.word	0x2003e6b8
-   b4e78:	000b6e74 	.word	0x000b6e74
+   b4e78:	000b6e78 	.word	0x000b6e78
 
 000b4e7c <_ZN9IPAddressD1Ev>:
     IPAddress(uint32_t address);
@@ -2829,7 +2829,7 @@ IPAddress::IPAddress()
    b4f02:	4620      	mov	r0, r4
    b4f04:	bd10      	pop	{r4, pc}
    b4f06:	bf00      	nop
-   b4f08:	000b6eb0 	.word	0x000b6eb0
+   b4f08:	000b6eb4 	.word	0x000b6eb4
 
 000b4f0c <_ZN9IPAddressC1ERK16_HAL_IPAddress_t>:
 IPAddress::IPAddress(const HAL_IPAddress& address)
@@ -2847,7 +2847,7 @@ IPAddress::IPAddress(const HAL_IPAddress& address)
    b4f28:	701a      	strb	r2, [r3, #0]
 }
    b4f2a:	bd10      	pop	{r4, pc}
-   b4f2c:	000b6eb0 	.word	0x000b6eb0
+   b4f2c:	000b6eb4 	.word	0x000b6eb4
 
 000b4f30 <_ZN9IPAddress8set_ipv4Ehhhh>:
 {
@@ -2881,7 +2881,7 @@ IPAddress::IPAddress(const uint8_t* addr)
    b4f60:	b003      	add	sp, #12
    b4f62:	f85d fb04 	ldr.w	pc, [sp], #4
    b4f66:	bf00      	nop
-   b4f68:	000b6eb0 	.word	0x000b6eb0
+   b4f68:	000b6eb4 	.word	0x000b6eb4
 
 000b4f6c <_ZN12_GLOBAL__N_19skipTokenEPK9jsmntok_t>:
 
@@ -3219,7 +3219,7 @@ spark::JSONString::JSONString(const jsmntok_t *t, detail::JSONDataPtr d) :
    b5132:	4620      	mov	r0, r4
    b5134:	bd38      	pop	{r3, r4, r5, pc}
    b5136:	bf00      	nop
-   b5138:	000b6f1f 	.word	0x000b6f1f
+   b5138:	000b6f23 	.word	0x000b6f23
 
 000b513c <_ZN5spark18JSONObjectIteratorC1EPK9jsmntok_tSt10shared_ptrINS_6detail8JSONDataEE>:
 spark::JSONObjectIterator::JSONObjectIterator(const jsmntok_t *t, detail::JSONDataPtr d) :
@@ -3395,7 +3395,7 @@ spark::JSONWriter& spark::JSONWriter::value(unsigned val) {
 }
    b5218:	b002      	add	sp, #8
    b521a:	bd10      	pop	{r4, pc}
-   b521c:	000b6ebc 	.word	0x000b6ebc
+   b521c:	000b6ec0 	.word	0x000b6ec0
 
 000b5220 <_ZN5spark10JSONWriter12writeEscapedEPKcj>:
 
@@ -3517,7 +3517,7 @@ void spark::JSONWriter::writeEscaped(const char *str, size_t size) {
 }
    b52d2:	e8bd 87f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
    b52d6:	bf00      	nop
-   b52d8:	000b6ebf 	.word	0x000b6ebf
+   b52d8:	000b6ec3 	.word	0x000b6ec3
 
 000b52dc <_ZN5spark10JSONWriter4nameEPKcj>:
 spark::JSONWriter& spark::JSONWriter::name(const char *name, size_t size) {
@@ -4256,7 +4256,7 @@ void spark::DefaultOutputStreamFactory::getParams(const JSONValue &params, int *
    b56f2:	b00a      	add	sp, #40	; 0x28
    b56f4:	bd70      	pop	{r4, r5, r6, pc}
    b56f6:	bf00      	nop
-   b56f8:	000b6ec5 	.word	0x000b6ec5
+   b56f8:	000b6ec9 	.word	0x000b6ec9
 
 000b56fc <_ZN5spark26DefaultOutputStreamFactory12createStreamEPKcRKNS_9JSONValueE>:
 Print* spark::DefaultOutputStreamFactory::createStream(const char *type, const JSONValue &params) {
@@ -4305,8 +4305,8 @@ Print* spark::DefaultOutputStreamFactory::createStream(const char *type, const J
     return nullptr;
    b574c:	2000      	movs	r0, #0
    b574e:	e7fb      	b.n	b5748 <_ZN5spark26DefaultOutputStreamFactory12createStreamEPKcRKNS_9JSONValueE+0x4c>
-   b5750:	000b6eca 	.word	0x000b6eca
-   b5754:	000b6ed1 	.word	0x000b6ed1
+   b5750:	000b6ece 	.word	0x000b6ece
+   b5754:	000b6ed5 	.word	0x000b6ed5
 
 000b5758 <_ZN5spark6VectorINS_6detail9LogFilter4NodeENS_16DefaultAllocatorEED1Ev>:
 inline spark::Vector<T, AllocatorT>::~Vector() {
@@ -4380,7 +4380,7 @@ class JSONStreamLogHandler: public StreamLogHandler {
    b57c8:	f7ff ffe4 	bl	b5794 <_ZN5spark16StreamLogHandlerD1Ev>
    b57cc:	4620      	mov	r0, r4
    b57ce:	bd10      	pop	{r4, pc}
-   b57d0:	000b6f70 	.word	0x000b6f70
+   b57d0:	000b6f74 	.word	0x000b6f74
 
 000b57d4 <_ZN5spark20JSONStreamLogHandlerD0Ev>:
    b57d4:	b510      	push	{r4, lr}
@@ -5393,7 +5393,7 @@ inline spark::StreamLogHandler::StreamLogHandler(Print &stream, LogLevel level, 
    b5e44:	b007      	add	sp, #28
    b5e46:	bdf0      	pop	{r4, r5, r6, r7, pc}
    b5e48:	000b6de0 	.word	0x000b6de0
-   b5e4c:	000b6f58 	.word	0x000b6f58
+   b5e4c:	000b6f5c 	.word	0x000b6f5c
 
 000b5e50 <_ZN5spark24DefaultLogHandlerFactory13createHandlerEPKc8LogLevelNS_6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEEP5PrintRKNS_9JSONValueE>:
             Print *stream, const JSONValue &params) {
@@ -5464,10 +5464,10 @@ inline spark::StreamLogHandler::StreamLogHandler(Print &stream, LogLevel level, 
             return nullptr; // Output stream is not specified
    b5ec8:	2400      	movs	r4, #0
    b5eca:	e7e2      	b.n	b5e92 <_ZN5spark24DefaultLogHandlerFactory13createHandlerEPKc8LogLevelNS_6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEEP5PrintRKNS_9JSONValueE+0x42>
-   b5ecc:	000b6ed9 	.word	0x000b6ed9
-   b5ed0:	000b7068 	.word	0x000b7068
-   b5ed4:	000b6f70 	.word	0x000b6f70
-   b5ed8:	000b6edd 	.word	0x000b6edd
+   b5ecc:	000b6edd 	.word	0x000b6edd
+   b5ed0:	000b706c 	.word	0x000b706c
+   b5ed4:	000b6f74 	.word	0x000b6f74
+   b5ed8:	000b6ee1 	.word	0x000b6ee1
 
 000b5edc <_GLOBAL__sub_I__ZN5spark3LogE>:
         name_(name) {
@@ -5482,7 +5482,7 @@ void spark::logProcessControlRequest(ctrl_request* req) {
 }
    b5ee2:	4770      	bx	lr
    b5ee4:	2003e6cc 	.word	0x2003e6cc
-   b5ee8:	000b6eee 	.word	0x000b6eee
+   b5ee8:	000b6ef2 	.word	0x000b6ef2
 
 000b5eec <_ZN5spark16StreamLogHandler10logMessageEPKc8LogLevelS2_RK13LogAttributes>:
 void spark::StreamLogHandler::logMessage(const char *msg, LogLevel level, const char *category, const LogAttributes &attr) {
@@ -5702,18 +5702,18 @@ const char* extractFuncName(const char *s, size_t *size) {
    b605a:	e8bd 47f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
     write("\r\n", 2);
    b605e:	4718      	bx	r3
-   b6060:	000b6ef2 	.word	0x000b6ef2
-   b6064:	000b6ef9 	.word	0x000b6ef9
+   b6060:	000b6ef6 	.word	0x000b6ef6
+   b6064:	000b6efd 	.word	0x000b6efd
    b6068:	000b6db1 	.word	0x000b6db1
-   b606c:	000b6efc 	.word	0x000b6efc
-   b6070:	000b6f01 	.word	0x000b6f01
+   b606c:	000b6f00 	.word	0x000b6f00
+   b6070:	000b6f05 	.word	0x000b6f05
    b6074:	2003e6f8 	.word	0x2003e6f8
-   b6078:	000b6eff 	.word	0x000b6eff
-   b607c:	000b6f04 	.word	0x000b6f04
-   b6080:	000b6f07 	.word	0x000b6f07
-   b6084:	000b6f0f 	.word	0x000b6f0f
-   b6088:	000b6f12 	.word	0x000b6f12
-   b608c:	000b6f1d 	.word	0x000b6f1d
+   b6078:	000b6f03 	.word	0x000b6f03
+   b607c:	000b6f08 	.word	0x000b6f08
+   b6080:	000b6f0b 	.word	0x000b6f0b
+   b6084:	000b6f13 	.word	0x000b6f13
+   b6088:	000b6f16 	.word	0x000b6f16
+   b608c:	000b6f21 	.word	0x000b6f21
 
 000b6090 <_ZN5spark20JSONStreamLogHandler10logMessageEPKc8LogLevelS2_RK13LogAttributes>:
 void spark::JSONStreamLogHandler::logMessage(const char *msg, LogLevel level, const char *category, const LogAttributes &attr) {
@@ -5887,17 +5887,17 @@ const char* extractFuncName(const char *s, size_t *size) {
    b61ce:	e8bd 83f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, pc}
    b61d2:	bf00      	nop
    b61d4:	2003e6f8 	.word	0x2003e6f8
-   b61d8:	000b6f40 	.word	0x000b6f40
-   b61dc:	000b6ecf 	.word	0x000b6ecf
-   b61e0:	000b6f20 	.word	0x000b6f20
-   b61e4:	000b70d7 	.word	0x000b70d7
-   b61e8:	000b6f22 	.word	0x000b6f22
-   b61ec:	000b6f24 	.word	0x000b6f24
-   b61f0:	000b6f27 	.word	0x000b6f27
-   b61f4:	000b6e11 	.word	0x000b6e11
-   b61f8:	000b6f2a 	.word	0x000b6f2a
-   b61fc:	000b6f2f 	.word	0x000b6f2f
-   b6200:	000b6f1d 	.word	0x000b6f1d
+   b61d8:	000b6f44 	.word	0x000b6f44
+   b61dc:	000b6ed3 	.word	0x000b6ed3
+   b61e0:	000b6f24 	.word	0x000b6f24
+   b61e4:	000b70db 	.word	0x000b70db
+   b61e8:	000b6f26 	.word	0x000b6f26
+   b61ec:	000b6f28 	.word	0x000b6f28
+   b61f0:	000b6f2b 	.word	0x000b6f2b
+   b61f4:	000b6e13 	.word	0x000b6e13
+   b61f8:	000b6f2e 	.word	0x000b6f2e
+   b61fc:	000b6f33 	.word	0x000b6f33
+   b6200:	000b6f21 	.word	0x000b6f21
 
 000b6204 <_ZN5spark12NetworkClass7connectEj>:
         return Network;
@@ -6189,7 +6189,7 @@ class IPAddress : public Printable {
 } // spark
    b635e:	4770      	bx	lr
    b6360:	2003e6f8 	.word	0x2003e6f8
-   b6364:	000b6fb8 	.word	0x000b6fb8
+   b6364:	000b6fbc 	.word	0x000b6fbc
 
 000b6368 <_ZN5Print5writeEPKhj>:
 
@@ -6785,7 +6785,7 @@ String String::format(const char* fmt, ...)
    b6608:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
    b660c:	b003      	add	sp, #12
    b660e:	4770      	bx	lr
-   b6610:	000b6f1f 	.word	0x000b6f1f
+   b6610:	000b6f23 	.word	0x000b6f23
 
 000b6614 <_GLOBAL__sub_I_System>:
 } // namespace particle
@@ -6993,7 +6993,7 @@ USARTSerial::USARTSerial(hal_usart_interface_t serial, const hal_usart_buffer_co
 }
    b66e8:	4620      	mov	r0, r4
    b66ea:	bd10      	pop	{r4, pc}
-   b66ec:	000b7010 	.word	0x000b7010
+   b66ec:	000b7014 	.word	0x000b7014
 
 000b66f0 <_ZN11USARTSerial5beginEmm>:
   hal_usart_begin_config(_serial, baud, config, nullptr);
@@ -7140,7 +7140,7 @@ USBSerial::USBSerial(HAL_USB_USART_Serial serial, const HAL_USB_USART_Config& co
 }
    b67a0:	4620      	mov	r0, r4
    b67a2:	bd10      	pop	{r4, pc}
-   b67a4:	000b7040 	.word	0x000b7040
+   b67a4:	000b7044 	.word	0x000b7044
 
 000b67a8 <_ZN9USBSerial5beginEl>:
     HAL_USB_USART_Begin(_serial, speed, NULL);
@@ -7291,7 +7291,7 @@ void module_user_init_hook()
    b6882:	bf00      	nop
    b6884:	2003f400 	.word	0x2003f400
    b6888:	2003f404 	.word	0x2003f404
-   b688c:	000b7224 	.word	0x000b7224
+   b688c:	000b7234 	.word	0x000b7234
    b6890:	2003f400 	.word	0x2003f400
    b6894:	9a271c1e 	.word	0x9a271c1e
 
@@ -7453,7 +7453,7 @@ USARTSerial& __fetch_global_Serial1()
    b697a:	4620      	mov	r0, r4
    b697c:	bd38      	pop	{r3, r4, r5, pc}
    b697e:	bf00      	nop
-   b6980:	000b7068 	.word	0x000b7068
+   b6980:	000b706c 	.word	0x000b706c
 
 000b6984 <_Z22__fetch_global_Serial1v>:
 {
@@ -7513,7 +7513,7 @@ USARTSerial& __fetch_global_Serial1()
    b69ec:	7840      	ldrb	r0, [r0, #1]
    b69ee:	f000 0097 	and.w	r0, r0, #151	; 0x97
    b69f2:	4770      	bx	lr
-   b69f4:	000b70d9 	.word	0x000b70d9
+   b69f4:	000b70dd 	.word	0x000b70dd
 
 000b69f8 <memcpy>:
    b69f8:	440a      	add	r2, r1
@@ -7592,8 +7592,8 @@ USARTSerial& __fetch_global_Serial1()
    b6a98:	615a      	str	r2, [r3, #20]
    b6a9a:	bd38      	pop	{r3, r4, r5, pc}
    b6a9c:	2003e5ec 	.word	0x2003e5ec
-   b6aa0:	000b7069 	.word	0x000b7069
-   b6aa4:	000b7080 	.word	0x000b7080
+   b6aa0:	000b706d 	.word	0x000b706d
+   b6aa4:	000b7084 	.word	0x000b7084
    b6aa8:	abcd330e 	.word	0xabcd330e
    b6aac:	e66d1234 	.word	0xe66d1234
    b6ab0:	0005deec 	.word	0x0005deec
@@ -7821,7 +7821,7 @@ USARTSerial& __fetch_global_Serial1()
    b6c9e:	230a      	movs	r3, #10
    b6ca0:	e7ab      	b.n	b6bfa <_strtol_l.constprop.0+0x56>
    b6ca2:	bf00      	nop
-   b6ca4:	000b70da 	.word	0x000b70da
+   b6ca4:	000b70de 	.word	0x000b70de
 
 000b6ca8 <strtol>:
    b6ca8:	4613      	mov	r3, r2
@@ -7928,111 +7928,114 @@ USARTSerial& __fetch_global_Serial1()
 000b6df0 <_ZTVN5spark16SerialLogHandlerE>:
 	...
    b6df8:	40d5 000b 4109 000b 5eed 000b 40cb 000b     .@...A...^...@..
-   b6e08:	6f63 6e75 4574 6576 746e 0000               countEvent..
+   b6e08:	6f63 6e75 6574 4572 6576 746e 0000 0000     counterEvent....
 
-000b6e14 <_ZTVN5spark13CellularClassE>:
+000b6e18 <_ZTVN5spark13CellularClassE>:
 	...
-   b6e1c:	4897 000b 488d 000b 4883 000b 4839 000b     .H...H...H..9H..
-   b6e2c:	4877 000b 486b 000b 6245 000b 624d 000b     wH..kH..Eb..Mb..
-   b6e3c:	485f 000b 4857 000b 484d 000b 4843 000b     _H..WH..MH..CH..
-   b6e4c:	627d 000b                                   }b..
+   b6e20:	4897 000b 488d 000b 4883 000b 4839 000b     .H...H...H..9H..
+   b6e30:	4877 000b 486b 000b 6245 000b 624d 000b     wH..kH..Eb..Mb..
+   b6e40:	485f 000b 4857 000b 484d 000b 4843 000b     _H..WH..MH..CH..
+   b6e50:	627d 000b                                   }b..
 
-000b6e50 <_ZTVSt15_Sp_counted_ptrIPN8particle6detail10FutureImplIbNS1_13FutureContextEEELN9__gnu_cxx12_Lock_policyE0EE>:
+000b6e54 <_ZTVSt15_Sp_counted_ptrIPN8particle6detail10FutureImplIbNS1_13FutureContextEEELN9__gnu_cxx12_Lock_policyE0EE>:
 	...
-   b6e58:	48d1 000b 48d7 000b 4915 000b 48e5 000b     .H...H...I...H..
-   b6e68:	48d3 000b                                   .H..
+   b6e5c:	48d1 000b 48d7 000b 4915 000b 48e5 000b     .H...H...I...H..
+   b6e6c:	48d3 000b                                   .H..
 
-000b6e6c <_ZTVN5spark13EthernetClassE>:
+000b6e70 <_ZTVN5spark13EthernetClassE>:
 	...
-   b6e74:	4e5f 000b 4e55 000b 4e4b 000b 4e41 000b     _N..UN..KN..AN..
-   b6e84:	4e35 000b 4e29 000b 6245 000b 624d 000b     5N..)N..Eb..Mb..
-   b6e94:	4e1d 000b 4e15 000b 4e0b 000b 4e01 000b     .N...N...N...N..
-   b6ea4:	627d 000b                                   }b..
+   b6e78:	4e5f 000b 4e55 000b 4e4b 000b 4e41 000b     _N..UN..KN..AN..
+   b6e88:	4e35 000b 4e29 000b 6245 000b 624d 000b     5N..)N..Eb..Mb..
+   b6e98:	4e1d 000b 4e15 000b 4e0b 000b 4e01 000b     .N...N...N...N..
+   b6ea8:	627d 000b                                   }b..
 
-000b6ea8 <_ZTV9IPAddress>:
+000b6eac <_ZTV9IPAddress>:
 	...
-   b6eb0:	4e8d 000b 4e7d 000b 4e7f 000b 7525 7500     .N..}N...N..%u.u
-   b6ec0:	3025 7834 6200 7561 0064 6553 6972 6c61     %04x.baud.Serial
-   b6ed0:	5300 7265 6169 316c 4a00 4f53 534e 7274     .Serial1.JSONStr
-   b6ee0:	6165 4c6d 676f 6148 646e 656c 0072 7061     eamLogHandler.ap
-   b6ef0:	0070 3025 3031 2075 5d00 0020 202c 2800     p.%010u .] ., .(
-   b6f00:	3a29 0020 5b20 6300 646f 2065 203d 2500     ): . [.code = .%
-   b6f10:	0069 6564 6174 6c69 2073 203d 0d00 000a     i.details = ....
-   b6f20:	006d 0066 6e6c 6600 006e 6f63 6564 6400     m.f.ln.fn.code.d
-   b6f30:	7465 6961 006c 0000                         etail...
+   b6eb4:	4e8d 000b 4e7d 000b 4e7f 000b 7525 7500     .N..}N...N..%u.u
+   b6ec4:	3025 7834 6200 7561 0064 6553 6972 6c61     %04x.baud.Serial
+   b6ed4:	5300 7265 6169 316c 4a00 4f53 534e 7274     .Serial1.JSONStr
+   b6ee4:	6165 4c6d 676f 6148 646e 656c 0072 7061     eamLogHandler.ap
+   b6ef4:	0070 3025 3031 2075 5d00 0020 202c 2800     p.%010u .] ., .(
+   b6f04:	3a29 0020 5b20 6300 646f 2065 203d 2500     ): . [.code = .%
+   b6f14:	0069 6564 6174 6c69 2073 203d 0d00 000a     i.details = ....
+   b6f24:	006d 0066 6e6c 6600 006e 6f63 6564 6400     m.f.ln.fn.code.d
+   b6f34:	7465 6961 006c 0000                         etail...
 
-000b6f38 <_ZTVN5spark16JSONStreamWriterE>:
+000b6f3c <_ZTVN5spark16JSONStreamWriterE>:
 	...
-   b6f40:	5339 000b 535f 000b 531d 000b 4f9b 000b     9S.._S...S...O..
+   b6f44:	5339 000b 535f 000b 531d 000b 4f9b 000b     9S.._S...S...O..
 
-000b6f50 <_ZTVN5spark16StreamLogHandlerE>:
+000b6f54 <_ZTVN5spark16StreamLogHandlerE>:
 	...
-   b6f58:	5795 000b 57ad 000b 5eed 000b 40cb 000b     .W...W...^...@..
+   b6f5c:	5795 000b 57ad 000b 5eed 000b 40cb 000b     .W...W...^...@..
 
-000b6f68 <_ZTVN5spark20JSONStreamLogHandlerE>:
+000b6f6c <_ZTVN5spark20JSONStreamLogHandlerE>:
 	...
-   b6f70:	57c1 000b 57d5 000b 6091 000b 5325 000b     .W...W...`..%S..
+   b6f74:	57c1 000b 57d5 000b 6091 000b 5325 000b     .W...W...`..%S..
 
-000b6f80 <_ZTVN5spark24DefaultLogHandlerFactoryE>:
+000b6f84 <_ZTVN5spark24DefaultLogHandlerFactoryE>:
 	...
-   b6f88:	5337 000b 536d 000b 5e51 000b 5327 000b     7S..mS..Q^..'S..
+   b6f8c:	5337 000b 536d 000b 5e51 000b 5327 000b     7S..mS..Q^..'S..
 
-000b6f98 <_ZTVN5spark26DefaultOutputStreamFactoryE>:
+000b6f9c <_ZTVN5spark26DefaultOutputStreamFactoryE>:
 	...
-   b6fa0:	5335 000b 537b 000b 56fd 000b 539d 000b     5S..{S...V...S..
+   b6fa4:	5335 000b 537b 000b 56fd 000b 539d 000b     5S..{S...V...S..
 
-000b6fb0 <_ZTVN5spark12NetworkClassE>:
+000b6fb4 <_ZTVN5spark12NetworkClassE>:
 	...
-   b6fb8:	6205 000b 620f 000b 6219 000b 6223 000b     .b...b...b..#b..
-   b6fc8:	622d 000b 6239 000b 6245 000b 624d 000b     -b..9b..Eb..Mb..
-   b6fd8:	6255 000b 6261 000b 6269 000b 6273 000b     Ub..ab..ib..sb..
-   b6fe8:	627d 000b 5925 252d 2d6d 6425 2554 3a48     }b..%Y-%m-%dT%H:
-   b6ff8:	4d25 253a 2553 007a 7361 7463 6d69 0065     %M:%S%z.asctime.
+   b6fbc:	6205 000b 620f 000b 6219 000b 6223 000b     .b...b...b..#b..
+   b6fcc:	622d 000b 6239 000b 6245 000b 624d 000b     -b..9b..Eb..Mb..
+   b6fdc:	6255 000b 6261 000b 6269 000b 6273 000b     Ub..ab..ib..sb..
+   b6fec:	627d 000b 5925 252d 2d6d 6425 2554 3a48     }b..%Y-%m-%dT%H:
+   b6ffc:	4d25 253a 2553 007a 7361 7463 6d69 0065     %M:%S%z.asctime.
 
-000b7008 <_ZTV11USARTSerial>:
+000b700c <_ZTV11USARTSerial>:
 	...
-   b7010:	664d 000b 66b9 000b 6691 000b 6369 000b     Mf...f...f..ic..
-   b7020:	6661 000b 667d 000b 666f 000b 668b 000b     af..}f..of...f..
-   b7030:	664f 000b 6653 000b                         Of..Sf..
+   b7014:	664d 000b 66b9 000b 6691 000b 6369 000b     Mf...f...f..ic..
+   b7024:	6661 000b 667d 000b 666f 000b 668b 000b     af..}f..of...f..
+   b7034:	664f 000b 6653 000b                         Of..Sf..
 
-000b7038 <_ZTV9USBSerial>:
+000b703c <_ZTV9USBSerial>:
 	...
-   b7040:	670b 000b 6773 000b 6749 000b 6369 000b     .g..sg..Ig..ic..
-   b7050:	673b 000b 670d 000b 671d 000b 676d 000b     ;g...g...g..mg..
-   b7060:	672d 000b 6705 000b                         -g...g..
+   b7044:	670b 000b 6773 000b 6749 000b 6369 000b     .g..sg..Ig..ic..
+   b7054:	673b 000b 670d 000b 671d 000b 676d 000b     ;g...g...g..mg..
+   b7064:	672d 000b 6705 000b                         -g...g..
 
-000b7068 <_ZSt7nothrow>:
-   b7068:	5200 4545 544e 6d20 6c61 6f6c 2063 7573     .REENT malloc su
-   b7078:	6363 6565 6564 0064 742f 706d 6a2f 6e65     cceeded./tmp/jen
-   b7088:	696b 736e 472d 4343 312d 2d30 6970 6570     kins-GCC-10-pipe
-   b7098:	696c 656e 342d 5f38 3032 3032 3131 3432     line-48_20201124
-   b70a8:	315f 3036 3136 3038 3336 2f39 7273 2f63     _1606180639/src/
-   b70b8:	656e 6c77 6269 6e2f 7765 696c 2f62 696c     newlib/newlib/li
-   b70c8:	6362 732f 6474 696c 2f62 6172 646e 632e     bc/stdlib/rand.c
-	...
-
-000b70d9 <_ctype_>:
-   b70d9:	2000 2020 2020 2020 2020 2828 2828 2028     .         ((((( 
-   b70e9:	2020 2020 2020 2020 2020 2020 2020 2020                     
-   b70f9:	8820 1010 1010 1010 1010 1010 1010 1010      ...............
-   b7109:	0410 0404 0404 0404 0404 1004 1010 1010     ................
-   b7119:	1010 4141 4141 4141 0101 0101 0101 0101     ..AAAAAA........
-   b7129:	0101 0101 0101 0101 0101 0101 1010 1010     ................
-   b7139:	1010 4242 4242 4242 0202 0202 0202 0202     ..BBBBBB........
-   b7149:	0202 0202 0202 0202 0202 0202 1010 1010     ................
-   b7159:	0020 0000 0000 0000 0000 0000 0000 0000      ...............
+000b706c <_ZSt7nothrow>:
+   b706c:	5200 4545 544e 6d20 6c61 6f6c 2063 7573     .REENT malloc su
+   b707c:	6363 6565 6564 0064 742f 706d 6a2f 6e65     cceeded./tmp/jen
+   b708c:	696b 736e 472d 4343 312d 2d30 6970 6570     kins-GCC-10-pipe
+   b709c:	696c 656e 342d 5f38 3032 3032 3131 3432     line-48_20201124
+   b70ac:	315f 3036 3136 3038 3336 2f39 7273 2f63     _1606180639/src/
+   b70bc:	656e 6c77 6269 6e2f 7765 696c 2f62 696c     newlib/newlib/li
+   b70cc:	6362 732f 6474 696c 2f62 6172 646e 632e     bc/stdlib/rand.c
 	...
 
-000b71da <link_const_variable_data_end>:
+000b70dd <_ctype_>:
+   b70dd:	2000 2020 2020 2020 2020 2828 2828 2028     .         ((((( 
+   b70ed:	2020 2020 2020 2020 2020 2020 2020 2020                     
+   b70fd:	8820 1010 1010 1010 1010 1010 1010 1010      ...............
+   b710d:	0410 0404 0404 0404 0404 1004 1010 1010     ................
+   b711d:	1010 4141 4141 4141 0101 0101 0101 0101     ..AAAAAA........
+   b712d:	0101 0101 0101 0101 0101 0101 1010 1010     ................
+   b713d:	1010 4242 4242 4242 0202 0202 0202 0202     ..BBBBBB........
+   b714d:	0202 0202 0202 0202 0202 0202 1010 1010     ................
+   b715d:	0020 0000 0000 0000 0000 0000 0000 0000      ...............
 	...
 
-000b71dc <link_constructors_location>:
-   b71dc:	000b42f9 	.word	0x000b42f9
-   b71e0:	000b4829 	.word	0x000b4829
-   b71e4:	000b48a1 	.word	0x000b48a1
-   b71e8:	000b4e69 	.word	0x000b4e69
-   b71ec:	000b5edd 	.word	0x000b5edd
-   b71f0:	000b6355 	.word	0x000b6355
-   b71f4:	000b6475 	.word	0x000b6475
-   b71f8:	000b6615 	.word	0x000b6615
-   b71fc:	000b6639 	.word	0x000b6639
+000b71de <link_const_variable_data_end>:
+	...
+
+000b71e0 <link_constructors_location>:
+   b71e0:	000b42f9 	.word	0x000b42f9
+   b71e4:	000b4829 	.word	0x000b4829
+   b71e8:	000b48a1 	.word	0x000b48a1
+   b71ec:	000b4e69 	.word	0x000b4e69
+   b71f0:	000b5edd 	.word	0x000b5edd
+   b71f4:	000b6355 	.word	0x000b6355
+   b71f8:	000b6475 	.word	0x000b6475
+   b71fc:	000b6615 	.word	0x000b6615
+   b7200:	000b6639 	.word	0x000b6639
+
+000b7204 <link_constructors_end>:
+	...

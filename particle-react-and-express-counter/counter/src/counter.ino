@@ -3,7 +3,7 @@ SerialLogHandler logHandler; // This allows for USB serial debug logs
 
 int count();
 
-const char *eventName = "countEvent";
+const char *eventName = "counterEvent";
 std::chrono::milliseconds publishPeriod = 30s; // Can use `min` and `h` as well.
 
 unsigned long lastPublishMs;
