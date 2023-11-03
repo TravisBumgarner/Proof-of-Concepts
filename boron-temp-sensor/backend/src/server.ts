@@ -16,7 +16,7 @@ app.use(express.json());
 
 app.post('/data', (req: Request, res: Response) => {
   const { body} = req;
-  
+  console.log('message received', body)
   fs.appendFile('data.txt', JSON.stringify(body) + '\n', (err: any) => {
     if (err) {
       console.error(err);
