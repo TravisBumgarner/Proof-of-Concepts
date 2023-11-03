@@ -72,3 +72,14 @@
 {"event":"tempF","data":"79.741240","published_at":"2023-11-03T05:24:23.342Z","coreid":"e00fce687cc15f2e42da5d0a"}
 {"event":"tempF","data":"80.093692","published_at":"2023-11-03T05:24:24.385Z","coreid":"e00fce687cc15f2e42da5d0a"}
 {"event":"tempF","data":"80.077659","published_at":"2023-11-03T05:24:25.504Z","coreid":"e00fce687cc15f2e42da5d0a"}
+{"event":"tempF","data":"79.549231","published_at":"2023-11-03T05:24:26.543Z","coreid":"e00fce687cc15f2e42da5d0a"}
+{"event":"tempF","data":"79.741240","published_at":"2023-11-03T05:24:27.665Z","coreid":"e00fce687cc15f2e42da5d0a"}
+{"event":"tempF","data":"79.701224","published_at":"2023-11-03T05:24:28.702Z","coreid":"e00fce687cc15f2e42da5d0a"}
+{"event":"tempF","data":"79.709227","published_at":"2023-11-03T05:24:29.821Z","coreid":"e00fce687cc15f2e42da5d0a"}
+{"event":"tempF","data":"79.293475","published_at":"2023-11-03T05:24:30.862Z","coreid":"e00fce687cc15f2e42da5d0a"}
+{"event":"tempF","data":"79.589219","published_at":"2023-11-03T05:24:31.985Z","coreid":"e00fce687cc15f2e42da5d0a"}
+{"event":"tempF","data":"79.141756","published_at":"2023-11-03T05:24:33.023Z","coreid":"e00fce687cc15f2e42da5d0a"}
+{"event":"tempF","data":"79.093866","published_at":"2023-11-03T05:24:34.145Z","coreid":"e00fce687cc15f2e42da5d0a"}
+{"event":"tempF","data":"79.317440","published_at":"2023-11-03T05:24:35.194Z","coreid":"e00fce687cc15f2e42da5d0a"}
+{"event":"tempF","data":"79.693222","published_at":"2023-11-03T05:24:36.301Z","coreid":"e00fce687cc15f2e42da5d0a"}
+{"event":"tempF","data":"79.245553","published_at":"2023-11-03T05:24:37.343Z","coreid":"e00fce687cc15f2e42da5d0a"}
