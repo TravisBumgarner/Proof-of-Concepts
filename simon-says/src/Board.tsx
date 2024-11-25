@@ -1,24 +1,37 @@
-import React, { useEffect, useCallback, useRef, useMemo, useState } from "react";
+import React, {
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo,
+  useState,
+} from "react";
 import styled from "styled-components";
 import Tile, { TileRefParams } from "./Tile";
 import { shuffleArray } from "./utilities";
 
+const COLORS = ["red", "blue", "green", "yellow"];
+
 const Board = () => {
-  const [colors, setColors] = useState(["red", "blue", "green", "yellow"]);
+  const [colors, setColors] = useState(COLORS);
   const sequence = useRef<string[]>([]);
   const userSequence = useRef<string[]>([]);
+  const [isLandscape, setIsLandscape] = useState(false);
 
   const childRefs = useMemo(() => {
     const refs: { [key: string]: React.RefObject<TileRefParams> } = {};
-    colors.forEach((color) => {
+    // Use
+    COLORS.forEach((color) => {
       refs[color] = React.createRef<TileRefParams>();
     });
     return refs;
-  }, []); 
+  }, []);
 
-  const triggerAnimation = useCallback((id: string) => {
-    childRefs[id]?.current?.startAnimation();
-  }, [childRefs]);
+  const triggerAnimation = useCallback(
+    (id: string) => {
+      childRefs[id]?.current?.startAnimation();
+    },
+    [childRefs]
+  );
 
   const playSequence = useCallback(async () => {
     setTimeout(() => {
@@ -31,7 +44,7 @@ const Board = () => {
   }, [triggerAnimation]);
 
   const pickColor = useCallback(() => {
-    const newColor = colors[Math.floor(Math.random() * colors.length)];
+    const newColor = COLORS[Math.floor(Math.random() * COLORS.length)];
     sequence.current.push(newColor);
   }, []);
 
@@ -76,29 +89,66 @@ const Board = () => {
     [compareSequences, nextTurn, resetGame]
   );
 
-  const shuffle = useCallback(() => { 
-    let colorsCopy = [...colors];
+  const shuffle = useCallback(() => {
+    let colorsCopy = [...COLORS];
     shuffleArray(colorsCopy);
-    setColors(colorsCopy)
-  }, [colors]);
+    setColors(colorsCopy);
+  }, []);
+
+  const handleResize = useCallback(() => {
+    const isLandscape = window.innerWidth > window.innerHeight;
+    setIsLandscape(isLandscape);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [handleResize]);
 
   return (
-    <div>
-      <button onClick={shuffle}>Shuffle</button>
-      <BoardWrapper>
-        {colors.map((color) => (
-          <Tile
-            ref={childRefs[color]}
-            key={color}
-            color={color}
-            onPress={() => handleTilePress(color)}
-          />
-        ))}
-      </BoardWrapper>
-    </div>
+    <>
+      <button
+        style={{ position: "fixed", right: 16, bottom: 16 }}
+        onClick={shuffle}
+      >
+        Shuffle
+      </button>
+      <BoardPositioner>
+        <TileWrapper $isLandscape={isLandscape}>
+          {colors.map((color) => (
+            <Tile
+              ref={childRefs[color]}
+              key={color}
+              color={color}
+              onPress={() => handleTilePress(color)}
+            />
+          ))}
+        </TileWrapper>
+      </BoardPositioner>
+    </>
   );
 };
 
-const BoardWrapper = styled.div``;
+const BoardPositioner = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 50px;
+  box-sizing: border-box;
+`;
+
+const TileWrapper = styled.div<{ $isLandscape: boolean }>`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  aspect-ratio: 1 / 1;
+
+  ${({ $isLandscape }) => ($isLandscape ? "height" : "width")}: 100%;
+`;
 
 export default Board;

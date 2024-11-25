@@ -50,7 +50,7 @@ const StyledTile = styled.button<{ $backgroundColor: string }>`
   opacity: 0.5;
   background-color: ${(props) => props.$backgroundColor};
 
-  width: 100px;
+  width: 100%;
   aspect-ratio: 1 / 1;
   border: 0;
   border-radius: 10px;
