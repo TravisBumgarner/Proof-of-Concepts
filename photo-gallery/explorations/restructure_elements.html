@@ -1,0 +1,73 @@
+<div class="grid" id="grid">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+</div>
+
+<button id="toggleColumns">Toggle Columns</button>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    transition: grid-template-columns 0.3s ease;
+  }
+  .item {
+    background: #007bff;
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+</style>
+
+<script>
+  const grid = document.getElementById("grid");
+  const toggleButton = document.getElementById("toggleColumns");
+  let useThreeColumns = false;
+
+  toggleButton.addEventListener("click", () => {
+    // Step 1: Capture initial positions
+    const items = Array.from(grid.children);
+    const positions = items.map((item) => item.getBoundingClientRect());
+
+    // Step 2: Update grid layout
+    useThreeColumns = !useThreeColumns;
+    grid.style.gridTemplateColumns = useThreeColumns
+      ? "repeat(3, 1fr)"
+      : "repeat(2, 1fr)";
+
+    // Step 3: Capture final positions
+    const newPositions = items.map((item) => item.getBoundingClientRect());
+
+    // Step 4: Calculate deltas and apply transform
+    items.forEach((item, index) => {
+      const deltaX = positions[index].left - newPositions[index].left;
+      const deltaY = positions[index].top - newPositions[index].top;
+      item.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+    });
+
+    // Step 5: Animate to new positions
+    requestAnimationFrame(() => {
+      items.forEach((item) => {
+        item.style.transition = "transform 0.3s ease";
+        item.style.transform = "translate(0, 0)";
+      });
+
+      // Clean up after animation
+      items.forEach((item) => {
+        item.addEventListener(
+          "transitionend",
+          () => {
+            item.style.transition = "";
+            item.style.transform = "";
+          },
+          { once: true }
+        );
+      });
+    });
+  });
+</script>

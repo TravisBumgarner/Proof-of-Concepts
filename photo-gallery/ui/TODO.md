@@ -2,6 +2,7 @@
 [x] get output.json rendering in app.
 [x] Use vibrant color
 
-- [ ] Masonry layout
+- [x] Masonry layout
+- [ ] Animate responsiveness. 
 - [ ] Scroll up and out/in animation
 - [ ]ao
