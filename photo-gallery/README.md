@@ -1,6 +1,6 @@
 To Checkout
 
-- https://motion-primitives.com/docs
+- [ ] https://motion-primitives.com/docs
 
 # Setup
 
