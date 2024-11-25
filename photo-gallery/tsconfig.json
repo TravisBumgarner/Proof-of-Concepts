@@ -11,22 +11,13 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
     "paths": {
-      "*": [
-        "src/types/*"
-      ],
-      "sharedComponents": [
-        "src/sharedComponents"
-      ],
-      "types": [
-        "src/types.ts"
-      ],
-      "theme": [
-        "src/theme.tsx"
-      ],
-      "utilities": [
-        "src/utilities"
-      ]
+      "*": ["src/types/*"],
+      "sharedComponents": ["src/sharedComponents"],
+      "types": ["src/types.ts"],
+      "theme": ["src/theme.tsx"],
+      "utilities": ["src/utilities"]
     }
   }
 }

@@ -1,0 +1,19 @@
+{
+  "name": "ingest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "blurhash": "^2.0.5",
+    "canvas": "^2.11.2",
+    "node-vibrant": "^3.2.1-alpha.1",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  }
+}

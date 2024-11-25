@@ -7,28 +7,25 @@ import React, {
   useState,
   type Dispatch
 } from 'react'
-import { type GalleryType, type PhotoType, type PrivateGallery } from 'types'
+import { type PhotoType } from 'types'
 
 import getContent from './content'
 
 export interface State {
   photos: Record<string, PhotoType>
-  galleries: Record<string, GalleryType>
-  privateGalleries: Record<string, PrivateGallery>
+  // galleries: Record<string, GalleryType>
 }
 
 const EMPTY_STATE: State = {
-  photos: {},
-  galleries: {},
-  privateGalleries: {}
+  photos: {}
+  // galleries: {}
 }
 
 interface HydratePhotos {
   type: 'HYDRATE_PHOTOS'
   payload: {
     photos: Record<string, PhotoType>
-    galleries: Record<string, GalleryType>
-    privateGalleries: Record<string, PrivateGallery>
+    // galleries: Record<string, GalleryType>
   }
 }
 
@@ -56,11 +53,11 @@ const ResultsContext = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     setIsLoading(true)
-    const { galleries, photos, privateGalleries } = getContent()
+    const { photos } = getContent()
 
     dispatch({
       type: 'HYDRATE_PHOTOS',
-      payload: { photos, galleries, privateGalleries }
+      payload: { photos }
     })
     setIsLoading(false)
   }, [])

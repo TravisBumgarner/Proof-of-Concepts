@@ -9,8 +9,13 @@ const App = () => {
 
   return (
     <img
+      style={{
+        border: `10px solid ${
+          photos[Object.keys(photos)[0]].vibrantcolors.vibrant
+        }`
+      }}
       src={getPhotoUrl({
-        isThumbnail: false,
+        isThumbnail: true,
         photoSrc: Object.values(photos)[1].src
       })}
     />

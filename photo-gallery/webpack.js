@@ -34,7 +34,10 @@ module.exports = {
     compress: true,
     port: 3000,
     hot: true,
-    historyApiFallback: true
+    historyApiFallback: true,
+    static: {
+      directory: path.resolve(__dirname, 'src/public')
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({

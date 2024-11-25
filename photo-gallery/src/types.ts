@@ -5,23 +5,20 @@ export interface GalleryType {
   previewId: string
 }
 
+// Types come from vibrant.js in the ingest folder
+type VibrantKey =
+  | 'vibrant'
+  | 'darkVibrant'
+  | 'lightVibrant'
+  | 'muted'
+  | 'darkMuted'
+  | 'lightMuted'
+
 export interface PhotoType {
-  id: string
   src: string
-  galleryIds: string[]
-  dateTaken: string
-  camera: string
-  lens: string
-  aperture: string
-  shutterSpeed: string
-  iso: string
-  focalLength: string
   blurHash: string
+  vibrantcolors: Record<VibrantKey, string | undefined>
   width: number
   height: number
-}
-
-export interface PrivateGallery {
-  gallery: GalleryType
-  photos: Record<string, PhotoType>
+  id: string
 }
