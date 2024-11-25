@@ -1,24 +1,50 @@
 {
-  "name": "photo-gallery",
-  "version": "0.1.0",
-  "private": true,
+  "name": "ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "webpack-dev-server --mode=development --config=webpack.js",
+    "bundle": " rm -rf ./build; mkdir ./build; webpack --mode=production --config=webpack.js",
+    "precommit": "tsc --noEmit --skipLibCheck",
+    "deploy": "gcloud config set project root-270023 && gcloud builds submit --tag gcr.io/root-270023/photo20 && gcloud run deploy photo20 --image gcr.io/root-270023/photo20 --platform managed --region us-east1",
+    "deploy-perf-updates": "gcloud config set project root-270023 && gcloud builds submit --tag gcr.io/root-270023/photo20perfupdates && gcloud run deploy photo20perfupdates --image gcr.io/root-270023/photo20perfupdates --platform managed --region us-east1"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
-    "next": "15.0.3"
+    "@sentry/react": "^7.17.4",
+    "@sentry/tracing": "^7.17.4",
+    "blurhash": "^2.0.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.6.0",
+    "react-modal": "^3.16.1",
+    "react-router-dom": "^6.4.3",
+    "styled-components": "^5.3.6",
+    "webpack-dev-server": "^4.11.1"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "15.0.3"
+    "@types/react": "^18.0.25",
+    "@types/styled-components": "^5.1.15",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "css-loader": "^7.1.2",
+    "eslint": "^8.49.0",
+    "eslint-config-standard-with-typescript": "^39.0.0",
+    "eslint-import-resolver-typescript": "^3.6.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-n": "^16.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-unused-imports": "^3.2.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.2",
+    "webpack": "5.76",
+    "webpack-cli": "^4.9.1"
   }
 }
