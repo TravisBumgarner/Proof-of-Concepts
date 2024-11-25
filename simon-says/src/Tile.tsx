@@ -34,9 +34,8 @@ const Tile = forwardRef<TileRefParams, Props>(({ color, onPress }, ref) => {
       $backgroundColor={color}
       onClick={onPress}
       className={isAnimating ? "animate" : ""}
-    >
-      Hello!
-    </StyledTile>
+    />
+
   );
 });
 

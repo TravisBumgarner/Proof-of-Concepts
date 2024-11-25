@@ -1,27 +1,25 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useEffect, useCallback, useRef, useMemo } from "react";
 import styled from "styled-components";
 import Tile, { TileRefParams } from "./Tile";
 
 const colors = ["red", "blue", "green", "yellow"] as const;
 
 const Board = () => {
-  //   const [sequence, setSequence] = useState<string[]>([]);
   const sequence = useRef<string[]>([]);
   const userSequence = useRef<string[]>([]);
-  const childRefs = useRef<{ [key: string]: React.RefObject<TileRefParams> }>(
-    {}
-  );
 
-  // Ensure refs exist for each color
-  colors.forEach((color) => {
-    if (!childRefs.current[color]) {
-      childRefs.current[color] = React.createRef<TileRefParams>();
-    }
-  });
+  // Initialize refs for each color once using useMemo
+  const childRefs = useMemo(() => {
+    const refs: { [key: string]: React.RefObject<TileRefParams> } = {};
+    colors.forEach((color) => {
+      refs[color] = React.createRef<TileRefParams>();
+    });
+    return refs;
+  }, []); // Empty dependency array ensures this is only created once.
 
   const triggerAnimation = useCallback((id: string) => {
-    childRefs.current[id]?.current?.startAnimation();
-  }, []);
+    childRefs[id]?.current?.startAnimation();
+  }, [childRefs]);
 
   const playSequence = useCallback(async () => {
     setTimeout(() => {
@@ -84,7 +82,7 @@ const Board = () => {
       <BoardWrapper>
         {colors.map((color) => (
           <Tile
-            ref={childRefs.current[color]}
+            ref={childRefs[color]}
             key={color}
             color={color}
             onPress={() => handleTilePress(color)}

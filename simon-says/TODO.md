@@ -1,5 +1,5 @@
 - [x] Implement basic tile
-- [ ] Implement basic game
+- [x] Implement basic game (Took way too long lol)
 
 
 - [ ] Implement animated menu
@@ -10,6 +10,7 @@
     - [ ] Fancy other stuff
 - [ ] Animations
     - [ ] Light up. Perhaps use the new color mixing. 
+    - [ ] Animate Game over. 
 - [ ] Gestures
 
 
