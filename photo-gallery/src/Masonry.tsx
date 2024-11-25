@@ -4,22 +4,27 @@ import { type PhotoType } from 'types'
 import { context } from './context'
 import { getPhotoUrl } from './utils'
 
-const PHOTO_SPACING = '4px'
-const CELL_BORDER_WIDTH = '4px'
+const PHOTO_SPACING = '8px'
 
 const StyledImage = styled.img`
-  border: 20px solid #fff;
+  border: 20px solid #bbb;
   width: 100%;
   height: auto;
   box-sizing: border-box;
   display: block; // Removes descender issues for display: inline.
+
+  transition: border-color 0.2s ease-in-out;
+
+  &: hover {
+    border-color: #fff;
+  }
 `
 
 const StyledCell = styled.div<{
   $borderColor: string
   $hoverBorderColor: string
 }>`
-  border: ${props => `${CELL_BORDER_WIDTH} solid ${props.$borderColor}`};
+  border: ${props => `4px solid ${props.$borderColor}`};
   margin: ${PHOTO_SPACING} 0;
 
   transition: border-color 0.2s ease-in-out;
@@ -70,7 +75,7 @@ const Column = ({
 
 const PhotoMasonry = () => {
   const [photoCount, setPhotoCount] = useState(11)
-  const [columns, setColumns] = useState(3)
+  const [columns, setColumns] = useState(5)
 
   const {
     state: { photos }
@@ -94,8 +99,13 @@ const PhotoMasonry = () => {
         const columnforCurrentPhoto = columnHeights.indexOf(
           Math.min(...columnHeights)
         )
+        // This algorithm does not account for the spacing between photos.
+        // So if a column has many landscape photos, there's lots of vertical
+        // padding that this algorithm doesn't account for. This is a small factor of safety.
 
-        columnHeights[columnforCurrentPhoto] += unitHeight
+        const FACTOR_OF_SAFETY = photo.height > photo.width ? 0.9 : 1.1
+        columnHeights[columnforCurrentPhoto] += unitHeight * FACTOR_OF_SAFETY
+        console.log(JSON.stringify(columnHeights))
         output[columnforCurrentPhoto].push(photo)
       })
 
