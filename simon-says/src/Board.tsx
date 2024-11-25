@@ -1,21 +1,20 @@
-import React, { useEffect, useCallback, useRef, useMemo } from "react";
+import React, { useEffect, useCallback, useRef, useMemo, useState } from "react";
 import styled from "styled-components";
 import Tile, { TileRefParams } from "./Tile";
-
-const colors = ["red", "blue", "green", "yellow"] as const;
+import { shuffleArray } from "./utilities";
 
 const Board = () => {
+  const [colors, setColors] = useState(["red", "blue", "green", "yellow"]);
   const sequence = useRef<string[]>([]);
   const userSequence = useRef<string[]>([]);
 
-  // Initialize refs for each color once using useMemo
   const childRefs = useMemo(() => {
     const refs: { [key: string]: React.RefObject<TileRefParams> } = {};
     colors.forEach((color) => {
       refs[color] = React.createRef<TileRefParams>();
     });
     return refs;
-  }, []); // Empty dependency array ensures this is only created once.
+  }, []); 
 
   const triggerAnimation = useCallback((id: string) => {
     childRefs[id]?.current?.startAnimation();
@@ -41,9 +40,9 @@ const Board = () => {
     playSequence();
   }, [pickColor, playSequence]);
 
-  useEffect(() => {
-    nextTurn();
-  }, [nextTurn]);
+  // useEffect(() => {
+  //   nextTurn();
+  // }, [nextTurn]);
 
   const compareSequences = useCallback(() => {
     for (let i = 0; i < userSequence.current.length; i++) {
@@ -77,8 +76,15 @@ const Board = () => {
     [compareSequences, nextTurn, resetGame]
   );
 
+  const shuffle = useCallback(() => { 
+    let colorsCopy = [...colors];
+    shuffleArray(colorsCopy);
+    setColors(colorsCopy)
+  }, [colors]);
+
   return (
     <div>
+      <button onClick={shuffle}>Shuffle</button>
       <BoardWrapper>
         {colors.map((color) => (
           <Tile
