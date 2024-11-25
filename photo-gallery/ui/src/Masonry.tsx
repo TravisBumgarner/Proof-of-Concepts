@@ -86,6 +86,7 @@ const PhotoMasonry = () => {
     // Use photos hardcoded widths and heights to calculate things. Makes it easier for resize
 
     const columnHeights = Array<number>(columns).fill(0)
+    // Ensure that each `[]` passed to `Array.from` is a new array. Reference issue with fill.
     const output = Array.from({ length: columns }, () => [] as PhotoType[])
 
     Object.values(photos)
@@ -99,19 +100,18 @@ const PhotoMasonry = () => {
         const columnforCurrentPhoto = columnHeights.indexOf(
           Math.min(...columnHeights)
         )
-        // This algorithm does not account for the spacing between photos.
+        // This algorithm does not account for the vertical spacing between photos.
         // So if a column has many landscape photos, there's lots of vertical
         // padding that this algorithm doesn't account for. This is a small factor of safety.
 
         const FACTOR_OF_SAFETY = photo.height > photo.width ? 0.9 : 1.1
         columnHeights[columnforCurrentPhoto] += unitHeight * FACTOR_OF_SAFETY
-        console.log(JSON.stringify(columnHeights))
         output[columnforCurrentPhoto].push(photo)
       })
 
     return output
   }, [photos, columns, photoCount])
-  console.log(imagesByColumn)
+
   return (
     <>
       <ButtonsWrapper>
