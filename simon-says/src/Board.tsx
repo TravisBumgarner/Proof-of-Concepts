@@ -2,13 +2,12 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import styled from "styled-components";
 import Tile, { TileRefParams } from "./Tile";
 
-const colors = ["red", "blue", "green", "yellow"];
+const colors = ["red", "blue", "green", "yellow"] as const;
 
 const Board = () => {
-  const [sequence, setSequence] = useState<string[]>(["red"]);
-  const [userSequence, setUserSequence] = useState<string[]>([]);
-  const [isUserTurn, setIsUserTurn] = useState(false);
-  const [message, setMessage] = useState("Watch the sequence");
+  //   const [sequence, setSequence] = useState<string[]>([]);
+  const sequence = useRef<string[]>([]);
+  const userSequence = useRef<string[]>([]);
   const childRefs = useRef<{ [key: string]: React.RefObject<TileRefParams> }>(
     {}
   );
@@ -20,25 +19,23 @@ const Board = () => {
     }
   });
 
-  const triggerAnimation = (id: string) => {
-    console.log(childRefs.current);
+  const triggerAnimation = useCallback((id: string) => {
     childRefs.current[id]?.current?.startAnimation();
-  };
+  }, []);
 
   const playSequence = useCallback(async () => {
     setTimeout(() => {
-      setMessage("Watch the sequence");
-      sequence.forEach((color, index) => {
+      sequence.current.forEach((color, index) => {
         setTimeout(() => {
           triggerAnimation(color);
         }, index * 1000);
       });
     }, 1000);
-  }, [sequence]);
+  }, [triggerAnimation]);
 
   const pickColor = useCallback(() => {
     const newColor = colors[Math.floor(Math.random() * colors.length)];
-    setSequence((prev) => [...prev, newColor]);
+    sequence.current.push(newColor);
   }, []);
 
   const nextTurn = useCallback(() => {
@@ -48,15 +45,39 @@ const Board = () => {
 
   useEffect(() => {
     nextTurn();
-  }, []);
+  }, [nextTurn]);
 
-  const handleTilePress = useCallback((color: string) => {}, []);
+  const compareSequences = useCallback(() => {
+    for (let i = 0; i < userSequence.current.length; i++) {
+      if (userSequence.current[i] !== sequence.current[i]) {
+        return false;
+      }
+    }
+    return true;
+  }, [userSequence, sequence]);
 
   const resetGame = useCallback(() => {
-    setSequence([]);
-    setUserSequence([]);
-    setIsUserTurn(false);
+    sequence.current = [];
+    userSequence.current = [];
   }, []);
+
+  const handleTilePress = useCallback(
+    (color: string) => {
+      userSequence.current.push(color);
+      if (userSequence.current.length !== sequence.current.length) return;
+
+      const sequencesMatch = compareSequences();
+      if (!sequencesMatch) {
+        alert("Game over!");
+        resetGame();
+        nextTurn();
+      } else {
+        userSequence.current = [];
+        nextTurn();
+      }
+    },
+    [compareSequences, nextTurn, resetGame]
+  );
 
   return (
     <div>
@@ -70,7 +91,6 @@ const Board = () => {
           />
         ))}
       </BoardWrapper>
-      <p>{message}</p>
     </div>
   );
 };
