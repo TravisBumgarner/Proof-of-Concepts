@@ -4,36 +4,71 @@ import { type PhotoType } from 'types'
 import { context } from './context'
 import { getPhotoUrl } from './utils'
 
-const StyledBrick = styled.img<{ $borderColor: string }>`
-  border: ${props => `10px solid ${props.$borderColor}`};
+const PHOTO_SPACING = '4px'
+const CELL_BORDER_WIDTH = '4px'
+
+const StyledImage = styled.img`
+  border: 20px solid #fff;
   width: 100%;
   height: auto;
   box-sizing: border-box;
+  display: block; // Removes descender issues for display: inline.
 `
 
-const Brick = ({ vibrantcolors: { darkVibrant }, src }: PhotoType) => {
+const StyledCell = styled.div<{
+  $borderColor: string
+  $hoverBorderColor: string
+}>`
+  border: ${props => `${CELL_BORDER_WIDTH} solid ${props.$borderColor}`};
+  margin: ${PHOTO_SPACING} 0;
+
+  transition: border-color 0.2s ease-in-out;
+
+  &:hover {
+    border-color: ${props => `${props.$hoverBorderColor}`};
+  }
+`
+
+const Cell = ({
+  vibrantcolors: { darkVibrant, lightVibrant },
+  src
+}: PhotoType) => {
   return (
-    <StyledBrick
-      $borderColor={darkVibrant!}
-      src={getPhotoUrl({
-        isThumbnail: true,
-        photoSrc: src
-      })}
-    />
+    <StyledCell $hoverBorderColor={lightVibrant!} $borderColor={darkVibrant!}>
+      <StyledImage
+        src={getPhotoUrl({
+          isThumbnail: true,
+          photoSrc: src
+        })}
+      />
+    </StyledCell>
   )
 }
 
-const Column = ({ photos }: { photos: PhotoType[] }) => {
+const StyledColumn = styled.div<{ $columnCount: number }>`
+  display: flex;
+  flex-direction: column;
+  margin: 0 ${PHOTO_SPACING};
+  flex-basis: calc(100% / ${props => props.$columnCount});
+`
+
+const Column = ({
+  photos,
+  columnCount
+}: {
+  photos: PhotoType[]
+  columnCount
+}) => {
   return (
-    <div>
+    <StyledColumn $columnCount={columnCount}>
       {photos.map(photo => (
-        <Brick key={photo.id} {...photo} />
+        <Cell key={photo.id} {...photo} />
       ))}
-    </div>
+    </StyledColumn>
   )
 }
 
-const Masonry = () => {
+const PhotoMasonry = () => {
   const [photoCount, setPhotoCount] = useState(11)
   const [columns, setColumns] = useState(3)
 
@@ -48,22 +83,24 @@ const Masonry = () => {
     const columnHeights = Array<number>(columns).fill(0)
     const output = Array.from({ length: columns }, () => [] as PhotoType[])
 
-    Object.values(photos).forEach(photo => {
-      // All photos will have a width of 1 unit.
-      // Calculate height based on aspect ratio and we'll use that to determine
-      // which column to put it in.
-      const unitHeight = photo.height / photo.width
+    Object.values(photos)
+      .slice(0, photoCount)
+      .forEach(photo => {
+        // All photos will have a width of 1 unit.
+        // Calculate height based on aspect ratio and we'll use that to determine
+        // which column to put it in.
+        const unitHeight = photo.height / photo.width
 
-      const columnforCurrentPhoto = columnHeights.indexOf(
-        Math.min(...columnHeights)
-      )
+        const columnforCurrentPhoto = columnHeights.indexOf(
+          Math.min(...columnHeights)
+        )
 
-      columnHeights[columnforCurrentPhoto] += unitHeight
-      output[columnforCurrentPhoto].push(photo)
-    })
+        columnHeights[columnforCurrentPhoto] += unitHeight
+        output[columnforCurrentPhoto].push(photo)
+      })
 
     return output
-  }, [photos, columns])
+  }, [photos, columns, photoCount])
   console.log(imagesByColumn)
   return (
     <>
@@ -99,26 +136,28 @@ const Masonry = () => {
           --
         </button>
       </ButtonsWrapper>
-      <Grid>
+      <Table>
         {imagesByColumn.map((photos, index) => (
-          <Column key={index} photos={photos} />
+          <Column columnCount={columns} key={index} photos={photos} />
         ))}
-      </Grid>
+      </Table>
     </>
   )
 }
 
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+const Table = styled.div`
+  display: flex;
+  flex-direction: row;
 `
-
-const GridItem = styled.div``
 
 const ButtonsWrapper = styled.div`
   position: fixed;
   right: 16px;
   bottom: 16px;
+  color: #eee;
+  background-color: #333;
+  padding: 8px;
+  border-radius: 4px;
 `
 
-export default Masonry
+export default PhotoMasonry

@@ -1,9 +1,9 @@
 import React from 'react'
 import Context from './context'
-import Masonry from './Masonry'
+import PhotoMasonry from './Masonry'
 
 const App = () => {
-  return <Masonry />
+  return <PhotoMasonry />
 }
 
 const WrappedApp = () => {
