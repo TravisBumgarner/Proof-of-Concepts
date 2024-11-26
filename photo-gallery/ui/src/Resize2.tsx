@@ -1,6 +1,9 @@
 import { motion, useAnimationControls } from 'framer-motion'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Resize2.css' // Create styles for .fullscreen-box and other required animations.
+
+const VARIANTS_ENTER_FULL_SCREEN = 'enterFullScreen'
+const VARIANTS_EXIT_FULL_SCREEN = 'exitFullScreen'
 
 const FullscreenElement = () => {
   const [fullscreen, setFullscreen] = useState<any>(null) // Track which element is fullscreen.
@@ -9,16 +12,24 @@ const FullscreenElement = () => {
   const handleFullscreenClick = (id, rect) => {
     // Save the id and dimensions of the clicked element.
     setFullscreen({ id, rect })
+  }
 
-    setTimeout(() => {
-      void controls.start('fullScreen')
-    }, 1000)
+  // Wait for the fullscreen element to render before scaling it.
+  useEffect(() => {
+    if (fullscreen !== null) {
+      void controls.start(VARIANTS_ENTER_FULL_SCREEN)
+    }
+  }, [fullscreen, controls])
+
+  const handleAnimationComplete = variant => {
+    if (variant === VARIANTS_EXIT_FULL_SCREEN) {
+      setFullscreen(null)
+    }
   }
 
   const handleCloseFullscreen = () => {
-    void controls.start('exitFullScreen')
-
-    // setFullscreen(null) // Exit fullscreen.
+    // Remaining cleanup done in handleAnimationComplete
+    void controls.start(VARIANTS_EXIT_FULL_SCREEN)
   }
 
   return (
@@ -41,25 +52,24 @@ const FullscreenElement = () => {
         <motion.div
           onClick={handleCloseFullscreen}
           style={{
-            backgroundColor: 'rgba(255, 0, 0, 0.8)',
+            backgroundColor: 'rgba(0, 0, 0, 0.0)',
             position: 'fixed',
             top: fullscreen.rect.top,
             left: fullscreen.rect.left,
             width: fullscreen.rect.width,
-            height: fullscreen.rect.height,
-            transform: 'translate(0, 0)',
-            transition: 'all 3s ease'
+            height: fullscreen.rect.height
           }}
+          onAnimationComplete={handleAnimationComplete}
           animate={controls}
           variants={{
-            fullScreen: {
-              backgroundColor: 'rgba(0,255,0,0.8)',
+            [VARIANTS_ENTER_FULL_SCREEN]: {
+              backgroundColor: 'rgba(0,0,0, 1)',
               top: 0,
               left: 0,
               width: '100vw',
               height: '100vh'
             },
-            exitFullScreen: {
+            [VARIANTS_EXIT_FULL_SCREEN]: {
               top: fullscreen.rect.top,
               left: fullscreen.rect.left,
               width: fullscreen.rect.width,
@@ -70,6 +80,7 @@ const FullscreenElement = () => {
           {/* Fullscreen content */}
           <div className="fullscreen-content">
             Fullscreen Box {fullscreen.id}
+            <button onClick={handleCloseFullscreen}>Close</button>
           </div>
         </motion.div>
       )}
