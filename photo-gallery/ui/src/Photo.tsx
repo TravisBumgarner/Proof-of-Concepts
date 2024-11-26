@@ -1,5 +1,5 @@
 import { motion, useAnimationControls, useInView } from 'framer-motion'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { type PhotoType } from 'types'
 import { PHOTO_SPACING } from './consts'
@@ -11,17 +11,24 @@ const Cell = ({
 }: PhotoType) => {
   const ref = useRef<HTMLDivElement>(null)
   const controls = useAnimationControls()
-  const isInView = useInView(ref, { amount: 0.8 })
+  const isInView = useInView(ref, { amount: 0.5 })
 
-  // const wasInView = useRef(false)
+  const wasInView = useRef(false)
 
-  // useEffect(() => {
-  //   if (isInView && !wasInView.current) {
-  //     void controls.start('fadeIn')
-  //   } else if (!isInView && wasInView.current) {
-  //     void controls.start('fadeOut')
-  //   }
-  // }, [controls, isInView])
+  useEffect(() => {
+    const movedOntoScreen = !wasInView.current && isInView
+    const movedOffOfScreen = wasInView.current && !isInView
+
+    if (movedOntoScreen) {
+      void controls.start('fadeIn')
+    }
+
+    if (movedOffOfScreen) {
+      void controls.start('fadeOut')
+    }
+
+    wasInView.current = isInView
+  }, [controls, isInView])
 
   return (
     <StyledCell
@@ -31,14 +38,14 @@ const Cell = ({
       $borderColor={darkVibrant!}
       animate={controls}
       transition={{
-        duration: 4
+        duration: 0.4
       }}
       variants={{
         fadeIn: {
           opacity: [0, 1]
         },
         fadeOut: {
-          rotate: [1, 0]
+          opacity: [1, 0]
         }
       }}
     >
