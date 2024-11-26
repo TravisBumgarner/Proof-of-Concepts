@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  gap: 1rem;
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  background: lightblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+.fullscreen-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
