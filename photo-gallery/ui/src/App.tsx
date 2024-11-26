@@ -1,10 +1,10 @@
 import React from 'react'
 import Context from './context'
-import Resize from './Resize'
+import PhotoMasonry from './Masonry'
 
 const App = () => {
-  // return <PhotoMasonry />
-  return <Resize />
+  return <PhotoMasonry />
+  // return <Resize />
 }
 
 const WrappedApp = () => {

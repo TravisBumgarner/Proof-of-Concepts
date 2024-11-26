@@ -16,6 +16,7 @@
     "@sentry/react": "^7.17.4",
     "@sentry/tracing": "^7.17.4",
     "blurhash": "^2.0.5",
+    "framer-motion": "^11.11.17",
     "react": "^18.3.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
