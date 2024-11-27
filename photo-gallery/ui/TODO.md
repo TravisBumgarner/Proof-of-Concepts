@@ -4,5 +4,6 @@
 
 - [x] Masonry layout
 - [ ] Animate responsiveness. 
-- [ ] Scroll up and out/in animation
-- [ ]ao
+- [x] Scroll up and out/in animation
+- [ ] pinch to zoom causes rows to change from 2 to 3
+- [ ] Full screen single photo view

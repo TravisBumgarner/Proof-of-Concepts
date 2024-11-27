@@ -10,5 +10,7 @@ export const getPhotoUrl = ({
 
   url += isThumbnail ? 'thumbnail/' : 'large/'
   url += encodeURIComponent(photoSrc)
+
+  console.log('url', url)
   return url
 }

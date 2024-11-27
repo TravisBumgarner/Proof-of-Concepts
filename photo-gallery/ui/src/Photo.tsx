@@ -5,10 +5,7 @@ import { type PhotoType } from 'types'
 import { PHOTO_SPACING } from './consts'
 import { getPhotoUrl } from './utils'
 
-const Cell = ({
-  vibrantcolors: { darkVibrant, lightVibrant },
-  src
-}: PhotoType) => {
+const Cell = ({ vibrantcolors: { vibrant, lightVibrant }, src }: PhotoType) => {
   const ref = useRef<HTMLDivElement>(null)
   const controls = useAnimationControls()
   const isInView = useInView(ref, { amount: 0.5 })
@@ -34,8 +31,8 @@ const Cell = ({
     <StyledCell
       ref={ref}
       $opacity={isInView ? 1 : 0}
-      $hoverBorderColor={lightVibrant!}
-      $borderColor={darkVibrant!}
+      $hoverBorderColor={vibrant!}
+      $borderColor={lightVibrant!}
       animate={controls}
       transition={{
         duration: 0.4
