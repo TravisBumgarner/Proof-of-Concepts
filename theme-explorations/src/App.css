@@ -1,0 +1,19 @@
+.gutter-container {
+  position: relative;
+}
+
+.gutter {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background-color: #f0f0f0;
+  transition: width 0.2s ease-out;
+  opacity: 0;
+}
+
+.gutter-container:hover .gutter {
+  width: 50px;
+  opacity: 1;
+} 
