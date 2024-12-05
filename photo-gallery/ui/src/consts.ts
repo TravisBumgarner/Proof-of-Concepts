@@ -1,1 +1,1 @@
-export const PHOTO_SPACING = '8px'
+export const PHOTO_SPACING = '16px'

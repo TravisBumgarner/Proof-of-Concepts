@@ -31,7 +31,7 @@ const Cell = ({ vibrantcolors: { vibrant, lightVibrant }, src }: PhotoType) => {
     <StyledCell
       ref={ref}
       $opacity={isInView ? 1 : 0}
-      $hoverBorderColor={vibrant!}
+      $hoverBorderColor={lightVibrant!}
       $borderColor={lightVibrant!}
       animate={controls}
       transition={{
@@ -57,7 +57,7 @@ const Cell = ({ vibrantcolors: { vibrant, lightVibrant }, src }: PhotoType) => {
 }
 
 const StyledImage = styled.img`
-  border: 20px solid #bbb;
+  border: 10px solid #fff;
   width: 100%;
   height: auto;
   box-sizing: border-box;
@@ -75,13 +75,21 @@ const StyledCell = styled(motion.div)<{
   $hoverBorderColor: string
   $opacity: number
 }>`
-  border: ${props => `4px solid ${props.$borderColor}`};
+  /* border: ${props => `4px solid ${props.$borderColor}`}; */
   margin: ${PHOTO_SPACING} 0;
   opacity: ${props => `${props.$opacity}`};
-  transition: border-color 0.2s ease-in-out;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
 
   &:hover {
-    border-color: ${props => `${props.$hoverBorderColor}`};
+    transform: scale(1.05);
+    /* border-color: ${props => `${props.$hoverBorderColor}`}; */
+    /* box-shadow: 0 0 10px 0 ${props => `${props.$hoverBorderColor}`}; */
+
+    // Pretty
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 ${props => `${props.$hoverBorderColor}`}; */
   }
 `
 
