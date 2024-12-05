@@ -1,21 +1,16 @@
-import styled from 'styled-components'
-import Sidebar from './Sidebar'
+import BaseHtmlElements from './BaseHtmlElements'
 import Config from './Config'
-
-const H1 = styled.h1`
-  color: red;
-`
-
-const H2 = styled.h2`
-  color: blue;
-`
-
+import Sidebar from './Sidebar'
+import Explorations from './explorations'
+import './fonts.css'
 
 function App() {
   return (
-    <Sidebar sidebar={<Config />}/>
-     
-
+    <>
+      <Sidebar sidebar={<Config />} />
+      <BaseHtmlElements />
+      <Explorations />
+    </>
   )
 }
 
