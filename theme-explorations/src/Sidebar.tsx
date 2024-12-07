@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Hover = ({ sidebar }: { sidebar: React.ReactNode }) => {
@@ -7,6 +8,13 @@ const Hover = ({ sidebar }: { sidebar: React.ReactNode }) => {
         <HoverElement>Config</HoverElement>
       </HoverElementWrapper>
       <ContentArea>{sidebar}</ContentArea>
+      <ContentArea>
+        <nav>
+          <Link to="/">Base HTML Elements</Link>
+          <Link to="/explorations">Explorations</Link>
+          <Link to="/engineeringdoc">Engineering Doc</Link>
+        </nav>
+      </ContentArea>
     </Wrapper>
   )
 }
