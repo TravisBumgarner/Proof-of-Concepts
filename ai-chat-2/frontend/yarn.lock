@@ -1136,6 +1136,16 @@
   resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-7.0.1.tgz#f175f74543edc5faa13de927ababfffff450776f"
   integrity sha512-RN6S1C1k7ue57DFmJM4EizzsYBrahTTiMhcnlHspFLaojgHbFWZbYq1VriuRKysPU1ka/P+klsdtRFsB5K9jyw==
 
+"@capacitor/local-notifications@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/local-notifications/-/local-notifications-7.0.0.tgz#15616348ea71154efc71efede404de0401d4e124"
+  integrity sha512-+k93w1W0hZTVxM8rjttEyUKkkHxOW776POFM4snDcwv+sAxWX+YK+oqIwNtln6N5Plp3Z9TkQS0RufwZbl7GUw==
+
+"@capacitor/push-notifications@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/push-notifications/-/push-notifications-7.0.0.tgz#d1649995b0e7d43ae5c23e6733c10d8dffc6adfe"
+  integrity sha512-B+5Msm6H0gNh+c9vSkd/czxDwC0EXUs9WceQtveJumzcyTsXgk9fZyiTnrAkS1r2yLcooejWes02FSBnQEMPzg==
+
 "@csstools/normalize.css@*":
   version "12.1.1"
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-12.1.1.tgz#f0ad221b7280f3fc814689786fd9ee092776ef8f"

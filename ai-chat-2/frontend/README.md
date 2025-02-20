@@ -10,3 +10,10 @@
     1. web: `yarn run dev:web`
     1. ios: `yarn run dev:ios` (Note - This will also run web)
     1. android: Not yet implemented.
+
+# Ship to Native
+
+1. Build iOS
+    1. `yarn run build:ios`
+    1.  Press Play Button in XCode.
+
