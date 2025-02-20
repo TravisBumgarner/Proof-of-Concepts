@@ -1,0 +1,10 @@
+{
+  "appId": "dev.travisbumgarner.test",
+  "appName": "capacitor",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  }
+}
