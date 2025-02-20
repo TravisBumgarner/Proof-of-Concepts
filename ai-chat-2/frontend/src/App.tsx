@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import Assistant from './Assistant';
 
 function App() {
   useEffect(() => {
@@ -36,11 +36,9 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>Hello world.!</p>
         <button onClick={sendTestNotification}>Send Test Notification</button>
-      </header>
+    <Assistant />
     </div>
   );
 }
