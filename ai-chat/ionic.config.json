@@ -1,7 +1,0 @@
-{
-  "name": "ai-chat",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react-vite"
-}
