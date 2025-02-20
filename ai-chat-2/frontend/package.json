@@ -41,10 +41,10 @@
   },
   "scripts": {
     "launch-ios-emulator": "source .env && npx cap run --live-reload --target $IOS_TARGET ios",
-    "launch-android-emulator": "source .env && npx cap run --live-reload --target $ANDROID_TARGET ios",
+    "launch-android-emulator": "source .env && npx cap run --live-reload --target $ANDROID_TARGET android",
     "dev:ios": "concurrently \"yarn dev:web\" \"yarn run launch-ios-emulator\"",
     "dev:web": "react-scripts start",
-    "dev:android": "echo 'Coming soon'",
+    "dev:android": "concurrently \"yarn dev:web\" \"yarn run launch-android-emulator\"",
     "build:web": "react-scripts build",
     "build:ios": "yarn build:web && npx cap copy ios && npx cap open ios",
     "build:android": "echo 'Coming soon'",

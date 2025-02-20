@@ -5,10 +5,12 @@ import Assistant from './Assistant';
 import QuickVoice from './QuickVoice';
 
 function App() {
+  console.log('ruda')
   useEffect(() => {
     // Request notification permissions on mount
     const requestPermission = async () => {
       const result = await LocalNotifications.requestPermissions();
+      console.log('result', result)
       if (result.display !== 'granted') {
         alert('Notification permission denied');
       }
@@ -18,27 +20,25 @@ function App() {
   }, []);
 
   const sendTestNotification = async () => {
-    try {
-      await LocalNotifications.schedule({
-        notifications: [
-          {
-            id: Date.now(),
-            title: 'Test Notification',
-            body: 'This is a test local notification',
-            schedule: { at: new Date(Date.now() + 3000) }, // Trigger in 3 seconds
-          },
-        ],
-      });
-      alert('Local notification scheduled');
-    } catch (error) {
-      alert('Error scheduling local notification: ' + JSON.stringify(error));
-    }
+    console.log('ruda')
+    const r = await LocalNotifications.schedule({
+      notifications: [
+        {
+          id: Date.now(),
+          title: 'Test Notification',
+          body: 'This is a test local notification',
+          schedule: { at: new Date(Date.now() + 3000) }, // Trigger in 3 seconds
+        },
+      ],
+    });
+    alert(r)
+    alert('Local notification scheduled!');
   };
 
   return (
     <div className="App">
         <p>Hello world.!</p>
-        <button onClick={sendTestNotification}>Send Test Notification</button>
+        <button onClick={sendTestNotification}>Send Test Notification!!</button>
     <Assistant />
     <QuickVoice />
     </div>
