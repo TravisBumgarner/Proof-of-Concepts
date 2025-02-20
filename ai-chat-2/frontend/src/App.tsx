@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import Assistant from './Assistant';
+import QuickVoice from './QuickVoice';
 
 function App() {
   useEffect(() => {
@@ -39,6 +40,7 @@ function App() {
         <p>Hello world.!</p>
         <button onClick={sendTestNotification}>Send Test Notification</button>
     <Assistant />
+    <QuickVoice />
     </div>
   );
 }

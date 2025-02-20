@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@humeai/voice-react": "^0.1.20"
+  }
+}

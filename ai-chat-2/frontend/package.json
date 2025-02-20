@@ -35,7 +35,9 @@
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@humeai/voice-embed-react": "^0.1.19",
+    "@humeai/voice-react": "^0.1.19"
   },
   "scripts": {
     "launch-ios-emulator": "source .env && npx cap run --live-reload --target $IOS_TARGET ios",
